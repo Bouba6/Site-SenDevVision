@@ -7,7 +7,7 @@ export function ServicesSection() {
             title: "Développement Web",
             subtitle: "Sites & Applications Web",
             description: "Créations digitales modernes avec des technologies de pointe. Des sites vitrines aux plateformes e-commerce complexes.",
-            features: ["React/Next.js", "Design Responsif", "Performance Optimisée", "SEO Intégré"],
+            features: ["Angular/React.js", "Design Responsif", "Performance Optimisée", "SEO Intégré"],
             color: "from-blue-600 via-blue-500 to-cyan-400",
             bgColor: "bg-blue-500/10",
             borderColor: "border-blue-500/20 hover:border-blue-400/50"
@@ -17,7 +17,7 @@ export function ServicesSection() {
             title: "Applications Mobiles",
             subtitle: "iOS & Android",
             description: "Applications natives et cross-platform performantes avec une expérience utilisateur exceptionnelle.",
-            features: ["React Native", "Flutter", "UI/UX Design", "App Store Deploy"],
+            features: ["Flutter", "GetX Framework", "UI/UX Design", "Apk Deploy"],
             color: "from-purple-600 via-purple-500 to-pink-400",
             bgColor: "bg-purple-500/10",
             borderColor: "border-purple-500/20 hover:border-purple-400/50"
