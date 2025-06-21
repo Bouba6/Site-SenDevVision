@@ -43,7 +43,7 @@ export function Header() {
               </span>
             </div>
 
-            <NavBar items={navItems} />
+            <NavBar className="hidden md:flex" items={navItems} />
 
             {/* Navigation desktop */}
             {/* <nav className="hidden md:flex space-x-8">
