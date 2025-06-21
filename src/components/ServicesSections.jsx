@@ -53,7 +53,7 @@ export function ServicesSection() {
                     
                     <h2 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent leading-tight">
                         Services
-                        <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        <span className="block bg-gradient-to-r from-primary via-secondary to-quaternary bg-clip-text text-transparent">
                             d'Excellence
                         </span>
                     </h2>
