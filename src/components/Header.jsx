@@ -20,7 +20,7 @@ export function Header() {
   const navItems = [
     { name: "Accueil", url: "accueil", icon: Home },
     { name: "Services", url: "services", icon: Briefcase },
-    { name: "Portfolio", url: "portfolio", icon: FileText },
+    { name: "Galerie", url: "Galerie", icon: FileText },
     { name: "À Propos", url: "apropos", icon: User },
     { name: "Contact", url: "contact", icon: User },
   ];
