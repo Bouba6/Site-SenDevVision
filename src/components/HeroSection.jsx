@@ -77,7 +77,7 @@ export function HeroSection() {
     };
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-black pt-20">
+        <section className="relative min-h-screen overflow-hidden bg-black pt-20 mb-2 ">
             {/* Background effects */}
             <div className="absolute inset-0">
                 {/* Gradient overlays */}
@@ -108,7 +108,7 @@ export function HeroSection() {
             />
 
             {/* Main content */}
-            <div className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center">
+            <div className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center ">
                 <div className="container mx-auto px-2 lg:px-8">
                     <motion.div
                         className="grid lg:grid-cols-12 gap-12 items-center"
