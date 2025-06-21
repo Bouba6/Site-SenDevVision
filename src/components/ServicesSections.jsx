@@ -56,8 +56,6 @@ export function ServicesSection() {
   ];
 
   return (
-    <>
-      
 
       <section className="relative py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-black overflow-hidden">
         {/* Éléments décoratifs en arrière-plan */}
@@ -183,7 +181,7 @@ export function ServicesSection() {
           </div>
         </div>
       </section>
-    </>
+
   );
 }
 
