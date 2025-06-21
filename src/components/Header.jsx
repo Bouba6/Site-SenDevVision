@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
-import { Logo } from '../assets/img/Logo.png'
+import Logo from '../assets/img/Logo.png'
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
