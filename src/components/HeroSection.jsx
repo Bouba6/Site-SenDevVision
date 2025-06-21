@@ -8,7 +8,7 @@ export function HeroSection() {
     const [mounted, setMounted] = useState(false);
 
     const texts = [
-        { text: "Sites Web Extraordinaires", color: "from-blue-400 to-cyan-400" },
+        { text: "Sites Web HyperMegaCool", color: "from-blue-400 to-cyan-400" },
         { text: "Applications Mobiles", color: "from-purple-400 to-pink-400" },
         { text: "Solutions Digitales", color: "from-green-400 to-emerald-400" },
         { text: "Expériences Uniques", color: "from-orange-400 to-red-400" }
