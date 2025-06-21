@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import Logo from '../assets/img/Logo.png'
 
 export function Header() {
@@ -33,14 +33,14 @@ export function Header() {
                         {/* Navigation desktop */}
                         <nav className="hidden md:flex space-x-8">
                             {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
-                                <a
+                                <Link
                                     key={item}
-                                    href= {item.toLowerCase()}
+                                    to = {item.toLowerCase()}
                                     className="text-[var(--color-quaternary)] hover:text-[var(--color-quaternary)] transition-colors duration-300 relative group"
                                 >
                                     {item}
                                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[var(--color-primary)] to-purple-400 transition-all duration-300 group-hover:w-full"></span>
-                                </a>
+                                </Link>
                             ))}
                         </nav>
 
@@ -62,14 +62,14 @@ export function Header() {
                     <nav className="container mx-auto px-6 py-4">
                         <div className="flex flex-col space-y-4">
                             {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
-                                <a
+                                <Link
                                     key={item}
-                                    href={item.toLowerCase()}
+                                    to = {item.toLowerCase()}
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-[var(--color-quaternary)] hover:text-[var(--color-primary)] transition-colors duration-300 py-2 border-b border-gray-800/50 last:border-b-0"
                                 >
                                     {item}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </nav>
