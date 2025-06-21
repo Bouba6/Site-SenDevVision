@@ -35,7 +35,7 @@ export function Header() {
                             {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
                                 <a
                                     key={item}
-                                    href="#"
+                                    href= {item.toLowerCase()}
                                     className="text-[var(--color-quaternary)] hover:text-[var(--color-quaternary)] transition-colors duration-300 relative group"
                                 >
                                     {item}
