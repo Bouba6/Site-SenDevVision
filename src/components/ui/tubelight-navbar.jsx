@@ -40,7 +40,7 @@ export function NavBar({
               className={cn(
                 "relative cursor-pointer w-max text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                 "text-white hover:text-secondary",
-                isActive && "bg-muted text-secondary"
+                isActive && "bg-gray-900 text-secondary"
               )}>
               <span className="hidden md:inline">{item.name}</span>
               <span className="md:hidden">
