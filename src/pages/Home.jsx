@@ -8,7 +8,6 @@ const Home = () => {
             <HeroSection />
             <ValuesSection />
 
-
         </>
     )
 }
