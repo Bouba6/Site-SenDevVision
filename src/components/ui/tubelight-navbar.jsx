@@ -23,7 +23,7 @@ export function NavBar({
   return (
     (<div
       className={cn(
-        "fixed left-3/4 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        "fixed left-2/3 ml-14 -translate-x-1/2 z-50 mb-6 sm:pt-6",
         className
       )}>
       <div
@@ -38,7 +38,7 @@ export function NavBar({
               to={item.url}
               onClick={() => setActiveTab(item.name)}
               className={cn(
-                "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
+                "relative cursor-pointer w-max text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                 "text-white hover:text-secondary",
                 isActive && "bg-muted text-secondary"
               )}>
@@ -59,7 +59,7 @@ export function NavBar({
                   <div
                     className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
                     <div
-                      className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
+                      className="absolute w-12 h-6 bg-white/15 rounded-full blur-md -top-2 -left-2" />
                     <div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md -top-1" />
                     <div
                       className="absolute w-4 h-4 bg-primary/20 rounded-full blur-sm top-0 left-2" />

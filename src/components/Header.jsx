@@ -29,9 +29,7 @@ export function Header() {
     <>
       <header
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-black/80 backdrop-blur-lg border-b border-blue-500/30"
-            : "bg-transparent"
+          scrolled ? "bg-transparent backdrop-blur-lg" : "bg-transparent"
         }`}
       >
         <div className="container mx-auto px-6 py-4">
