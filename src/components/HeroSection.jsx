@@ -223,7 +223,7 @@ export function HeroSection() {
                         >
                             <div className="relative">
                                 {/* Main visual element */}
-                                <div className="relative aspect-square max-w-md mx-auto">
+                                <div className="relative aspect-square mx-auto max-w-[270px] sm:max-w-[270px] md:max-w-md">
                                     {/* Rotating border */}
                                     <motion.div
                                         className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 p-0.5"
