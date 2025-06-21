@@ -64,7 +64,7 @@ export function Header() {
                             {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
                                 <a
                                     key={item}
-                                    href="#"
+                                    href={item.toLowerCase()}
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-[var(--color-quaternary)] hover:text-[var(--color-primary)] transition-colors duration-300 py-2 border-b border-gray-800/50 last:border-b-0"
                                 >
