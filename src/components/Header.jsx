@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Code } from 'lucide-react';
 import { Menu, X } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
-import { logo } from '../assets/img/Logo.png'
+import { Logo } from '../assets/img/Logo.png'
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +23,7 @@ export function Header() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <div className="w-10 h-10 bg-gradient-to-br rounded-lg flex items-center justify-center">
-                                <img src={logo} alt="" />
+                                <img src={Logo} alt="" />
                             </div>
                             <span className="text-2xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-quaternary)] bg-clip-text text-transparent">
                                 SenDevVision
