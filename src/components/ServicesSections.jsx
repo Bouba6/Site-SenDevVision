@@ -47,7 +47,7 @@ export function ServicesSection() {
         "Architecture Custom",
         "API Development",
         "Cloud Solutions",
-        "Maintenance 24/7",
+        "Maintenance 7/7",
       ],
       color: "from-emerald-600 via-green-500 to-teal-400",
       bgColor: "bg-green-500/10",
@@ -57,7 +57,7 @@ export function ServicesSection() {
 
   return (
 
-      <section className="relative py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-black overflow-hidden">
+      <section className="relative py-24 bg-black overflow-hidden">
         {/* Éléments décoratifs en arrière-plan */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl"></div>
