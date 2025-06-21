@@ -30,6 +30,7 @@ export function Header() {
                             </span>
                         </div>
 
+                        {/* Navigation desktop */}
                         <nav className="hidden md:flex space-x-8">
                             {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
                                 <a
@@ -43,13 +44,35 @@ export function Header() {
                             ))}
                         </nav>
 
+                        {/* Bouton burger */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden text-white hover:text-blue-400 transition-colors"
+                            className="md:hidden text-white hover:text-blue-400 transition-colors z-60"
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
                     </div>
+                </div>
+
+                {/* Menu mobile */}
+                <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen
+                        ? 'max-h-80 opacity-100'
+                        : 'max-h-0 opacity-0 overflow-hidden'
+                    } bg-black/95 backdrop-blur-lg border-t border-blue-500/30`}>
+                    <nav className="container mx-auto px-6 py-4">
+                        <div className="flex flex-col space-y-4">
+                            {['Accueil', 'Services', 'Portfolio', 'À Propos', 'Contact'].map((item) => (
+                                <a
+                                    key={item}
+                                    href="#"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-[var(--color-quaternary)] hover:text-[var(--color-primary)] transition-colors duration-300 py-2 border-b border-gray-800/50 last:border-b-0"
+                                >
+                                    {item}
+                                </a>
+                            ))}
+                        </div>
+                    </nav>
                 </div>
             </header>
             <Outlet />

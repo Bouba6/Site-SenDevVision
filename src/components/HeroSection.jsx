@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Rocket, ArrowRight, Sparkles, Code2 } from 'lucide-react';
 import { FloatingParticles } from "./FloatingParticles";
+
 export function HeroSection() {
     const [currentText, setCurrentText] = useState(0);
     const [mounted, setMounted] = useState(false);
@@ -23,7 +24,7 @@ export function HeroSection() {
     if (!mounted) return null;
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-black ">
+        <section className="relative min-h-screen overflow-hidden bg-black pt-20">
             {/* Background effects */}
             <div className="absolute inset-0">
                 {/* Gradient overlays */}
@@ -42,7 +43,7 @@ export function HeroSection() {
             <div className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse opacity-50"></div>
 
             {/* Main content */}
-            <div className="relative z-10 min-h-screen flex items-center">
+            <div className="relative z-10 min-h-[calc(100vh-5rem)] flex items-center">
                 <div className="container mx-auto px-2 lg:px-8">
                     <div className="grid lg:grid-cols-12 gap-12 items-center">
 
