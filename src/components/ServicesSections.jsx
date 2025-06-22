@@ -367,7 +367,7 @@ export function ServicesSection() {
           </div>
 
           {/* Process Section */}
-          <div className="mb-24">
+          <div>
             <div className="max-w-3xl mx-auto text-center mb-16">
               <div
                 className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 
