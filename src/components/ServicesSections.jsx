@@ -247,7 +247,7 @@ export function ServicesSection() {
     {
       icon: <Target className="w-6 h-6" />,
       title: "Conception & Design",
-      description: "Architecture solution et design d'expérience utilisateur",
+      description: "Architecture solution et prototypage",
       details: ["Wireframing", "Prototypage", "Architecture système"],
     },
     {
@@ -405,7 +405,7 @@ export function ServicesSection() {
                     </div>
 
                     {/* Content */}
-                    <h4 className="text-lg font-bold text-slate-900 mb-2">
+                    <h4 className="text-lg font-bold text-slate-100 mb-2">
                       {step.title}
                     </h4>
                     <p className="text-slate-100 text-sm mb-4 leading-relaxed">
