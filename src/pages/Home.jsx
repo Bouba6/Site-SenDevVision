@@ -1,5 +1,6 @@
 import ValuesSection from "@/components/ValuesSection"
 import { HeroSection } from "../components/HeroSection"
+import ProcedureSection from "@/components/ProcedureSection"
 
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
         <>
             <HeroSection />
             <ValuesSection />
+            <ProcedureSection />
 
         </>
     )
