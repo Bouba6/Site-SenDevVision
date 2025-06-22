@@ -3,9 +3,7 @@ import {
   ArrowUpRight,
   Check,
   Clock,
-  Cloud,
   Code,
-  Database,
   Globe,
   ListChecks,
   Package,
@@ -20,10 +18,12 @@ import {
   TrendingUp,
   X,
   Zap,
+  Calendar, MessageCircle, Phone, Mail
 } from "lucide-react";
 import { useState } from "react";
 import FloatingParticles from "./FloatingParticles";
 import { TechnologiesSection } from "./TechnologiesSection";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
@@ -177,6 +177,38 @@ export function ServicesSection() {
     },
   ];
 
+  const modalVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.95,
+      y: 20
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        duration: 0.4,
+        bounce: 0.1
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.95,
+      y: 20,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
   const openModal = (service) => {
     setSelectedService(service);
     setActiveTab("technologies");
@@ -323,35 +355,6 @@ export function ServicesSection() {
                   {service.description}
                 </p>
 
-                {/* Features */}
-                <ul className="space-y-2 mb-8">
-                  {service.features.map((feature, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-3 text-sm text-slate-300"
-                    >
-                      <Check
-                        className={`w-4 h-4 ${
-                          colorVariants[service.color].accent
-                        }`}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 mb-8 py-4 border-t border-slate-100">
-                  {service.stats.map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <div className="text-lg font-bold text-slate-200">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-slate-200">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-
                 {/* CTA */}
                 <button
                   onClick={() => openModal(service)}
@@ -432,7 +435,6 @@ export function ServicesSection() {
           </div>
 
           {/* Technologies Section */}
-          
 
           <TechnologiesSection />
 
@@ -564,151 +566,268 @@ export function ServicesSection() {
 
       {/* Modal */}
       {isModalOpen && selectedService && (
+        <AnimatePresence>
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          {/* Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={closeModal}
-          ></div>
-          <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-slate-900 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300">
-            {/* Header */}
-            <div className="p-8 border-b border-slate-200">
-              <div className="flex items-start justify-between">
+          />
+      
+          {/* Modal */}
+          <motion.div
+            className="relative w-full max-w-6xl h-[85vh] flex flex-col bg-slate-900 rounded-3xl shadow-2xl overflow-hidden"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {/* Header Compact */}
+            <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 p-6 border-b border-slate-800">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div
+                  <motion.div
                     className={`p-3 rounded-xl bg-gradient-to-br ${
                       colorVariants[selectedService.color].gradient
-                    } text-white`}
+                    } text-white shadow-lg`}
+                    whileHover={{ scale: 1.05, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    {selectedService.icon}
-                  </div>
+                    <Code className="w-6 h-6" />
+                  </motion.div>
                   <div>
-                    <h3 className="text-2xl font-bold text-slate-900">
+                    <h2 className="text-2xl font-bold text-slate-100">
                       {selectedService.title}
-                    </h3>
-                    <p
-                      className={`${
-                        colorVariants[selectedService.color].accent
-                      } font-medium`}
-                    >
-                      {selectedService.subtitle}
-                    </p>
+                    </h2>
                   </div>
                 </div>
-                <button
+                <motion.button
                   onClick={closeModal}
-                  className="p-2 rounded-full text-slate-400 hover:bg-slate-100 transition-colors"
+                  className="p-2 rounded-full text-slate-400 hover:bg-white hover:text-slate-600 transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  <X className="w-5 h-5" />
-                </button>
+                  <X className="w-6 h-6" />
+                </motion.button>
               </div>
             </div>
-
-            {/* Body */}
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-8">
-                <p className="text-lg text-slate-200 mb-8 leading-relaxed">
-                  {selectedService.detailedDescription}
-                </p>
-
-                {/* Tabs */}
-                <div className="flex gap-2 mb-8">
+      
+            {/* Content Layout: Side Navigation + Content */}
+            <div className="flex-1 flex overflow-hidden">
+              {/* Side Navigation */}
+              <div className="w-64 bg-slate-800 border-r border-slate-900 p-6">
+                <div className="space-y-2">
+                  <TabButton
+                    id="overview"
+                    label="Vue d'ensemble"
+                    icon={<Package className="w-4 h-4" />}
+                  />
                   <TabButton
                     id="technologies"
                     label="Technologies"
                     icon={<Code className="w-4 h-4" />}
+                    count={selectedService.technologies.length}
                   />
                   <TabButton
                     id="process"
                     label="Processus"
                     icon={<ListChecks className="w-4 h-4" />}
+                    count={selectedService.processSteps.length}
                   />
                   <TabButton
                     id="deliverables"
                     label="Livrables"
                     icon={<Package className="w-4 h-4" />}
+                    count={selectedService.deliverables.length}
                   />
                 </div>
-
-                {/* Tab Content */}
-                <div className="min-h-[300px]">
-                  {activeTab === "technologies" && (
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {selectedService.technologies.map((tech, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg"
-                        >
-                          <Check
-                            className={`w-4 h-4 ${
-                              colorVariants[selectedService.color].accent
-                            }`}
-                          />
-                          <span className="text-slate-100 font-medium">
-                            {tech}
-                          </span>
+      
+              </div>
+      
+              {/* Main Content Area */}
+              <div className="flex-1 overflow-y-auto">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    className="p-8"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {activeTab === "overview" && (
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-2xl font-bold text-slate-100 mb-4">
+                            {selectedService.subtitle}
+                          </h3>
+                          <p className="text-lg text-slate-400 leading-relaxed mb-6">
+                            {selectedService.detailedDescription}
+                          </p>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                  {activeTab === "process" && (
-                    <div className="space-y-4">
-                      {selectedService.processSteps.map((step, i) => (
-                        <div
-                          key={i}
-                          className="flex gap-4 p-4 bg-slate-800/50 rounded-lg"
-                        >
-                          <div
-                            className={`flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br ${
-                              colorVariants[selectedService.color].gradient
-                            } text-slate-100 flex items-center justify-center text-sm font-bold`}
-                          >
-                            {i + 1}
+      
+                        {/* Points clés en grid */}
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl border border-green-200">
+                            <Check className="w-5 h-5 text-green-600" />
+                            <span className="font-medium text-slate-900">Solutions sur mesure</span>
                           </div>
-                          <p className="text-slate-100 font-medium">{step}</p>
+                          <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                            <Check className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-900">Technologies modernes</span>
+                          </div>
+                          <div className="flex items-center gap-3 p-4 bg-purple-50 rounded-xl border border-purple-200">
+                            <Check className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-900">Support inclus</span>
+                          </div>
+                          <div className="flex items-center gap-3 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                            <Check className="w-5 h-5 text-orange-600" />
+                            <span className="font-medium text-slate-900">Livraison rapide</span>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                  {activeTab === "deliverables" && (
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {selectedService.deliverables.map((item, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg"
-                        >
-                          <Package
-                            className={`w-4 h-4 ${
-                              colorVariants[selectedService.color].accent
-                            }`}
-                          />
-                          <span className="text-slate-100 font-medium">
-                            {item}
-                          </span>
+      
+                        {/* CTA Principal */}
+                        <div className={`p-6 ${colorVariants[selectedService.color].light} rounded-xl ${colorVariants[selectedService.color].border}`}>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="font-semibold text-slate-100 mb-2">
+                                Prêt à démarrer votre projet ?
+                              </h4>
+                             
+                            </div>
+                            <motion.button
+                              className={`px-6 py-3 rounded-xl text-white font-semibold ${
+                                colorVariants[selectedService.color].button
+                              } shadow-lg flex items-center gap-2`}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <MessageCircle className="w-4 h-4" />
+                              Devis
+                            </motion.button>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                      </div>
+                    )}
+      
+                    {activeTab === "technologies" && (
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-100 mb-6">
+                          Stack technologique
+                        </h3>
+                        <div className="grid grid-cols-3 gap-4">
+                          {selectedService.technologies.map((tech, i) => (
+                            <motion.div
+                              key={tech}
+                              className="flex items-center gap-3 p-4 bg-slate-900 border-2 border-slate-700 rounded-xl hover:shadow-lg transition-all"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.05, borderColor: colorVariants[selectedService.color].accent }}
+                            >
+                              <div
+                                className={`w-3 h-3 rounded-full bg-gradient-to-r ${
+                                  colorVariants[selectedService.color].gradient
+                                }`}
+                              />
+                              <span className="font-semibold text-slate-100">
+                                {tech}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+      
+                    {activeTab === "process" && (
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-100 mb-6">
+                          Notre processus de développement
+                        </h3>
+                        <div className="space-y-6">
+                          {selectedService.processSteps.map((step, i) => (
+                            <motion.div
+                              key={i}
+                              className="flex gap-6 p-6 bg-slate-900 border-2 border-slate-700 rounded-xl shadow-sm"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                              whileHover={{ scale: 1.02, shadow: "lg" }}
+                            >
+                              <div
+                                className={`flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br ${
+                                  colorVariants[selectedService.color].gradient
+                                } text-white flex items-center justify-center text-lg font-bold shadow-lg`}
+                              >
+                                {i + 1}
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-lg font-semibold text-slate-100">
+                                  {step}
+                                </p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+      
+                    {activeTab === "deliverables" && (
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-100 mb-6">
+                          Ce que vous recevrez
+                        </h3>
+                        <div className="grid grid-cols-2 gap-4">
+                          {selectedService.deliverables.map((item, i) => (
+                            <motion.div
+                              key={item}
+                              className="flex items-center gap-4 p-5 bg-slate-900 border-2 border-slate-700 rounded-xl shadow-sm"
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: i * 0.05 }}
+                              whileHover={{ scale: 1.03, borderColor: colorVariants[selectedService.color].accent }}
+                            >
+                              <Package
+                                className={`w-6 h-6 ${
+                                  colorVariants[selectedService.color].accent
+                                }`}
+                              />
+                              <span className="text-lg font-semibold text-slate-100">
+                                {item}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
-
-            {/* Footer */}
-            <div className="p-8 border-t border-slate-200 bg-slate-900">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  className={`flex-1 px-6 py-3 rounded-lg text-white font-semibold transition-all duration-300 ${
+      
+            {/* Footer Compact */}
+            <div className="p-6 bg-gradient-to-r from-slate-800 to-slate-900 border-t border-slate-900">
+              <div className="flex gap-4">
+                <motion.button
+                  className={`flex-1 flex items-center justify-between gap-4 px-6 py-3 rounded-xl text-white font-semibold ${
                     colorVariants[selectedService.color].button
-                  }`}
+                  } shadow-lg`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Demander un devis
-                </button>
-                <button className="flex-1 px-6 py-3 rounded-lg border border-slate-300 text-slate-100 hover:text-slate-900 font-semibold hover:bg-white transition-colors">
-                  Planifier un appel
-                </button>
+                  <MessageCircle className="w-5 h-5" />
+                  Nous contacter
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
+      </AnimatePresence>
       )}
     </>
   );
