@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import FloatingParticles from "./FloatingParticles";
+import { TechnologiesSection } from "./TechnologiesSection";
 
 export function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
@@ -431,88 +432,9 @@ export function ServicesSection() {
           </div>
 
           {/* Technologies Section */}
-          <div className="mb-16">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h3 className="text-3xl font-bold text-slate-100 mb-4">
-                Technologies de Pointe
-              </h3>
-              <p className="text-lg text-slate-400 mb-6"></p>
-              <p className="text-lg text-slate-400">
-                Nous utilisons les dernières technologies pour créer des
-                solutions performantes et évolutives
-              </p>
-            </div>
+          
 
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-4">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-100 mb-2">
-                  Frontend
-                </h4>
-                <p className="text-slate-400 text-sm mb-4">
-                  Interfaces modernes et réactives
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["React", "Angular", "Vue.js", "TypeScript"].map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 mb-4">
-                  <Database className="w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-100 mb-2">
-                  Backend
-                </h4>
-                <p className="text-slate-400 text-sm mb-4">
-                  APIs robustes et sécurisées
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Node.js", "Spring Boot", "MongoDB", "PostgreSQL"].map(
-                    (tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-md"
-                      >
-                        {tech}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 mb-4">
-                  <Cloud className="w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-bold text-slate-100 mb-2">
-                  Cloud & DevOps
-                </h4>
-                <p className="text-slate-400 text-sm mb-4">
-                  Déploiement et monitoring
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["AWS", "Docker", "Kubernetes", "CI/CD"].map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-purple-50 text-purple-600 text-xs rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <TechnologiesSection />
 
           {/* CTA Section */}
           <div className="relative max-w-4xl mx-auto text-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-12 overflow-hidden group">
