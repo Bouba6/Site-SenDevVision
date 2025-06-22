@@ -358,7 +358,7 @@ export function ServicesSection() {
                 {/* CTA */}
                 <button
                   onClick={() => openModal(service)}
-                  className="flex items-center justify-between w-full p-3 rounded-lg bg-slate-300 hover:bg-slate-100 transition-colors group-hover:bg-slate-200"
+                  className="hidden md:flex items-center justify-between w-full p-3 rounded-lg bg-slate-300 hover:bg-slate-100 transition-colors group-hover:bg-slate-200"
                 >
                   <span className="text-sm font-medium text-slate-700">
                     En savoir plus
