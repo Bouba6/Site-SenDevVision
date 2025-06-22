@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { FloatingParticles } from "./FloatingParticles";
 export function ProcedureSection() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -74,6 +74,8 @@ export function ProcedureSection() {
                     backgroundSize: '50px 50px'
                 }} />
             </div>
+
+            <FloatingParticles />
 
             {/* En-tête */}
             <div className="w-full max-w-7xl mx-auto px-4 md:px-8 mb-8 md:mb-16 relative z-10">
