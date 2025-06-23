@@ -122,7 +122,7 @@ export function ServicesSection() {
     const y = (clientY - top - height / 2) / (height / 2);
 
     // Mettre à jour la rotation cible
-    targetRotation.current = { x: -y * 5, y: x * 5 };
+    targetRotation.current = { x: -y * 1, y: x * 6 };
 
     // Démarrer la boucle d'animation si elle n'est pas déjà en cours
     if (!animationFrameId.current) {
