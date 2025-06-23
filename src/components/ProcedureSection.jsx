@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FloatingParticles } from "./FloatingParticles";
+
 export function ProcedureSection() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [animationComplete, setAnimationComplete] = useState(false);
 
     const procedureSteps = [
         {
@@ -17,7 +19,7 @@ export function ProcedureSection() {
         {
             id: 2,
             title: "Conception",
-            description: "Conception UI/UX et planification de l’architecture pour une expérience utilisateur optimale",
+            description: "Conception UI/UX et planification de l'architecture pour une expérience utilisateur optimale",
             phase: "CONCEPTION",
             duration: "2 à 3 semaines",
             icon: "🎨",
@@ -52,18 +54,37 @@ export function ProcedureSection() {
         }
     ];
 
-
-    // Auto-advance animation
+    // Animation unique au montage du composant
     useEffect(() => {
-        const interval = setInterval(() => {
-            setIsAnimating(true);
-            setTimeout(() => {
-                setCurrentStep((prev) => (prev + 1) % procedureSteps.length);
-                setIsAnimating(false);
-            }, 500);
-        }, 4000);
-        return () => clearInterval(interval);
-    }, []);
+        if (animationComplete) return;
+
+        const animateSteps = () => {
+            const totalSteps = procedureSteps.length;
+            let stepIndex = 0;
+
+            const advanceStep = () => {
+                if (stepIndex < totalSteps) {
+                    setIsAnimating(true);
+                    setTimeout(() => {
+                        setCurrentStep(stepIndex);
+                        setIsAnimating(false);
+                        stepIndex++;
+
+                        if (stepIndex < totalSteps) {
+                            setTimeout(advanceStep, 2000); // Pause entre chaque étape
+                        } else {
+                            setAnimationComplete(true);
+                        }
+                    }, 500);
+                }
+            };
+
+            // Délai initial avant de commencer l'animation
+            setTimeout(advanceStep, 1000);
+        };
+
+        animateSteps();
+    }, [animationComplete]);
 
     return (
         <div className="bg-black min-h-screen py-8 md:py-20 relative">
@@ -95,7 +116,6 @@ export function ProcedureSection() {
                     </p>
                 </div>
             </div>
-
 
             {/* Desktop Layout - Staircase */}
             <div className="hidden md:block w-full max-w-7xl mx-auto px-4 md:px-8 relative">
@@ -216,7 +236,7 @@ export function ProcedureSection() {
                                     style={{
                                         animation: isAnimating
                                             ? 'bounce 0.6s ease-in-out, wiggle 0.6s ease-in-out'
-                                            : 'float 2s ease-in-out infinite',
+                                            : animationComplete ? 'none' : 'float 2s ease-in-out infinite',
                                     }}
                                 >
                                     <div
@@ -231,7 +251,7 @@ export function ProcedureSection() {
                                     <div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                                         style={{
-                                            animation: 'shine 2s ease-in-out infinite 3s',
+                                            animation: animationComplete ? 'none' : 'shine 2s ease-in-out infinite 3s',
                                         }}
                                     />
                                 </div>
@@ -240,7 +260,7 @@ export function ProcedureSection() {
                                     style={{
                                         animation: isAnimating
                                             ? 'shadowBounce 0.6s ease-in-out'
-                                            : 'shadowFloat 2s ease-in-out infinite',
+                                            : animationComplete ? 'none' : 'shadowFloat 2s ease-in-out infinite',
                                     }}
                                 />
                                 {isAnimating && (
@@ -366,7 +386,7 @@ export function ProcedureSection() {
                                         className={`absolute top-20 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg z-10 transition-all duration-1000 ${isLeft ? 'left-6' : 'right-6'
                                             }`}
                                         style={{
-                                            animation: isAnimating ? 'bounce 0.6s ease-in-out' : 'float 2s ease-in-out infinite',
+                                            animation: isAnimating ? 'bounce 0.6s ease-in-out' : animationComplete ? 'none' : 'float 2s ease-in-out infinite',
                                         }}
                                     >
                                         <div className="text-lg">🚶‍♂️</div>
