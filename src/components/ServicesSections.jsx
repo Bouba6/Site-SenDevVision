@@ -22,8 +22,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import FloatingParticles from "./FloatingParticles";
-import { TechnologiesSection } from "./TechnologiesSection";
+import { TechnologiesSection } from "./Page-sevice/TechnologiesSection";
 import { motion, AnimatePresence } from "framer-motion";
+import ProcessSection from "./Page-sevice/ProcessSection";
 
 export function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
@@ -265,39 +266,6 @@ export function ServicesSection() {
     </button>
   );
 
-  const processSteps = [
-    {
-      icon: <Search className="w-6 h-6" />,
-      title: "Analyse des Besoins",
-      description:
-        "Évaluation approfondie de vos exigences et objectifs business",
-      details: [
-        "Audit technique",
-        "Définition du scope",
-        "Identification des risques",
-      ],
-    },
-    {
-      icon: <Target className="w-6 h-6" />,
-      title: "Conception & Design",
-      description: "Architecture solution et prototypage",
-      details: ["Wireframing", "Prototypage", "Architecture système"],
-    },
-    {
-      icon: <Settings className="w-6 h-6" />,
-      title: "Développement",
-      description:
-        "Implémentation avec les meilleures pratiques et technologies",
-      details: ["Code de qualité", "Tests automatisés", "Intégration continue"],
-    },
-    {
-      icon: <Rocket className="w-6 h-6" />,
-      title: "Déploiement",
-      description: "Mise en production sécurisée et formation des équipes",
-      details: ["Déploiement", "Formation", "Support continu"],
-    },
-  ];
-
   return (
     <>
       <section className="relative py-24 bg-black">
@@ -370,69 +338,8 @@ export function ServicesSection() {
           </div>
 
           {/* Process Section */}
-          <div>
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <div
-                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 
-              text-slate-400 rounded-full text-sm font-medium text-blue-600 mb-6"
-              >
-                <TrendingUp className="w-4 h-4" />
-                Notre Processus
-              </div>
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-100 mb-6">
-                Méthodologie Éprouvée
-                <span className="block text-blue-600">pour Votre Succès</span>
-              </h3>
-              <p className="text-lg text-slate-400">
-                Une approche structurée et transparente pour garantir la
-                réussite de votre projet digital.
-              </p>
-            </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {processSteps.map((step, index) => (
-                <div key={index} className="relative group">
-                  {/* Connection Line */}
-                  {index < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-blue-200 to-transparent z-0" />
-                  )}
-
-                  <div className="relative bg-slate-900 border border-slate-700 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group-hover:border-blue-200">
-                    {/* Step Number */}
-                    <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 text-slate-100 rounded-full flex items-center justify-center text-sm font-bold">
-                      {index + 1}
-                    </div>
-
-                    {/* Icon */}
-                    <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-100 transition-colors">
-                      {step.icon}
-                    </div>
-
-                    {/* Content */}
-                    <h4 className="text-lg font-bold text-slate-100 mb-2">
-                      {step.title}
-                    </h4>
-                    <p className="text-slate-100 text-sm mb-4 leading-relaxed">
-                      {step.description}
-                    </p>
-
-                    {/* Details */}
-                    <ul className="space-y-1">
-                      {step.details.map((detail, i) => (
-                        <li
-                          key={i}
-                          className="flex items-center gap-2 text-xs text-slate-100"
-                        >
-                          <div className="w-1 h-1 bg-blue-400 rounded-full" />
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ProcessSection />
 
           {/* Technologies Section */}
 
@@ -810,7 +717,7 @@ export function ServicesSection() {
             </div>
       
             {/* Footer Compact */}
-            <div className="p-6 bg-gradient-to-r from-slate-800 to-slate-900 border-t border-slate-900">
+            {/* <div className="p-6 bg-gradient-to-r from-slate-800 to-slate-900 border-t border-slate-900">
               <div className="flex gap-4">
                 <motion.button
                   className={`flex-1 flex items-center justify-between gap-4 px-6 py-3 rounded-xl text-white font-semibold ${
@@ -824,7 +731,7 @@ export function ServicesSection() {
                   <ArrowRight className="w-4 h-4" />
                 </motion.button>
               </div>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </AnimatePresence>
