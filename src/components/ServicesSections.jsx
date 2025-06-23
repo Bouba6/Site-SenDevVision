@@ -301,7 +301,7 @@ export function ServicesSection() {
   return (
     <>
       <section className="relative py-24 bg-black">
-        <FloatingParticles />
+
         <div className="container mx-auto px-6">
           {/* Header Section */}
           <div className="max-w-4xl mx-auto text-center mb-16">

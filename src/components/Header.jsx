@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import Logo from "../assets/img/Logo.png";
 
 import { NavBar } from "@/components/ui/tubelight-navbar";
+import { Footer } from "./footer-section";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,8 +29,9 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-transparent backdrop-blur-lg" : "bg-transparent"
-          }`}
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+          scrolled ? "bg-transparent backdrop-blur-lg" : "bg-transparent"
+        }`}
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -76,10 +78,11 @@ export function Header() {
 
         {/* Menu mobile */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen
               ? "max-h-80 opacity-100"
               : "max-h-0 opacity-0 overflow-hidden"
-            } bg-black/95 backdrop-blur-lg border-t border-blue-500/30`}
+          } bg-black/95 backdrop-blur-lg border-t border-blue-500/30`}
         >
           <nav className="container mx-auto px-6 py-4">
             <div className="flex flex-col space-y-4">
@@ -93,7 +96,6 @@ export function Header() {
                   >
                     {item}
                   </Link>
-
                 )
               )}
             </div>
@@ -101,6 +103,13 @@ export function Header() {
         </div>
       </header>
       <Outlet />
+
+      <div className="relative flex flex-col mt-14">
+        {/* <div className="min-h-screen flex items-center justify-center">
+          <h1 className="font-mono text-2xl text-white font-bold">Scrool Down!</h1>
+        </div> */}
+        <Footer />
+      </div>
     </>
   );
 }
