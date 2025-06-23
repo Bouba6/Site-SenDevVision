@@ -620,7 +620,7 @@ const StickyValueItem = ({ value, index }) => {
             {/* Contenu principal */}
             <div className="relative z-10 w-full max-w-7xl mx-auto">
                 <div className="fixed inset-0 z-0 pointer-events-none">
-                    <FloatingParticles />
+                    {/* <FloatingParticles /> */}
                 </div>
                 <div className="flex flex-col gap-y-24">
                     {/* Container des 2 images côte à côte - GARDE VOTRE DISPOSITION */}
