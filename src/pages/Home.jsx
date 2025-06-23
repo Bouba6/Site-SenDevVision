@@ -9,7 +9,6 @@ const Home = () => {
     return (
         <>
             <HeroSection />
-
             <ValuesSection />
             <ProcedureSection />
             <Banner />
