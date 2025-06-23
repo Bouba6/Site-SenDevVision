@@ -10,7 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react"; // 1. Importer useEffect
 import CinematicHeroSection from "./Page-sevice/HeroSection";
 import { servicesJson } from "./Page-sevice/Json";
-import Modal from "./Page-sevice/modal";
+import Modal from "./Page-sevice/Modal";
 import ProcessSection from "./Page-sevice/ProcessSection";
 import { TechnologiesSection } from "./Page-sevice/TechnologiesSection";
 
@@ -64,13 +64,11 @@ export function ServicesSection() {
   const TabButton = ({ id, label, icon }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-lg ${
-        activeTab === id
-          ? `${colorVariants[selectedService.color].accent} ${
-              colorVariants[selectedService.color].bg
-            } border ${colorVariants[selectedService.color].border}`
+      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-lg ${activeTab === id
+          ? `${colorVariants[selectedService.color].accent} ${colorVariants[selectedService.color].bg
+          } border ${colorVariants[selectedService.color].border}`
           : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-      }`}
+        }`}
     >
       {icon}
       {label}
@@ -93,7 +91,7 @@ export function ServicesSection() {
     const smoothingFactor = 0.1;
     let currentX = rotation.current.x;
     let currentY = rotation.current.y;
-    
+
     currentX += (targetRotation.current.x - currentX) * smoothingFactor;
     currentY += (targetRotation.current.y - currentY) * smoothingFactor;
 
@@ -113,7 +111,7 @@ export function ServicesSection() {
       animationFrameId.current = null;
     }
   };
-  
+
   const handleMouseMove = (e) => {
     if (!sectionRef.current) return;
     const { clientX, clientY, currentTarget } = e;
@@ -139,7 +137,7 @@ export function ServicesSection() {
       animationFrameId.current = requestAnimationFrame(animate);
     }
   };
-  
+
   // 3. Nettoyer l'animation lorsque le composant est démonté
   useEffect(() => {
     return () => {
@@ -201,15 +199,13 @@ export function ServicesSection() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className={`break-inside-avoid group relative bg-gray-900/80 backdrop-blur-sm border rounded-2xl p-8 transition-all duration-300 ${
-                  colorVariants[service.color].border
-                } ${colorVariants[service.color].glow}`}
+                className={`break-inside-avoid group relative bg-gray-900/80 backdrop-blur-sm border rounded-2xl p-8 transition-all duration-300 ${colorVariants[service.color].border
+                  } ${colorVariants[service.color].glow}`}
                 style={{ transform: "translateZ(40px)" }}
               >
                 <div
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${
-                    colorVariants[service.color].gradient
-                  } text-white mb-6 transition-transform duration-300 group-hover:scale-110`}
+                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${colorVariants[service.color].gradient
+                    } text-white mb-6 transition-transform duration-300 group-hover:scale-110`}
                 >
                   {service.icon}
                 </div>
@@ -217,9 +213,8 @@ export function ServicesSection() {
                   {service.title}
                 </h3>
                 <p
-                  className={`text-sm font-medium ${
-                    colorVariants[service.color].accent
-                  } mb-4`}
+                  className={`text-sm font-medium ${colorVariants[service.color].accent
+                    } mb-4`}
                 >
                   {service.subtitle}
                 </p>
