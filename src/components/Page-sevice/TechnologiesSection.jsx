@@ -1,256 +1,199 @@
-import { Globe, Database, Cloud, Code, Smartphone, Server, Shield, Cpu } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { Cloud, Code, Globe, Server, Shield, Smartphone } from "lucide-react";
+import { useRef } from "react";
 
+// Données des technologies (inchangées)
+const technologies = {
+  frontend: {
+    icon: Globe,
+    color: "#3b82f6", // blue-500
+    techs: [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "Angular",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    title: "Frontend",
+    description: "Interfaces modernes, animées et ultra-réactives.",
+    span: "lg:col-span-2",
+  },
+  backend: {
+    icon: Server,
+    color: "#10b981", // emerald-500
+    techs: [
+      "Spring-Boot",
+      "C#",
+      "Java",
+      "PostgreSQL",
+      "MongoDB",
+      "Restful APIs",
+    ],
+    title: "Backend",
+    description: "APIs robustes et architectures microservices.",
+    span: "lg:col-span-1",
+  },
+  cloud: {
+    icon: Cloud,
+    color: "#8b5cf6", // purple-500
+    techs: ["AWS", "Docker", "Firebase", "Vercel", "CI/CD"],
+    title: "Cloud & DevOps",
+    description: "Infrastructure as Code et déploiement continu.",
+    span: "lg:col-span-1",
+  },
+  mobile: {
+    icon: Smartphone,
+    color: "#f97316", // orange-500
+    techs: ["Dart", "Flutter", "iOS", "Android", "GetX"],
+    title: "Mobile",
+    description: "Applications natives cross-platform performantes.",
+    span: "lg:col-span-2",
+  },
+  security: {
+    icon: Shield,
+    color: "#ef4444", // red-500
+    techs: ["Auth0", "JWT", "OAuth 2.0", "Encryption"],
+    title: "Sécurité",
+    description: "Authentification forte et protection des données.",
+    span: "lg:col-span-1",
+  },
+};
+
+// Variants pour l'animation du conteneur principal
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+// Variants pour l'animation de chaque carte
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 100, damping: 12 },
+  },
+};
+
+// Le composant principal de la section
 export function TechnologiesSection() {
-  const [activeCategory, setActiveCategory] = useState(null);
+  const gridRef = useRef(null);
 
-  const technologies = {
-    frontend: {
-      icon: Globe,
-      color: "blue",
-      techs: ["React", "TypeScript", "Angular", "Tailwind CSS", "Bootstrap"],
-      title: "Frontend",
-      description: "Interfaces utilisateur modernes et performantes"
-    },
-    backend: {
-      icon: Server,
-      color: "emerald",
-      techs: ["Spring-Boot", "C#", "Java", "PostgreSQL", "MongoDB", "Restful APIs"],
-      title: "Backend",
-      description: "APIs robustes et architecture scalable"
-    },
-    cloud: {
-      icon: Cloud,
-      color: "purple",
-      techs: ["AWS", "Docker", "Firebase", "Superbase", "Cloudinary", "CI/CD"],
-      title: "Cloud & DevOps",
-      description: "Infrastructure moderne et déploiement automatisé"
-    },
-    mobile: {
-      icon: Smartphone,
-      color: "orange",
-      techs: ["Dart", "Flutter", "iOS", "Android","GetX"],
-      title: "Mobile",
-      description: "Applications natives et cross-platform"
-    },
-    security: {
-      icon: Shield,
-      color: "red",
-      techs: ["Authentication","JWT", "HTTPS", "Encryption"],
-      title: "Sécurité",
-      description: "Protection des données et authentification"
-    },
-    performance: {
-      icon: Cpu,
-      color: "cyan",
-      techs: ["Optimization", "Caching", "CDN", "Monitoring", "Analytics"],
-      title: "Performance",
-      description: "Optimisation et monitoring en temps réel"
-    }
-  };
-
-  const colorVariants = {
-    blue: "from-blue-500 to-blue-600",
-    emerald: "from-emerald-500 to-emerald-600",
-    purple: "from-purple-500 to-purple-600",
-    orange: "from-orange-500 to-orange-600",
-    red: "from-red-500 to-red-600",
-    cyan: "from-cyan-500 to-cyan-600"
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 20,
-      scale: 0.95
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    }
+  // Gère l'effet de "spotlight" qui suit la souris
+  const handleMouseMove = (e) => {
+    if (!gridRef.current) return;
+    const rect = gridRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    gridRef.current.style.setProperty("--mouse-x", `${x}px`);
+    gridRef.current.style.setProperty("--mouse-y", `${y}px`);
   };
 
   return (
-    <section className="py-20">
+    <section className="py-24 bg-slate-950 text-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <motion.div 
+        {/* En-tête de la section */}
+        <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-full text-sm font-medium text-slate-400 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-full text-sm font-medium text-blue-400 mb-6">
             <Code className="w-4 h-4" />
-            <span>Technologies</span>
+            <span>Au coeur de nos créations</span>
           </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-100 mb-6">
-            Notre stack
-            <span className="block text-blue-600 text-3xl md:text-4xl font-normal mt-2">
-              technologique
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-100 mb-6 leading-tight">
+            Une stack technologique
+            <br />
+            <span className="text-transparent bg-clip-text bg-blue-600">
+              puissante et flexible
             </span>
           </h2>
-          
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Des technologies éprouvées et modernes pour créer des solutions robustes, 
-            performantes et évolutives
+          <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            Nous sélectionnons le meilleur de la technologie pour construire des
+            applications qui ne sont pas seulement fonctionnelles, mais
+            exceptionnelles.
           </p>
         </motion.div>
 
-        {/* Technologies Grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        {/* Grille "Bento" avec effet de spotlight */}
+        <motion.div
+          ref={gridRef}
+          onMouseMove={handleMouseMove}
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="group/grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative"
+          style={{
+            // @ts-ignore
+            "--mouse-x": "50%",
+            "--mouse-y": "50%",
+          }}
         >
+          {/* Pseudo-élément pour le spotlight */}
+          <div
+            className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-500 group-hover/grid:opacity-100"
+            style={{
+              background:
+                "radial-gradient(400px at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 80%)",
+            }}
+          />
+
           {Object.entries(technologies).map(([key, tech]) => {
             const IconComponent = tech.icon;
-            const isActive = activeCategory === key;
-            
             return (
               <motion.div
                 key={key}
                 variants={cardVariants}
-                className="group cursor-pointer"
-                onMouseEnter={() => setActiveCategory(key)}
-                onMouseLeave={() => setActiveCategory(null)}
+                className={`card-container rounded-xl bg-slate-900/80 before:rounded-xl before:bg-slate-900/50 ${tech.span}`}
               >
-                <motion.div 
-                  className="bg-slate-900 rounded-2xl p-8 h-full border border-slate-700 shadow-sm"
-                  whileHover={{ 
-                    y: -8,
-                    transition: { duration: 0.2, ease: "easeOut" }
-                  }}
-                  animate={{
-                    boxShadow: isActive 
-                      ? "0 20px 40px -12px rgba(0, 0, 0, 0.15)"
-                      : "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {/* Icon */}
-                  <motion.div 
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${colorVariants[tech.color]} flex items-center justify-center mb-6`}
-                    whileHover={{ scale: 1.05 }}
-                    animate={{ scale: isActive ? 1.05 : 1 }}
-                  >
-                    <IconComponent className="w-7 h-7 text-white" />
-                  </motion.div>
-
-                  {/* Content */}
-                  <h3 className="text-xl font-semibold text-slate-100 mb-3">
-                    {tech.title}
-                  </h3>
-                  
-                  <p className="text-slate-300 mb-6 leading-relaxed">
-                    {tech.description}
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-slate-300">
-                        Technologies
-                      </span>
-                      <span className="text-sm text-slate-300">
-                        {tech.techs.length}
-                      </span>
-                    </div>
-                    
-                    <motion.div 
-                      className="flex flex-wrap gap-2"
-                      initial="hidden"
-                      animate={isActive ? "visible" : "hidden"}
-                      variants={{
-                        hidden: {},
-                        visible: {
-                          transition: {
-                            staggerChildren: 0.05
-                          }
-                        }
+                <div className="card-content p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div
+                      className="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
+                      style={{
+                        backgroundColor: tech.color + "20",
+                        border: `1px solid ${tech.color}60`,
                       }}
                     >
-                      {tech.techs.map((techName, index) => (
-                        <motion.span
+                      <IconComponent
+                        className="w-6 h-6"
+                        style={{ color: tech.color }}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-100 mb-2">
+                      {tech.title}
+                    </h3>
+                    <p className="text-slate-400 leading-relaxed">
+                      {tech.description}
+                    </p>
+                  </div>
+                  <div className="mt-8">
+                    <div className="flex flex-wrap gap-2">
+                      {tech.techs.map((techName) => (
+                        <span
                           key={techName}
-                          className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg font-medium"
-                          variants={{
-                            hidden: { opacity: 0.6, scale: 0.95 },
-                            visible: { 
-                              opacity: 1, 
-                              scale: 1,
-                              transition: { duration: 0.2 }
-                            }
-                          }}
-                          whileHover={{ 
-                            scale: 1.05,
-                            backgroundColor: "rgb(226 232 240)"
-                          }}
+                          className="px-3 py-1 bg-slate-800/50 border border-slate-700 text-slate-300 text-sm rounded-md font-medium"
                         >
                           {techName}
-                        </motion.span>
+                        </span>
                       ))}
-                    </motion.div>
+                    </div>
                   </div>
-
-                  {/* Active Indicator */}
-                  <motion.div
-                    className={`absolute top-4 right-4 w-3 h-3 rounded-full bg-gradient-to-br ${colorVariants[tech.color]}`}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: isActive ? 1 : 0,
-                      opacity: isActive ? 1 : 0
-                    }}
-                    transition={{ duration: 0.2 }}
-                  />
-                </motion.div>
+                </div>
               </motion.div>
             );
           })}
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div 
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold text-slate-300 mb-2">25+</div>
-            <div className="text-slate-400">Technologies</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-slate-300 mb-2">6</div>
-            <div className="text-slate-400">Domaines</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-slate-300 mb-2">100%</div>
-            <div className="text-slate-400">Modernes</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-slate-300 mb-2">7/7</div>
-            <div className="text-slate-400">Support</div>
-          </div>
         </motion.div>
       </div>
     </section>
