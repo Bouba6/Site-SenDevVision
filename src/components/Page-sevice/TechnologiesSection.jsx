@@ -97,7 +97,7 @@ export function TechnologiesSection() {
   };
 
   return (
-    <section className="py-24 bg-slate-950 text-white">
+    <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* En-tête de la section */}
         <motion.div

@@ -1,0 +1,148 @@
+import { Globe, Smartphone, Zap } from "lucide-react";
+
+export const servicesJson = [
+  {
+    icon: <Globe className="w-6 h-6" />,
+    title: "Développement Web",
+    subtitle: "Sites & Applications Web Modernes",
+    description:
+      "Solutions web sur mesure avec des technologies de pointe. Des sites vitrines performants aux plateformes e-commerce complexes.",
+    features: [
+      "React.js & Angular",
+      "Design Responsive",
+      "Performance Optimisée",
+      "SEO Intégré",
+    ],
+    color: "blue",
+    detailedDescription:
+      "Nous créons des expériences web exceptionnelles qui allient performance, design moderne et fonctionnalités avancées. Notre approche holistique garantit des solutions web qui non seulement impressionnent visuellement, mais offrent également une expérience utilisateur fluide et intuitive.",
+    technologies: [
+      "Angular / React.js",
+      "Angular 18+",
+      "TypeScript",
+      "Tailwind CSS",
+      "JavaScript / Spring-boot",
+      "MongoDB / PostgreSQL / MySQL",
+      "REST API Integration",
+      "Docker",
+      "Firebase / Superbase / Cloudinary",
+      "Render / Vercel",
+    ],
+    processSteps: [
+      "Analyse des besoins et wireframing",
+      "Design UI/UX et prototypage",
+      "Développement frontend et backend",
+      "Tests et optimisation",
+      "Déploiement et mise en production",
+      "Formation et documentation",
+    ],
+    deliverables: [
+      "Site web responsive complet",
+      "Panel d'administration",
+      "Documentation technique",
+      "Formation utilisateur",
+      "Support 3 mois inclus",
+    ],
+    timeline: "4-8 semaines",
+    price: "À partir de 2,500€",
+    stats: [
+      { label: "Projets livrés", value: "50+" },
+      { label: "Temps moyen", value: "6 sem" },
+      { label: "Satisfaction", value: "98%" },
+    ],
+  },
+  {
+    icon: <Smartphone className="w-6 h-6" />,
+    title: "Applications Mobiles",
+    subtitle: "iOS & Android Natifs",
+    description:
+      "Applications cross-platform performantes avec Flutter. Une base de code unique pour une expérience utilisateur exceptionnelle.",
+    features: [
+      "Flutter & Dart",
+      "GetX Framework",
+      "UI/UX Design",
+      "Store Deploy",
+    ],
+    color: "purple",
+    detailedDescription:
+      "Développement d'applications mobiles innovantes qui révolutionnent l'expérience utilisateur. Nous utilisons Flutter pour créer des applications cross-platform performantes avec un code base unique pour iOS et Android.",
+    technologies: [
+      "Flutter / Dart",
+      "GetX State Management",
+      "Firebase / Superbase / Cloudinary",
+      "REST API Integration",
+      "SQLite / Hive",
+      "Push Notifications",
+      "App Store Optimization",
+      "CI/CD Pipeline",
+    ],
+    processSteps: [
+      "Étude de marché et conception UX",
+      "Prototypage interactif",
+      "Développement MVP",
+      "Tests sur appareils réels",
+      "Optimisation et polish",
+      "Publication sur stores",
+    ],
+    deliverables: [
+      "Application iOS et Android",
+      "Code source documenté",
+      "Guide de publication",
+      "Maintenance 6 mois",
+    ],
+    timeline: "6-12 semaines",
+    price: "À partir de 4,000€",
+    stats: [
+      { label: "Apps développées", value: "30+" },
+      { label: "Note moyenne", value: "4.8★" },
+      { label: "Downloads", value: "100K+" },
+    ],
+  },
+  {
+    icon: <Zap className="w-6 h-6" />,
+    title: "Solutions Sur Mesure",
+    subtitle: "Architecture & Consulting",
+    description:
+      "Développement personnalisé et consulting technique pour transformer vos idées en solutions digitales évolutives et robustes.",
+    features: [
+      "Architecture Custom",
+      "API Development",
+      "Cloud Solutions",
+      "Support 24/7",
+    ],
+    color: "emerald",
+    detailedDescription:
+      "Solutions technologiques sur mesure conçues spécifiquement pour vos besoins uniques. De l'architecture système complexe aux intégrations API avancées, nous créons des solutions qui évoluent avec votre entreprise.",
+    technologies: [
+      "Architecture Microservices",
+      "Docker / Kubernetes",
+      "GraphQL / REST APIs",
+      "Redis / ElasticSearch",
+      "CI/CD DevOps",
+      "Monitoring & Analytics",
+      "Security Best Practices",
+    ],
+    processSteps: [
+      "Audit technique et consultation",
+      "Architecture et planification",
+      "Développement itératif",
+      "Tests d'intégration",
+      "Déploiement sécurisé",
+      "Monitoring et support continu",
+    ],
+    deliverables: [
+      "Solution technique complète",
+      "Architecture documentée",
+      "APIs et intégrations",
+      "Dashboard de monitoring",
+      "Support technique 24/7",
+    ],
+    timeline: "Sur mesure",
+    price: "Sur devis",
+    stats: [
+      { label: "Systèmes créés", value: "25+" },
+      { label: "Uptime", value: "99.9%" },
+      { label: "Économies", value: "40%" },
+    ],
+  },
+];
