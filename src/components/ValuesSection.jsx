@@ -431,17 +431,17 @@ export function ValuesSection() {
                         initial={{ opacity: 0, y: -30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
-                        className="text-white text-5xl font-bold"
+                        className="text-white text-7xl font-bold"
                     >
-                        Découvrez notre équipe
+                        Portés par une vision
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="text-gray-300 mt-4 text-lg"
+                        className="text-gray-300 mt-4 text-xl"
                     >
-                        Passionnés, créatifs et toujours prêts à innover
+                        guidés par l’impact.
                     </motion.p>
                 </div>
                 <div className="w-full max-w-7xl mx-auto flex gap-8">
