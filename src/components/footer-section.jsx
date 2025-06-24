@@ -6,7 +6,7 @@ import {
   YoutubeIcon,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import Logo from "../assets/img/Logo.png";
+import Logo from "../assets/img/Logo3.png";
 
 const footerLinks = [
   {
@@ -54,14 +54,14 @@ export function Footer() {
       <div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
         <AnimatedContainer className="space-y-4">
 
-				<div className="flex items-center space-x-3">
-              <div className="w-14 h-14 bg-gradient-to-br rounded-lg flex items-center justify-center">
-                <img src={Logo} alt="" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-quaternary)] bg-clip-text text-transparent">
-                SenDevVision
-              </span>
+          <div className="flex items-center space-x-3">
+            <div className="w-14 h-14 bg-gradient-to-br rounded-lg flex items-center justify-center">
+              <img src={Logo} alt="" />
             </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-quaternary)] bg-clip-text text-transparent">
+              SenDevVision
+            </span>
+          </div>
 
           <p className="text-white/45 mt-8 text-sm md:mt-0">
             © {new Date().getFullYear()} SenDevVision. Tous droits réservés.
