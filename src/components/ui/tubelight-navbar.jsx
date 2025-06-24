@@ -23,7 +23,7 @@ export function NavBar({
   return (
     (<div
       className={cn(
-        "fixed left-2/3 ml-14 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        "fixed left-2/3 lg:left-3/4  -translate-x-1/2 z-50 mb-6 sm:pt-6",
         className
       )}>
       <div
