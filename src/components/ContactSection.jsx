@@ -277,8 +277,6 @@ export function ContactSection() {
             className="absolute inset-0 object-cover w-full h-full"
             src={contact}
           ></video>
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
         </motion.div>
 
         {/* Main Content */}
