@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+.scroll-item {
+  scroll-snap-align: start;
+  height: 100vh;
+}
+
+
 @theme {
   --color-primary: #173482;
   --color-secondary: #2350a1;
