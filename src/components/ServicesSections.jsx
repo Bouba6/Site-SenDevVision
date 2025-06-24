@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react"; // 1. Importer useEffect
 import CinematicHeroSection from "./Page-sevice/HeroSection";
 import { servicesJson2 } from "./Page-sevice/Json";
 import Modal from "./Page-sevice/Modal";
-import OurSection from "./Page-sevice/OurSection";
+import OurSection from "./Page-sevice/ourSection";
 import ProcessSection from "./Page-sevice/ProcessSection";
-import { TechnologiesSection } from "./Page-sevice/technologiesSection";
+import { TechnologiesSection } from "./Page-sevice/TechnologiesSection";
 
 export function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
