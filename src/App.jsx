@@ -11,11 +11,11 @@ import ServiceDetailPage from './components/Page-sevice/serviceDetail'
 function App() {
   return (
     <BrowserRouter>
-      <BackgroundSound />
+      {/* <BackgroundSound /> */}
       <Routes>
 
-      {/* <Route path="/services/:serviceId" element={<ServiceDetailPage />} /> */}
-      <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
+        {/* <Route path="/services/:serviceId" element={<ServiceDetailPage />} /> */}
+        <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
 
 
         <Route path="/" element={<Header />}>
