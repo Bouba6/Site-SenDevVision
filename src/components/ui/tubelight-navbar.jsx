@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils"
 
 export function NavBar({
   items,
   className
 }) {
+  const location = useLocation()
   const [activeTab, setActiveTab] = useState(items[0].name)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -19,6 +20,15 @@ export function NavBar({
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize);
   }, [])
+
+  // Détecter l'onglet actif basé sur l'URL
+  useEffect(() => {
+    const currentPath = location.pathname
+    const matchingItem = items.find(item => item.url === currentPath)
+    if (matchingItem) {
+      setActiveTab(matchingItem.name)
+    }
+  }, [location.pathname, items])
 
   return (
     (<div
