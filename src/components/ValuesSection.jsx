@@ -409,13 +409,6 @@ export function ValuesSection() {
             text: "Flexibilité pour évoluer avec les défis",
             image1: "https://images.pexels.com/photos/3184299/pexels-photo-3184299.jpeg?auto=compress&cs=tinysrgb&w=800",
             image2: "https://images.pexels.com/photos/3184300/pexels-photo-3184300.jpeg?auto=compress&cs=tinysrgb&w=600"
-        },
-        {
-            id: 6,
-            title: "Passion",
-            text: "Énergie contagieuse dans chaque projet",
-            image1: "https://images.pexels.com/photos/3184301/pexels-photo-3184301.jpeg?auto=compress&cs=tinysrgb&w=800",
-            image2: "https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&w=600"
         }
     ];
 
