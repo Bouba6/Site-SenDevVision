@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Heart, Star, Mail, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Linkedin, Github, Eye, Award, Calendar, Coffee } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { Users, Mail, Linkedin, Github, Eye, Award, X, Grid, Camera, Layers, Heart, Star, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Calendar, Coffee } from 'lucide-react';
+import GalleryHero from './ui/GalleryHero';
+import GalleryGrid from './ui/GalleryGrid';
 
 // Composant de particules ultra sophistiqué
 const FloatingParticles = () => {
@@ -63,157 +66,190 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
 
     useEffect(() => {
         setMounted(true);
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
+        document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+        return () => { document.body.style.overflow = 'unset'; };
     }, [isOpen]);
 
     if (!isOpen || !promoteur || !mounted) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop avec effects */}
-            <div
-                className="absolute inset-0 bg-black/85 backdrop-blur-2xl"
-                onClick={onClose}
-            />
-
-            {/* Particules dans le modal */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-blue-400/30 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-1/3 right-1/4 w-4 h-4 bg-purple-400/20 rounded-full animate-pulse"></div>
-                <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-cyan-400/40 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-1/4 left-1/3 w-5 h-5 bg-pink-400/25 rounded-full animate-pulse"></div>
-            </div>
-
-            {/* Modal container */}
-            <div className="relative w-full max-w-5xl max-h-[85vh] mx-auto">
-                {/* Glow effect */}
-
-                {/* Bouton fermer spectaculaire */}
-                <button
-                    onClick={onClose}
-                    className="absolute -top-8 -right-8 z-20 w-16 h-16 bg-gradient-to-br from-blue-500 via-blue-700 to-blue-800 hover:from-blue-800 hover:via-blue-900 hover:to-blue-900 rounded-full flex items-center justify-center text-white shadow-2xl border-2 border-white/20 hover:scale-110 transition-all duration-300 group"
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                 >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                    <span className="relative text-2xl font-bold group-hover:rotate-90 transition-transform duration-300">✕</span>
-                </button>
+                    {/* Backdrop */}
+                    <motion.div
+                        className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+                        onClick={onClose}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    />
 
-                {/* Card principal */}
-                <div className="relative max-h-[85vh] h-auto bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                    
+                    {/* Modal container - Taille réduite */}
+                    <motion.div
+                        className="relative w-full max-w-3xl mx-auto z-10"
+                        initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30
+                        }}
+                    >
+                        {/* Bouton fermer - Ajusté */}
+                        <motion.button
+                            onClick={onClose}
+                            className="absolute -top-4 -right-4 z-20 w-12 h-12 bg-blue-800 hover:bg-blue-900 rounded-full flex items-center justify-center text-white shadow-2xl border-2 border-white/20"
+                            whileHover={{ scale: 1.1, rotate: 90 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                        >
+                            <X className="w-5 h-5" />
+                        </motion.button>
 
-                    <div className="grid lg:grid-cols-2 gap-0 relative z-10">
-                        {/* Section Image améliorée */}
-                        <div className="relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent z-10"></div>
-                            <img
-                                src={promoteur.image}
-                                alt={promoteur.nom}
-                                className="w-full h-full object-cover absolute inset-0 z-0"
-                            />
+                        {/* Card principal - Hauteur réduite */}
+                        <motion.div
+                            className="relative bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-h-[75vh]"
+                            layoutId={`card-${promoteur.id}`}
+                        >
+                            <div className="grid lg:grid-cols-2 gap-0 h-full">
+                                {/* Section Image sans cadre - Image complète */}
+                                <motion.div
+                                    className="relative h-full min-h-[350px]"
+                                    initial={{ x: -50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: 0.2 }}
+                                >
+                                    {/* Image en plein écran */}
+                                    <motion.img
+                                        src={promoteur.image}
+                                        alt={promoteur.nom}
+                                        className="w-full h-full object-cover"
+                                        initial={{ scale: 1.1 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ duration: 0.6, ease: "easeOut" }}
+                                    />
 
-                            <div className={`absolute inset-0 bg-gradient-to-t ${promoteur.color} opacity-15`}></div>
+                                    {/* Overlay léger pour meilleure lisibilité */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                                    
+                                </motion.div>
 
-                            {/* Badge expertise flottant */}
-                            <div className="absolute top-8 left-8 z-20">
-                                <div className={`px-6 py-3 bg-gradient-to-r ${promoteur.color} rounded-full text-white font-black shadow-2xl border border-white/30 backdrop-blur-sm animate-pulse`}>
-                                    <div className="flex items-center gap-2">
-                                        <Award className="w-5 h-5" />
-                                        {promoteur.expertise}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Section Contenu redesignée */}
-                        <div className="p-6 flex flex-col justify-center gap-6">
-                            {/* Header */}
-                            <div className="space-y-4">
-                                <h3 className="text-4xl font-black text-white tracking-tight leading-tight">
-                                    {promoteur.nom}
-                                </h3>
-                                <p className={`text-2xl font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
-                                    {promoteur.role}
-                                </p>
-
-
-                            </div>
-
-                            {/* Citation stylisée */}
-                            <blockquote className="relative">
-                                <div className="text-6xl text-blue-400/20 absolute -top-4 -left-2 font-serif">"</div>
-                                <p className="text-white text-xl italic leading-relaxed font-medium pl-6 relative z-10">
-                                    {promoteur.pensee}
-                                </p>
-                                <div className="text-6xl text-purple-400/20 absolute -bottom-6 -right-2 font-serif rotate-180">"</div>
-                            </blockquote>
-
-                            {/* Actions stylisées */}
-                            <div className="space-y-3">
-                                <div className="flex gap-4">
-                                    <a
-                                        href={promoteur.linkedin}
-                                        className="group flex-1 relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl border border-blue-400/30 p-3"
+                                {/* Section Contenu - Padding réduit */}
+                                <motion.div
+                                    className="p-6 flex flex-col justify-center space-y-4"
+                                    initial={{ x: 50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    {/* Header avec animation - Tailles réduites */}
+                                    <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.4 }}
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        <div className="relative flex items-center justify-center gap-2">
-                                            <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                                            LinkedIn
-                                        </div>
-                                    </a>
-                                    <a
-                                        href={promoteur.github}
-                                        className="group flex-1 relative overflow-hidden bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl border border-slate-600/30 p-3"
+                                        <h3 className="text-3xl font-black text-white mb-2 tracking-tight">
+                                            {promoteur.nom}
+                                        </h3>
+                                        <p className={`text-xl font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
+                                            {promoteur.role}
+                                        </p>
+                                    </motion.div>
+
+                                    {/* Badge expertise - Plus compact */}
+                                    <motion.div
+                                        className={`inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${promoteur.color} bg-opacity-20 rounded-full border border-white/20 backdrop-blur-sm w-fit`}
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ delay: 0.5, type: "spring" }}
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        <div className="relative flex items-center justify-center gap-2">
-                                            <Github className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                                            GitHub
+                                        <Award className="w-3.5 h-3.5 text-white" />
+                                        <span className="text-white font-medium text-sm">{promoteur.expertise}</span>
+                                    </motion.div>
+
+                                    {/* Citation avec animation typewriter - Plus compact */}
+                                    <motion.blockquote
+                                        className="relative"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ delay: 0.6 }}
+                                    >
+                                        <div className="text-4xl text-blue-400/20 absolute -top-2 -left-1">"</div>
+                                        <p className="text-white/90 text-base italic leading-relaxed pl-4">
+                                            {promoteur.pensee}
+                                        </p>
+                                        <div className="text-4xl text-purple-400/20 absolute -bottom-4 -right-1 rotate-180">"</div>
+                                    </motion.blockquote>
+
+                                    {/* Actions avec hover effects - Plus compact */}
+                                    <motion.div
+                                        className="space-y-2"
+                                        initial={{ y: 30, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.7 }}
+                                    >
+                                        <div className="flex gap-2">
+                                            <motion.a
+                                                href={promoteur.linkedin}
+                                                className="flex-1 bg-blue-600 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                                whileHover={{ scale: 1.05, backgroundColor: "#1d4ed8" }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Linkedin className="w-4 h-4" />
+                                                LinkedIn
+                                            </motion.a>
+
+                                            <motion.a
+                                                href={promoteur.github}
+                                                className="flex-1 bg-slate-700 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                                whileHover={{ scale: 1.05, backgroundColor: "#374151" }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Github className="w-4 h-4" />
+                                                GitHub
+                                            </motion.a>
                                         </div>
-                                    </a>
-                                </div>
-                                <button className="group w-full relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl p-3">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    <div className="relative flex items-center justify-center gap-2">
-                                        <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                                        Contacter
-                                    </div>
-                                </button>
+
+                                        <motion.button
+                                            className="w-full bg-green-600 text-white py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                            whileHover={{ scale: 1.05, backgroundColor: "#059669" }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <Mail className="w-4 h-4" />
+                                            Contacter
+                                        </motion.button>
+                                    </motion.div>
+
+                                    {/* Footer - Plus compact */}
+                                    <motion.div
+                                        className="flex items-center justify-center gap-3 pt-3 opacity-70"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ delay: 0.8 }}
+                                    >
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                        <div className="text-white/60 font-medium text-xs">
+                                            Sen Dev Vision
+                                        </div>
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                    </motion.div>
+                                </motion.div>
                             </div>
-
-                            {/* Footer élégant */}
-                            <div className="flex items-center justify-center gap-4 pt-4 opacity-70">
-                                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                                <div className="flex items-center gap-2 text-white/60 font-medium text-sm">
-                                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                                    Sen Dev Vision
-                                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                                </div>
-                                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Texture overlay */}
-                    <div className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none">
-                        <div className="w-full h-full" style={{
-                            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0)',
-                            backgroundSize: '20px 20px'
-                        }}></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+                        </motion.div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
+
 
 const GallerySection = () => {
     const [mounted, setMounted] = useState(false);
@@ -373,156 +409,15 @@ const GallerySection = () => {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+        <div className="min-h-screen bg-black overflow-hidden mt-18">
             {/* Header spectaculaire */}
-            <section className="relative py-32 px-6">
-                <FloatingParticles />
-
-                {/* Background effects */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
-                </div>
-
-                <div className="relative z-10 text-center">
-                    <div className="relative inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500 rounded-full mb-12 shadow-2xl group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
-                        <Users className="w-16 h-16 text-white relative z-10 group-hover:scale-110 transition-transform duration-300" />
-                        <div className="absolute inset-0 rounded-full border-4 border-white/20 animate-pulse"></div>
-                    </div>
-
-                    <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-black text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text mb-8 leading-none tracking-tight">
-                        GALERIE
-                    </h1>
-
-                    <div className="w-48 h-2 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 mx-auto mb-12 rounded-full shadow-lg animate-pulse"></div>
-
-                    <p className="text-4xl text-white max-w-5xl mx-auto leading-relaxed font-medium mb-8">
-                        Découvrez les <span className="text-blue-400 font-black">visages</span> et les <span className="text-purple-400 font-black">talents</span> qui construisent l'avenir technologique du Sénégal
-                    </p>
-
-                    <div className="mt-12 text-slate-300">
-                        <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-xl">
-                            <Eye className="w-8 h-8 text-blue-400 animate-bounce" />
-                            <span className="text-xl font-bold">Cliquez sur une photo pour en savoir plus</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <GalleryHero />
 
             {/* Galerie restructurée */}
-            <section className="relative px-6 pb-32">
-                <div className="container mx-auto max-w-7xl">
-                    {Object.entries(groupedPromoteurs).map(([blocNumber, membres]) => {
-                        const IconComponent = blocIcons[blocNumber];
-                        return (
-                            <div key={blocNumber} className="mb-32">
-                                {/* Titre du bloc amélioré */}
-                                <div className="text-center mb-20">
-                                    <div className="inline-flex items-center gap-4 mb-6">
-                                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
-                                            <IconComponent className="w-8 h-8 text-white" />
-                                        </div>
-                                        <div className="text-left">
-                                            <h2 className="text-5xl md:text-6xl font-black text-white leading-tight">
-                                                {blocTitles[blocNumber]}
-                                            </h2>
-                                            <p className="text-xl text-slate-400 font-medium mt-2">
-                                                {blocSubtitles[blocNumber]}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 mx-auto rounded-full"></div>
-                                </div>
-
-                                {/* Grille redesignée */}
-                                <div className="grid md:grid-cols-3 gap-12">
-                                    {membres.map((promoteur, index) => (
-                                        <div
-                                            key={promoteur.id}
-                                            className="group cursor-pointer perspective-1000"
-                                            onClick={() => handleImageClick(promoteur)}
-                                            onMouseEnter={() => setHoveredCard(promoteur.id)}
-                                            onMouseLeave={() => setHoveredCard(null)}
-                                            style={{
-                                                animationDelay: `${index * 200}ms`
-                                            }}
-                                        >
-                                            {/* Glow effect */}
-                                            <div className={`absolute inset-0 bg-gradient-to-r ${promoteur.color} opacity-0 group-hover:opacity-30 rounded-3xl blur-2xl transition-all duration-700 -z-10`}></div>
-
-                                            {/* Card container */}
-                                            <div className="relative transform transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-4">
-                                                {/* Image principale */}
-                                                <div className="relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/10 group-hover:border-white/30 transition-all duration-500">
-                                                    <img
-                                                        src={promoteur.image}
-                                                        alt={promoteur.nom}
-                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                                    />
-
-                                                    {/* Overlay sophistiqué */}
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-
-                                                    {/* Badge expertise animé */}
-                                                    <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                                        <div className={`px-4 py-2 bg-gradient-to-r ${promoteur.color} rounded-full text-white font-bold shadow-2xl border border-white/30 backdrop-blur-sm`}>
-                                                            <div className="flex items-center gap-2">
-                                                                <Award className="w-4 h-4" />
-                                                                {promoteur.expertise}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Info au hover */}
-                                                    <div className="absolute bottom-6 left-6 right-6 opacity-100 transition-all duration-500 transform translate-y-6 group-hover:translate-y-0">
-                                                        <p className="text-blue-300 text-2xl font-bold drop-shadow-xl mb-4">{promoteur.role}</p>
-
-                                                    </div>
-
-                                                   
-
-                                                    {/* Effet de particules */}
-                                                    {hoveredCard === promoteur.id && (
-                                                        <div className="absolute inset-0 pointer-events-none">
-                                                            <div className="absolute top-4 right-4 w-2 h-2 bg-white/60 rounded-full animate-ping"></div>
-                                                            <div className="absolute bottom-12 right-8 w-1.5 h-1.5 bg-blue-400/60 rounded-full animate-ping animation-delay-200"></div>
-                                                            <div className="absolute top-16 left-8 w-1 h-1 bg-purple-400/60 rounded-full animate-ping animation-delay-400"></div>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                {/* Badge nom permanent */}
-                                                <div className="mt-8 text-center">
-                                                    <h4 className="text-white text-3xl font-black mb-2">{promoteur.nom}</h4>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </section>
-
-            {/* Call to action spectaculaire */}
-            <section className="relative py-24 px-6">
-                <div className="text-center">
-                    <div className="inline-flex items-center gap-8 px-12 py-8 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 backdrop-blur-2xl border-2 border-white/20 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group">
-                        <div className="flex items-center gap-4 text-blue-400">
-                            <Eye className="w-8 h-8 group-hover:animate-bounce" />
-                            <span className="text-2xl font-black">Explorez nos talents</span>
-                        </div>
-                        <div className="w-px h-12 bg-white/30"></div>
-                        <div className="flex items-center gap-4 text-purple-400">
-                            <Sparkles className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
-                            <span className="text-2xl font-black">Rejoignez l'aventure</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <GalleryGrid
+                groupedPromoteurs={groupedPromoteurs}
+                handleImageClick={handleImageClick}
+            />
 
             {/* Modal */}
             <ImageModal

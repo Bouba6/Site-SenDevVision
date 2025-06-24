@@ -1,7 +1,8 @@
 import { Code, Globe, Palette, Smartphone, Zap,PenTool } from "lucide-react";
 
-export const servicesJson = [
+export const servicesJson2 = [
   {
+    id: "dev-web",
     icon: <Globe className="w-6 h-6" />,
     title: "Développement Web",
     subtitle: "Sites & Applications Web Modernes",
@@ -52,6 +53,7 @@ export const servicesJson = [
     ],
   },
   {
+    id: "ui-ux",
     icon: <Smartphone className="w-6 h-6" />,
     title: "Applications Mobiles",
     subtitle: "iOS & Android Natifs",
@@ -99,6 +101,7 @@ export const servicesJson = [
     ],
   },
   {
+    id: "branding",
     icon: <Zap className="w-6 h-6" />,
     title: "Solutions Sur Mesure",
     subtitle: "Architecture & Consulting",
@@ -176,7 +179,7 @@ export const colorVariants = {
 };
 
 // On exporte les données des services
-export const servicesJson2 = [
+export const servicesJson = [
   {
     id: "dev-web",
     title: "Développement Web Sur-Mesure",
