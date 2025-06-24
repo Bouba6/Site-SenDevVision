@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Code2, Rocket } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FloatingParticles } from "./FloatingParticles";
+import animatedphone from "../assets/animations/animatedphone.json";
+import Lottie from "lottie-react";
 
 export function HeroSection() {
   const [currentText, setCurrentText] = useState(0);
@@ -228,79 +230,9 @@ export function HeroSection() {
             </div>
 
             {/* Right column - Visual elements */}
-            <motion.div
-              className="lg:col-span-5 relative"
-              variants={itemVariants}
-            >
-              <div className="relative">
-                {/* Main visual element */}
-                <div className="relative aspect-square mx-auto max-w-[270px] sm:max-w-[270px] md:max-w-md">
-                  {/* Rotating border */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 p-0.5"
-                    variants={rotateVariants}
-                    animate="animate"
-                  >
-                    <div className="w-full h-full rounded-full bg-slate-950"></div>
-                  </motion.div>
 
-                  {/* Center content */}
-                  <motion.div
-                    className="absolute inset-8 rounded-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 flex items-center justify-center"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 1 }}
-                  >
-                    <div className="text-center">
-                      <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        <Code2 className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                      </motion.div>
-                      <div className="text-2xl font-bold text-white mb-2">
-                        SenDevVision
-                      </div>
-                      <div className="text-sm text-slate-400">
-                        Innovation • Créativité • Excellence
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
+            <Lottie animationData={animatedphone} loop={true} className="w-[350px] h-[350px] sm:w-[400px] sm:h-[400px]" />
 
-                {/* Floating cards */}
-                <motion.div
-                  className="absolute -top-4 -right-4 p-4 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50"
-                  variants={floatingVariants}
-                  animate="animate"
-                  initial={{ opacity: 0, y: -20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                >
-                  <div className="text-xs text-slate-400 mb-1">
-                    Stack Technique
-                  </div>
-                  <div className="text-sm font-semibold text-white">
-                    Java • Angular • Spring Boot • Flutter
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="absolute -bottom-4 -left-4 p-4 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50"
-                  variants={floatingVariants}
-                  animate="animate"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.4 }}
-                  style={{ animationDelay: "3s" }}
-                >
-                  <div className="text-xs text-slate-400 mb-1">Spécialités</div>
-                  <div className="text-sm font-semibold text-white">
-                    UI/UX • Mobile • Web
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Scroll indicator */}
