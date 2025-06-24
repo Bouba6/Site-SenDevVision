@@ -301,7 +301,7 @@ export function ContactSection() {
       </section>
 
       {/* Main Content Grid */}
-      <section className="relative py-24 bg-gray-800 overflow-hidden">
+      <section className="relative py-24 bg-black overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Contact form */}
