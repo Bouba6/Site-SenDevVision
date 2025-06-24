@@ -441,7 +441,7 @@ export function ValuesSection() {
                         transition={{ duration: 1, delay: 0.2 }}
                         className="text-gray-300 mt-4 text-xl"
                     >
-                        , guidés par l’impact.
+                        guidés par l’impact.
                     </motion.p>
                 </div>
                 <div className="w-full max-w-7xl mx-auto flex gap-8">
