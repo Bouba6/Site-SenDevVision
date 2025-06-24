@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import robotImage from '../assets/img/robotbanner.png'; // adapte le chemin selon où est ton fichier
+import Lottie from 'lottie-react';
+import animatedbot from '../assets/animations/animatedbot.json';
 
 // Simulation de Framer Motion avec des animations CSS personnalisées
 const MotionDiv = ({ children, className, initial, whileInView, viewport, transition, whileHover, ...props }) => {
@@ -119,6 +121,23 @@ export default function Banner() {
             <div className="absolute bottom-20 right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-500" />
 
+            {/* Robot Lottie en arrière-plan - REPOSITIONNÉ */}
+            <div className="absolute inset-0 flex items-center justify-center z-0">
+                <div className="relative group opacity-20">
+                    <Lottie
+                        animationData={animatedbot}
+                        className="w-96 h-96 md:w-[600px] md:h-[600px] lg:w-[700px] lg:h-[700px] robot-float"
+                    />
+
+                    {/* Particules orbitales */}
+                    <div className="absolute inset-0 particle-orbit opacity-50">
+                        <div className="particle particle-1"></div>
+                        <div className="particle particle-2"></div>
+                        <div className="particle particle-3"></div>
+                    </div>
+                </div>
+            </div>
+
             {/* Contenu principal */}
             <div className="relative z-10 flex items-center justify-center min-h-screen px-6 py-20">
                 <div className="max-w-6xl mx-auto">
@@ -129,47 +148,6 @@ export default function Banner() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Robot Image en arrière-plan */}
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 opacity-20">
-                            <div className="relative group">
-                                {/* Robot */}
-                                <div className="relative robot-container">
-                                    <img
-                                        src={robotImage}
-                                        alt="AI Robot"
-                                        className="w-96 h-96 md:w-[500px] md:h-[500px] object-contain filter blur-none robot-float"
-                                        onError={(e) => console.error('Erreur de chargement de l\'image :', e)}
-                                    />
-
-                                    {/* Robot SVG de fallback */}
-                                    <div className="w-96 h-96 md:w-[500px] md:h-[500px] hidden items-center justify-center robot-float">
-                                        <svg viewBox="0 0 100 100" className="w-full h-full text-blue-400 opacity-30">
-                                            {/* Corps du robot */}
-                                            <rect x="25" y="40" width="50" height="45" rx="8" fill="currentColor" opacity="0.8" />
-                                            {/* Tête */}
-                                            <rect x="30" y="15" width="40" height="35" rx="15" fill="currentColor" />
-                                            {/* Yeux */}
-                                            <circle cx="38" cy="28" r="3" fill="#00ffff" className="animate-pulse" />
-                                            <circle cx="62" cy="28" r="3" fill="#00ffff" className="animate-pulse" />
-                                            {/* Antenne */}
-                                            <line x1="50" y1="15" x2="50" y2="8" stroke="currentColor" strokeWidth="2" />
-                                            <circle cx="50" cy="8" r="2" fill="#00ffff" className="animate-ping" />
-                                            {/* Bras */}
-                                            <rect x="15" y="45" width="12" height="25" rx="6" fill="currentColor" opacity="0.7" />
-                                            <rect x="73" y="45" width="12" height="25" rx="6" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                {/* Particules orbitales */}
-                                <div className="absolute inset-0 particle-orbit opacity-50">
-                                    <div className="particle particle-1"></div>
-                                    <div className="particle particle-2"></div>
-                                    <div className="particle particle-3"></div>
-                                </div>
-                            </div>
-                        </div>
-
                         {/* Titre principal */}
                         <MotionDiv
                             className="mb-6 relative z-20"
@@ -202,35 +180,6 @@ export default function Banner() {
                                 pour créer des expériences extraordinaires.
                             </p>
                         </MotionDiv>
-                        {/*
-                        Bouton Contact
-                        <MotionDiv
-                            className="relative z-20"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
-                        >
-                            <button className="group relative px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 active:scale-95">
-                              
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-                       
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-
-                        <span className="relative flex items-center justify-center gap-3">
-                            Contact Us
-                            <svg
-                                className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </span>
-                    </button>
-                </MotionDiv>*/}
 
                         {/* Indicateurs de scroll */}
                         <MotionDiv
@@ -248,7 +197,7 @@ export default function Banner() {
                         </MotionDiv>
                     </MotionDiv>
                 </div>
-            </div >
+            </div>
 
             <style jsx>{`
         @keyframes float {
@@ -327,6 +276,6 @@ export default function Banner() {
           animation: gradient-x 3s ease infinite;
         }
       `}</style>
-        </section >
+        </section>
     );
 }

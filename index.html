@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SenDevVision</title>
   <style>
-    /* Styles pour le loader */
     #initial-loader {
       position: fixed;
       top: 0;
@@ -32,7 +31,6 @@
       position: relative;
     }
 
-    /* Particules de fond */
     .particles {
       position: absolute;
       top: 0;
@@ -52,7 +50,6 @@
       animation: float-particle 4s infinite ease-in-out;
     }
 
-    /* Effets de lumière */
     .light-effect-1 {
       position: absolute;
       top: 25%;
@@ -75,7 +72,6 @@
       animation: pulse 3s infinite ease-in-out 1s;
     }
 
-    /* Logo container */
     .logo-container {
       position: relative;
       width: 80px;
@@ -91,7 +87,6 @@
       filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
     }
 
-    /* Cercles orbitaux */
     .orbital-ring {
       position: absolute;
       border-radius: 50%;
@@ -118,7 +113,6 @@
       animation: rotate-reverse 12s linear infinite;
     }
 
-    /* Titre */
     .loader-title {
       font-size: 2.5rem;
       font-weight: bold;
@@ -140,57 +134,6 @@
       animation: fade-in 1s ease-out 0.5s forwards;
     }
 
-    /* Barre de progression */
-    .progress-container {
-      width: 300px;
-      margin: 0 auto 2rem;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .progress-label {
-      color: #3b82f6;
-    }
-
-    .progress-percent {
-      color: #06b6d4;
-      font-family: monospace;
-    }
-
-    .progress-bar-container {
-      width: 100%;
-      height: 8px;
-      background: #1f2937;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-      border-radius: 4px;
-      width: 0%;
-      transition: width 0.3s ease;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-    }
-
-    .progress-shimmer {
-      position: absolute;
-      top: 0;
-      left: -30px;
-      width: 30px;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      animation: shimmer 2s ease-in-out infinite;
-    }
-
-    /* Points de chargement */
     .loading-dots {
       display: flex;
       justify-content: center;
@@ -219,23 +162,23 @@
       animation-delay: 0.32s;
     }
 
-    /* Message de statut */
     .status-message {
       color: #6b7280;
       font-size: 0.9rem;
       animation: pulse-text 2s ease-in-out infinite;
     }
 
-    /* Animations */
     @keyframes float-particle {
 
       0%,
       100% {
-        transform: translateY(0px) opacity(0.3);
+        transform: translateY(0px);
+        opacity: 0.3;
       }
 
       50% {
-        transform: translateY(-20px) opacity(1);
+        transform: translateY(-20px);
+        opacity: 1;
       }
     }
 
@@ -317,16 +260,6 @@
       }
     }
 
-    @keyframes shimmer {
-      0% {
-        left: -30px;
-      }
-
-      100% {
-        left: 100%;
-      }
-    }
-
     @keyframes bounce {
 
       0%,
@@ -352,46 +285,33 @@
       }
     }
 
-    /* Fallback SVG */
     .logo-fallback {
       display: none;
       width: 100%;
       height: 100%;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .loader-title {
         font-size: 2rem;
-      }
-
-      .progress-container {
-        width: 250px;
       }
     }
   </style>
 </head>
 
 <body class="bg-black">
-  <!-- Loader initial -->
   <div id="initial-loader">
-    <!-- Particules de fond -->
     <div class="particles" id="particles"></div>
-
-    <!-- Effets de lumière -->
     <div class="light-effect-1"></div>
     <div class="light-effect-2"></div>
 
     <div class="loader-container">
-      <!-- Logo avec cercles orbitaux -->
       <div class="logo-container">
         <div class="orbital-ring ring-1"></div>
         <div class="orbital-ring ring-2"></div>
 
-        <img src="./src/assets/img/Logo.png" alt="SenDevVision Logo" class="logo-image"
+        <img src="./src/assets/img/Logo3.png" alt="SenDevVision Logo" class="logo-image"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-
-        <!-- SVG Fallback -->
         <svg class="logo-fallback" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -405,47 +325,25 @@
         </svg>
       </div>
 
-      <!-- Titre -->
       <h1 class="loader-title">SenDevVision</h1>
       <p class="loader-subtitle">L'avenir se dessine ici</p>
 
-      <!-- Barre de progression -->
-      <div class="progress-container">
-        <div class="progress-info">
-          <span class="progress-label">Chargement</span>
-          <span class="progress-percent" id="progress-percent">0%</span>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar" id="progress-bar"></div>
-          <div class="progress-shimmer"></div>
-        </div>
-      </div>
-
-      <!-- Points de chargement -->
       <div class="loading-dots">
         <div class="dot dot-1"></div>
         <div class="dot dot-2"></div>
         <div class="dot dot-3"></div>
       </div>
 
-      <!-- Message de statut -->
       <p class="status-message" id="status-message">Initialisation des modules...</p>
     </div>
   </div>
 
-  <!-- Votre app React -->
   <div id="root"></div>
 
   <script>
-    // Script pour animer le loader
     (function () {
-      let progress = 0;
-      const progressBar = document.getElementById('progress-bar');
-      const progressPercent = document.getElementById('progress-percent');
       const statusMessage = document.getElementById('status-message');
       const loader = document.getElementById('initial-loader');
-
-      // Messages de statut
       const statusMessages = [
         'Initialisation des modules...',
         'Chargement des composants...',
@@ -453,7 +351,6 @@
         'Finalisation...'
       ];
 
-      // Génération des particules
       function createParticles() {
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 15; i++) {
@@ -467,58 +364,22 @@
         }
       }
 
-      // Animation de la progression
-      function updateProgress() {
-        const increment = Math.random() * 12 + 3;
-        progress = Math.min(progress + increment, 100);
-
-        progressBar.style.width = progress + '%';
-        progressPercent.textContent = Math.round(progress) + '%';
-
-        // Mise à jour du message de statut
-        if (progress < 25) {
-          statusMessage.textContent = statusMessages[0];
-        } else if (progress < 50) {
-          statusMessage.textContent = statusMessages[1];
-        } else if (progress < 80) {
-          statusMessage.textContent = statusMessages[2];
-        } else {
-          statusMessage.textContent = statusMessages[3];
-        }
-
-        if (progress < 100) {
-          setTimeout(updateProgress, 150 + Math.random() * 300);
-        } else {
-          // Masquer le loader quand React est prêt
-          setTimeout(() => {
-            loader.classList.add('hidden');
-            setTimeout(() => {
-              loader.remove();
-            }, 500);
-          }, 800);
+      let step = 0;
+      function updateStatus() {
+        if (step < statusMessages.length) {
+          statusMessage.textContent = statusMessages[step];
+          step++;
+          setTimeout(updateStatus, 1000);
         }
       }
 
-      // Initialisation
       createParticles();
+      setTimeout(updateStatus, 500);
 
-      // Démarrer la progression après un court délai
-      setTimeout(updateProgress, 500);
-
-      // S'assurer que le loader disparaît même si React met du temps
       setTimeout(() => {
-        if (!loader.classList.contains('hidden')) {
-          progress = 100;
-          progressBar.style.width = '100%';
-          progressPercent.textContent = '100%';
-          statusMessage.textContent = 'Chargement terminé !';
-
-          setTimeout(() => {
-            loader.classList.add('hidden');
-            setTimeout(() => loader.remove(), 500);
-          }, 300);
-        }
-      }, 5000); // 5 secondes maximum
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 500);
+      }, 5000);
     })();
   </script>
 
