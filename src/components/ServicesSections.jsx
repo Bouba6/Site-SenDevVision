@@ -1,25 +1,18 @@
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Clock,
-  Shield,
-  Sparkles,
-  Star,
-  Zap,
-} from "lucide-react";
+import { ArrowUpRight, Clock, Shield, Star, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react"; // 1. Importer useEffect
-import CinematicHeroSection from "./Page-sevice/HeroSection";
-import { servicesJson } from "./Page-sevice/Json";
-import Modal from "./Page-sevice/Modal";
-import ProcessSection from "./Page-sevice/ProcessSection";
-import { TechnologiesSection } from "./Page-sevice/TechnologiesSection";
+import CinematicHeroSection from "./Page-sevice/heroSection";
+import {servicesJson, servicesJson2 } from "./Page-sevice/json";
+import Modal from "./Page-sevice/modal";
+import OurSection from "./Page-sevice/ourSection";
+import ProcessSection from "./Page-sevice/processSection";
+import { TechnologiesSection } from "./Page-sevice/technologiesSection";
 
 export function ServicesSection() {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("technologies");
 
-  const services = servicesJson;
+  const services = servicesJson2;
 
   const openModal = (service) => {
     setSelectedService(service);
@@ -64,11 +57,13 @@ export function ServicesSection() {
   const TabButton = ({ id, label, icon }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-lg ${activeTab === id
-          ? `${colorVariants[selectedService.color].accent} ${colorVariants[selectedService.color].bg
-          } border ${colorVariants[selectedService.color].border}`
+      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 rounded-lg ${
+        activeTab === id
+          ? `${colorVariants[selectedService.color].accent} ${
+              colorVariants[selectedService.color].bg
+            } border ${colorVariants[selectedService.color].border}`
           : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-        }`}
+      }`}
     >
       {icon}
       {label}
@@ -120,7 +115,7 @@ export function ServicesSection() {
     const y = (clientY - top - height / 2) / (height / 2);
 
     // Mettre à jour la rotation cible
-    targetRotation.current = { x: -y * 1, y: x * 6 };
+    targetRotation.current = { x: -y * 1, y: x * 4 };
 
     // Démarrer la boucle d'animation si elle n'est pas déjà en cours
     if (!animationFrameId.current) {
@@ -175,7 +170,7 @@ export function ServicesSection() {
           style={{ transformStyle: "preserve-3d" }}
         >
           {/* Header Section */}
-          <div
+          {/* <div
             className="max-w-4xl mx-auto text-center mb-16"
             style={{ transform: "translateZ(20px)" }}
           >
@@ -192,10 +187,10 @@ export function ServicesSection() {
               digitale avec des solutions innovantes et performantes, adaptées à
               leurs besoins spécifiques.
             </p>
-          </div>
+          </div> */}
 
           {/* Services Grid - Layout Masonry */}
-          <div className="md:columns-2 lg:columns-3 gap-8 space-y-8 mb-16">
+          {/* <div className="md:columns-2 lg:columns-3 gap-8 space-y-8 mb-16">
             {services.map((service, index) => (
               <div
                 key={index}
@@ -232,7 +227,9 @@ export function ServicesSection() {
                 </button>
               </div>
             ))}
-          </div>
+          </div> */}
+
+          <OurSection />
 
           <ProcessSection />
           <TechnologiesSection />

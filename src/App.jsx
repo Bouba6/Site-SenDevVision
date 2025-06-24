@@ -4,16 +4,24 @@ import { Header } from './components/Header'
 import Home from './pages/Home'
 import ServicesPage from './pages/Services'
 import GalleryPage from './pages/Gallery'
+import ServiceDetailPage from './components/Page-sevice/serviceDetail'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+      {/* <Route path="/services/:serviceId" element={<ServiceDetailPage />} /> */}
+      <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
+
+
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
           <Route path="accueil" element={<Home />} />
           <Route path="services" element={<ServicesPage />} />
           <Route path="Galerie" element={<GalleryPage />} />
+          
+
         </Route>
       </Routes>
     </BrowserRouter>
