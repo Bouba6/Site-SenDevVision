@@ -6,12 +6,18 @@ import ServicesPage from './pages/Services'
 import ContactPage from './pages/Contact'
 import GalleryPage from './pages/Gallery'
 import BackgroundSound from './components/BackgroundSound'
+import ServiceDetailPage from './components/Page-sevice/serviceDetail'
 
 function App() {
   return (
     <BrowserRouter>
       <BackgroundSound />
       <Routes>
+
+      {/* <Route path="/services/:serviceId" element={<ServiceDetailPage />} /> */}
+      <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
+
+
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
           <Route path="accueil" element={<Home />} />

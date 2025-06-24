@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import FloatingParticles from "./FloatingParticles";
 import toast from "react-hot-toast";
+import CustomDropdown from "./ui/CustomDropdown";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -338,19 +339,15 @@ const handleSubmit = async (e) => {
                       <Sparkles className="w-4 h-4 inline mr-2" />
                       Service souhaité
                     </label>
-                    <select
+                    <CustomDropdown
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${errors.phone ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/20' : 'border-slate-600/50 focus:border-blue-500/50 focus:ring-blue-500/20'} text-white placeholder-slate-400  focus:outline-none transition-all duration-300`}
-                    >
-                      <option value="">Sélectionnez un service</option>
-                      {services.map((service, idx) => (
-                        <option key={idx} value={service}>
-                          {service}
-                        </option>
-                      ))}
-                    </select>
+                      options={services}
+                      placeholder="Sélectionnez un service"
+                      error={errors.service}
+                      icon={Sparkles}
+                    />
                     {errors.service && <span className="text-red-500/50 text-sm">{errors.service}</span>}
                   </motion.div>
                 </div>
