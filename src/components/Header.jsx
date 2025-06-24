@@ -33,7 +33,7 @@ export function Header() {
           }`}
       >
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex md:w-screen items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br rounded-lg flex items-center justify-center">
                 <img src={Logo} alt="" />
