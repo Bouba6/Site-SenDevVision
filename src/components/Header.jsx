@@ -1,7 +1,7 @@
 import { Briefcase, FileText, Home, Menu, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import Logo from "../assets/img/Logo1.png";
+import Logo from "../assets/img/Logo.png";
 
 import { NavBar } from "@/components/ui/tubelight-navbar";
 import { Footer } from "./footer-section";
