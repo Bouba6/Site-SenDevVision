@@ -106,6 +106,7 @@ export function Header() {
         {/* <div className="min-h-screen flex items-center justify-center">
           <h1 className="font-mono text-2xl text-white font-bold">Scrool Down!</h1>
         </div> */}
+        {/* Ousseynou refais le footer gars */}
         <Footer />
       </div>
     </>
