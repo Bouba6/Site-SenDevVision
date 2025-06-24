@@ -9,8 +9,8 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { colorVariants, servicesJson2 } from "./json";
+import { useNavigate, useParams } from "react-router-dom";
+import { colorVariants, servicesJson2 } from "./Json";
 
 // --- Composant TabButton (amélioré) ---
 function TabButton({ id, label, icon, isActive, onClick, color }) {
@@ -90,19 +90,23 @@ function ServiceDetailPage() {
             </motion.button>
             <div className="flex items-center gap-3">
               <div
-                className={`p-3 rounded-xl bg-gradient-to-br ${colorVariants[service.color].gradient}`}
+                className={`p-3 rounded-xl bg-gradient-to-br ${
+                  colorVariants[service.color].gradient
+                }`}
               >
                 {service.icon}
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">{service.title}</h1>
+                <h1 className="text-xl font-bold text-white">
+                  {service.title}
+                </h1>
                 <p className={`text-sm ${colorVariants[service.color].accent}`}>
                   {service.subtitle}
                 </p>
               </div>
             </div>
           </div>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -125,46 +129,50 @@ function ServiceDetailPage() {
           <div className="sticky top-8 space-y-6">
             {/* Navigation */}
             <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Navigation</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Navigation
+              </h3>
               <nav className="space-y-2">
-                <TabButton 
-                  id="overview" 
-                  label="Vue d'ensemble" 
-                  icon={<LayoutTemplate size={18} />} 
-                  isActive={activeTab === 'overview'} 
-                  onClick={setActiveTab} 
-                  color={service.color} 
+                <TabButton
+                  id="overview"
+                  label="Vue d'ensemble"
+                  icon={<LayoutTemplate size={18} />}
+                  isActive={activeTab === "overview"}
+                  onClick={setActiveTab}
+                  color={service.color}
                 />
-                <TabButton 
-                  id="technologies" 
-                  label="Technologies" 
-                  icon={<Code size={18} />} 
-                  isActive={activeTab === 'technologies'} 
-                  onClick={setActiveTab} 
-                  color={service.color} 
+                <TabButton
+                  id="technologies"
+                  label="Technologies"
+                  icon={<Code size={18} />}
+                  isActive={activeTab === "technologies"}
+                  onClick={setActiveTab}
+                  color={service.color}
                 />
-                <TabButton 
-                  id="process" 
-                  label="Notre Processus" 
-                  icon={<ListChecks size={18} />} 
-                  isActive={activeTab === 'process'} 
-                  onClick={setActiveTab} 
-                  color={service.color} 
+                <TabButton
+                  id="process"
+                  label="Notre Processus"
+                  icon={<ListChecks size={18} />}
+                  isActive={activeTab === "process"}
+                  onClick={setActiveTab}
+                  color={service.color}
                 />
-                <TabButton 
-                  id="deliverables" 
-                  label="Livrables Clés" 
-                  icon={<Package size={18} />} 
-                  isActive={activeTab === 'deliverables'} 
-                  onClick={setActiveTab} 
-                  color={service.color} 
+                <TabButton
+                  id="deliverables"
+                  label="Livrables Clés"
+                  icon={<Package size={18} />}
+                  isActive={activeTab === "deliverables"}
+                  onClick={setActiveTab}
+                  color={service.color}
                 />
               </nav>
             </div>
 
             {/* Call to Action */}
             <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Prêt à commencer ?</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Prêt à commencer ?
+              </h3>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -242,8 +250,14 @@ function ServiceDetailPage() {
                           transition={{ delay: 0.1 * i }}
                           className="flex items-center gap-3 p-4 bg-slate-700/50 border border-slate-600/50 rounded-xl hover:bg-slate-700/70 transition-all duration-300"
                         >
-                          <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${colorVariants[service.color].gradient}`}></div>
-                          <span className="font-medium text-slate-200">{tech}</span>
+                          <div
+                            className={`w-3 h-3 rounded-full bg-gradient-to-r ${
+                              colorVariants[service.color].gradient
+                            }`}
+                          ></div>
+                          <span className="font-medium text-slate-200">
+                            {tech}
+                          </span>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -274,10 +288,16 @@ function ServiceDetailPage() {
                           transition={{ delay: 0.1 * i }}
                           className="flex items-start gap-4 p-6 bg-slate-700/50 border border-slate-600/50 rounded-xl hover:bg-slate-700/70 transition-all duration-300"
                         >
-                          <div className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-white bg-gradient-to-br ${colorVariants[service.color].gradient} shadow-lg`}>
+                          <div
+                            className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-white bg-gradient-to-br ${
+                              colorVariants[service.color].gradient
+                            } shadow-lg`}
+                          >
                             {i + 1}
                           </div>
-                          <p className="text-slate-200 pt-2 leading-relaxed">{step}</p>
+                          <p className="text-slate-200 pt-2 leading-relaxed">
+                            {step}
+                          </p>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -308,8 +328,14 @@ function ServiceDetailPage() {
                           transition={{ delay: 0.1 * i }}
                           className="flex items-center gap-4 p-4 bg-slate-700/50 border border-slate-600/50 rounded-xl hover:bg-slate-700/70 transition-all duration-300"
                         >
-                          <CheckCircle2 className={`w-6 h-6 flex-shrink-0 ${colorVariants[service.color].accent}`} />
-                          <span className="font-medium text-slate-200">{item}</span>
+                          <CheckCircle2
+                            className={`w-6 h-6 flex-shrink-0 ${
+                              colorVariants[service.color].accent
+                            }`}
+                          />
+                          <span className="font-medium text-slate-200">
+                            {item}
+                          </span>
                         </motion.div>
                       ))}
                     </motion.div>

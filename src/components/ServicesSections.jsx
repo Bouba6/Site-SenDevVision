@@ -1,10 +1,10 @@
 import { ArrowUpRight, Clock, Shield, Star, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react"; // 1. Importer useEffect
-import CinematicHeroSection from "./Page-sevice/heroSection";
-import {servicesJson, servicesJson2 } from "./Page-sevice/json";
-import Modal from "./Page-sevice/modal";
-import OurSection from "./Page-sevice/ourSection";
-import ProcessSection from "./Page-sevice/processSection";
+import CinematicHeroSection from "./Page-sevice/HeroSection";
+import { servicesJson2 } from "./Page-sevice/Json";
+import Modal from "./Page-sevice/Modal";
+import OurSection from "./Page-sevice/OurSection";
+import ProcessSection from "./Page-sevice/ProcessSection";
 import { TechnologiesSection } from "./Page-sevice/technologiesSection";
 
 export function ServicesSection() {
