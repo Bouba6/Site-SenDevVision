@@ -1,7 +1,7 @@
 import { Briefcase, FileText, Home, Menu, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import Logo from "../assets/img/Logo1.png";
+import Logo from "../assets/img/Logo3.png";
 
 import { NavBar } from "@/components/ui/tubelight-navbar";
 import { Footer } from "./footer-section";
@@ -78,8 +78,8 @@ export function Header() {
         {/* Menu mobile */}
         <div
           className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen
-              ? "max-h-80 opacity-100"
-              : "max-h-0 opacity-0 overflow-hidden"
+            ? "max-h-80 opacity-100"
+            : "max-h-0 opacity-0 overflow-hidden"
             } bg-black/95 backdrop-blur-lg border-t border-blue-500/30`}
         >
           <nav className="container mx-auto px-6 py-4">

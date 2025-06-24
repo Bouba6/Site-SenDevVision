@@ -4,10 +4,12 @@ import { Header } from './components/Header'
 import Home from './pages/Home'
 import ServicesPage from './pages/Services'
 import GalleryPage from './pages/Gallery'
+import BackgroundSound from './components/BackgroundSound'
 
 function App() {
   return (
     <BrowserRouter>
+      <BackgroundSound />
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
