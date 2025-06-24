@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Heart, Star, Mail, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Linkedin, Github, Eye } from 'lucide-react';
+import { Users, Heart, Star, Mail, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Linkedin, Github, Eye, Award, Calendar, Coffee } from 'lucide-react';
 
-// Composant de particules amélioré
+// Composant de particules ultra sophistiqué
 const FloatingParticles = () => {
     const [particles, setParticles] = useState([]);
 
-    useEffect(() => {                        
+    useEffect(() => {
         const generateParticles = () => {
             const newParticles = [];
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 newParticles.push({
                     id: i,
                     x: Math.random() * 100,
                     y: Math.random() * 100,
-                    size: Math.random() * 6 + 3,
-                    duration: Math.random() * 4 + 3,
-                    delay: Math.random() * 3,
-                    opacity: Math.random() * 0.3 + 0.1
+                    size: Math.random() * 8 + 4,
+                    duration: Math.random() * 6 + 4,
+                    delay: Math.random() * 4,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: i % 3 === 0 ? 'blue' : i % 3 === 1 ? 'purple' : 'cyan'
                 });
             }
             setParticles(newParticles);
@@ -24,6 +25,15 @@ const FloatingParticles = () => {
 
         generateParticles();
     }, []);
+
+    const getParticleColor = (color, opacity) => {
+        switch (color) {
+            case 'blue': return `rgba(59, 130, 246, ${opacity})`;
+            case 'purple': return `rgba(147, 51, 234, ${opacity})`;
+            case 'cyan': return `rgba(6, 182, 212, ${opacity})`;
+            default: return `rgba(59, 130, 246, ${opacity})`;
+        }
+    };
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -36,9 +46,10 @@ const FloatingParticles = () => {
                         top: `${particle.y}%`,
                         width: `${particle.size}px`,
                         height: `${particle.size}px`,
-                        background: `radial-gradient(circle, rgba(59, 130, 246, ${particle.opacity}) 0%, rgba(147, 51, 234, ${particle.opacity * 0.5}) 100%)`,
+                        background: `radial-gradient(circle, ${getParticleColor(particle.color, particle.opacity)} 0%, transparent 70%)`,
                         animationDuration: `${particle.duration}s`,
                         animationDelay: `${particle.delay}s`,
+                        filter: 'blur(1px)'
                     }}
                 />
             ))}
@@ -46,51 +57,161 @@ const FloatingParticles = () => {
     );
 };
 
-// Composant Modal pour voir l'image en grand
+// Modal ultra moderne et immersif
 const ImageModal = ({ isOpen, onClose, promoteur }) => {
-    if (!isOpen || !promoteur) return null;
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    if (!isOpen || !promoteur || !mounted) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" onClick={onClose}>
-            <div className="relative max-w-5xl w-full bg-slate-900/95 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <button 
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop avec effects */}
+            <div
+                className="absolute inset-0 bg-black/85 backdrop-blur-2xl"
+                onClick={onClose}
+            />
+
+            {/* Particules dans le modal */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-blue-400/30 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-4 h-4 bg-purple-400/20 rounded-full animate-pulse"></div>
+                <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-cyan-400/40 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-1/4 left-1/3 w-5 h-5 bg-pink-400/25 rounded-full animate-pulse"></div>
+            </div>
+
+            {/* Modal container */}
+            <div className="relative w-full max-w-5xl max-h-[85vh] mx-auto">
+                {/* Glow effect */}
+
+                {/* Bouton fermer spectaculaire */}
+                <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 z-10 w-12 h-12 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white text-xl font-bold transition-all duration-300 hover:scale-110"
+                    className="absolute -top-8 -right-8 z-20 w-16 h-16 bg-gradient-to-br from-blue-500 via-blue-700 to-blue-800 hover:from-blue-800 hover:via-blue-900 hover:to-blue-900 rounded-full flex items-center justify-center text-white shadow-2xl border-2 border-white/20 hover:scale-110 transition-all duration-300 group"
                 >
-                    ✕
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                    <span className="relative text-2xl font-bold group-hover:rotate-90 transition-transform duration-300">✕</span>
                 </button>
-                <div className="grid lg:grid-cols-2 gap-0">
-                    <div className="relative">
-                        <img 
-                            src={promoteur.image} 
-                            alt={promoteur.nom}
-                            className="w-full h-96 lg:h-full object-cover"
-                        />
-                        <div className={`absolute inset-0 bg-gradient-to-t ${promoteur.color} opacity-20`}></div>
+
+                {/* Card principal */}
+                <div className="relative max-h-[85vh] h-auto bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-3xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                    
+
+                    <div className="grid lg:grid-cols-2 gap-0 relative z-10">
+                        {/* Section Image améliorée */}
+                        <div className="relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent z-10"></div>
+                            <img
+                                src={promoteur.image}
+                                alt={promoteur.nom}
+                                className="w-full h-full object-cover absolute inset-0 z-0"
+                            />
+
+                            <div className={`absolute inset-0 bg-gradient-to-t ${promoteur.color} opacity-15`}></div>
+
+                            {/* Badge expertise flottant */}
+                            <div className="absolute top-8 left-8 z-20">
+                                <div className={`px-6 py-3 bg-gradient-to-r ${promoteur.color} rounded-full text-white font-black shadow-2xl border border-white/30 backdrop-blur-sm animate-pulse`}>
+                                    <div className="flex items-center gap-2">
+                                        <Award className="w-5 h-5" />
+                                        {promoteur.expertise}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Section Contenu redesignée */}
+                        <div className="p-6 flex flex-col justify-center gap-6">
+                            {/* Header */}
+                            <div className="space-y-4">
+                                <h3 className="text-4xl font-black text-white tracking-tight leading-tight">
+                                    {promoteur.nom}
+                                </h3>
+                                <p className={`text-2xl font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
+                                    {promoteur.role}
+                                </p>
+
+
+                            </div>
+
+                            {/* Citation stylisée */}
+                            <blockquote className="relative">
+                                <div className="text-6xl text-blue-400/20 absolute -top-4 -left-2 font-serif">"</div>
+                                <p className="text-white text-xl italic leading-relaxed font-medium pl-6 relative z-10">
+                                    {promoteur.pensee}
+                                </p>
+                                <div className="text-6xl text-purple-400/20 absolute -bottom-6 -right-2 font-serif rotate-180">"</div>
+                            </blockquote>
+
+                            {/* Actions stylisées */}
+                            <div className="space-y-3">
+                                <div className="flex gap-4">
+                                    <a
+                                        href={promoteur.linkedin}
+                                        className="group flex-1 relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl border border-blue-400/30 p-3"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        <div className="relative flex items-center justify-center gap-2">
+                                            <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                                            LinkedIn
+                                        </div>
+                                    </a>
+                                    <a
+                                        href={promoteur.github}
+                                        className="group flex-1 relative overflow-hidden bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl border border-slate-600/30 p-3"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        <div className="relative flex items-center justify-center gap-2">
+                                            <Github className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                                            GitHub
+                                        </div>
+                                    </a>
+                                </div>
+                                <button className="group w-full relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 shadow-2xl p-3">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div className="relative flex items-center justify-center gap-2">
+                                        <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                                        Contacter
+                                    </div>
+                                </button>
+                            </div>
+
+                            {/* Footer élégant */}
+                            <div className="flex items-center justify-center gap-4 pt-4 opacity-70">
+                                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                <div className="flex items-center gap-2 text-white/60 font-medium text-sm">
+                                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                                    Sen Dev Vision
+                                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                                </div>
+                                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="p-10 flex flex-col justify-center bg-slate-900/50">
-                        <h3 className="text-4xl font-black text-white mb-3 tracking-tight">{promoteur.nom}</h3>
-                        <p className="text-2xl text-blue-300 mb-6 font-semibold">{promoteur.role}</p>
-                        <div className={`inline-block px-6 py-3 bg-gradient-to-r ${promoteur.color} rounded-full text-white text-base font-bold mb-8 w-fit shadow-lg`}>
-                            {promoteur.expertise}
-                        </div>
-                        <p className="text-slate-200 text-xl italic mb-8 leading-relaxed font-medium">
-                            "{promoteur.pensee}"
-                        </p>
-                        <div className="flex gap-4">
-                            <a href={promoteur.linkedin} className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-white font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-                                <Linkedin className="w-5 h-5" />
-                                LinkedIn
-                            </a>
-                            <a href={promoteur.github} className="flex items-center gap-3 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-full text-white font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-                                <Github className="w-5 h-5" />
-                                GitHub
-                            </a>
-                        </div>
+
+                    {/* Texture overlay */}
+                    <div className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none">
+                        <div className="w-full h-full" style={{
+                            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0)',
+                            backgroundSize: '20px 20px'
+                        }}></div>
                     </div>
                 </div>
             </div>
         </div>
+
     );
 };
 
@@ -98,6 +219,7 @@ const GallerySection = () => {
     const [mounted, setMounted] = useState(false);
     const [selectedPromoter, setSelectedPromoter] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hoveredCard, setHoveredCard] = useState(null);
 
     useEffect(() => {
         setMounted(true);
@@ -114,7 +236,7 @@ const GallerySection = () => {
             expertise: "Strategy & Leadership",
             linkedin: "#",
             github: "#",
-            color: "from-blue-500 to-cyan-500",
+            color: "bg-red-500",
             bloc: 1
         },
         {
@@ -229,6 +351,12 @@ const GallerySection = () => {
         3: "Les créatifs qui donnent vie à nos idées"
     };
 
+    const blocIcons = {
+        1: Target,
+        2: Code2,
+        3: Sparkles
+    };
+
     const handleImageClick = (promoteur) => {
         setSelectedPromoter(promoteur);
         setIsModalOpen(true);
@@ -245,155 +373,205 @@ const GallerySection = () => {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-black overflow-hidden">
-            {/* Header de la Galerie */}
-            <section className="relative py-24 px-6">
+        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+            {/* Header spectaculaire */}
+            <section className="relative py-32 px-6">
                 <FloatingParticles />
-                
+
+                {/* Background effects */}
+                <div className="absolute inset-0">
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+                </div>
+
                 <div className="relative z-10 text-center">
-                    <div className="relative inline-flex items-center justify-center w-28 h-28 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-3xl mb-10 animate-pulse shadow-2xl">
-                        <Users className="w-14 h-14 text-white" />
+                    <div className="relative inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500 rounded-full mb-12 shadow-2xl group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
+                        <Users className="w-16 h-16 text-white relative z-10 group-hover:scale-110 transition-transform duration-300" />
+                        <div className="absolute inset-0 rounded-full border-4 border-white/20 animate-pulse"></div>
                     </div>
-                    <h1 className="text-7xl md:text-9xl font-black text-white mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">
+
+                    <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-black text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text mb-8 leading-none tracking-tight">
                         GALERIE
                     </h1>
-                    <div className="w-40 h-2 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mb-10 rounded-full shadow-lg"></div>
-                    <p className="text-3xl text-white max-w-4xl mx-auto leading-relaxed font-medium">
-                        Découvrez les <span className="text-blue-400 font-bold">visages</span> et les <span className="text-purple-400 font-bold">talents</span> qui construisent l'avenir technologique du Sénégal
+
+                    <div className="w-48 h-2 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 mx-auto mb-12 rounded-full shadow-lg animate-pulse"></div>
+
+                    <p className="text-4xl text-white max-w-5xl mx-auto leading-relaxed font-medium mb-8">
+                        Découvrez les <span className="text-blue-400 font-black">visages</span> et les <span className="text-purple-400 font-black">talents</span> qui construisent l'avenir technologique du Sénégal
                     </p>
-                    <div className="mt-10 text-slate-300">
-                        <p className="text-xl font-semibold">Cliquez sur une photo pour en savoir plus</p>
-                        <Eye className="w-8 h-8 mx-auto mt-4 animate-bounce text-blue-400" />
+
+                    <div className="mt-12 text-slate-300">
+                        <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-xl">
+                            <Eye className="w-8 h-8 text-blue-400 animate-bounce" />
+                            <span className="text-xl font-bold">Cliquez sur une photo pour en savoir plus</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Galerie en Blocs */}
-            <section className="relative px-6 pb-20">
+            {/* Galerie restructurée */}
+            <section className="relative px-6 pb-32">
                 <div className="container mx-auto max-w-7xl">
-                    {Object.entries(groupedPromoteurs).map(([blocNumber, membres]) => (
-                        <div key={blocNumber} className="mb-20">
-                            {/* Titre du bloc */}
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                                    {blocTitles[blocNumber]}
-                                </h2>
-                                <p className="text-xl text-slate-400 font-medium">
-                                    {blocSubtitles[blocNumber]}
-                                </p>
-                                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
-                            </div>
+                    {Object.entries(groupedPromoteurs).map(([blocNumber, membres]) => {
+                        const IconComponent = blocIcons[blocNumber];
+                        return (
+                            <div key={blocNumber} className="mb-32">
+                                {/* Titre du bloc amélioré */}
+                                <div className="text-center mb-20">
+                                    <div className="inline-flex items-center gap-4 mb-6">
+                                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
+                                            <IconComponent className="w-8 h-8 text-white" />
+                                        </div>
+                                        <div className="text-left">
+                                            <h2 className="text-5xl md:text-6xl font-black text-white leading-tight">
+                                                {blocTitles[blocNumber]}
+                                            </h2>
+                                            <p className="text-xl text-slate-400 font-medium mt-2">
+                                                {blocSubtitles[blocNumber]}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 mx-auto rounded-full"></div>
+                                </div>
 
-                            {/* Grille de 3 images */}
-                            <div className="grid md:grid-cols-3 gap-10">
-                                {membres.map((promoteur, index) => (
-                                    <div
-                                        key={promoteur.id}
-                                        className="group cursor-pointer"
-                                        onClick={() => handleImageClick(promoteur)}
-                                        style={{ 
-                                            animationDelay: `${index * 200}ms`,
-                                            transform: `rotate(${(index - 1) * 3}deg)`
-                                        }}
-                                    >
-                                        {/* Ombre et effets */}
-                                        <div className={`absolute inset-0 bg-gradient-to-r ${promoteur.color} opacity-0 group-hover:opacity-40 rounded-3xl blur-2xl transition-all duration-500 w-full h-full`}></div>
-                                        
-                                        {/* Conteneur de l'image */}
-                                        <div className="relative w-full h-96 group-hover:scale-105 group-hover:rotate-0 transition-all duration-700 ease-out">
-                                            {/* Image principale */}
-                                            <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group-hover:border-white/50 transition-all duration-500">
-                                                <img
-                                                    src={promoteur.image}
-                                                    alt={promoteur.nom}
-                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                                />
-                                                
-                                                {/* Overlay gradient */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                                
-                                                {/* Badge expertise */}
-                                                <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                                                    <div className={`px-4 py-2 bg-gradient-to-r ${promoteur.color} rounded-full text-white text-sm font-bold shadow-xl border border-white/20`}>
-                                                        {promoteur.expertise}
+                                {/* Grille redesignée */}
+                                <div className="grid md:grid-cols-3 gap-12">
+                                    {membres.map((promoteur, index) => (
+                                        <div
+                                            key={promoteur.id}
+                                            className="group cursor-pointer perspective-1000"
+                                            onClick={() => handleImageClick(promoteur)}
+                                            onMouseEnter={() => setHoveredCard(promoteur.id)}
+                                            onMouseLeave={() => setHoveredCard(null)}
+                                            style={{
+                                                animationDelay: `${index * 200}ms`
+                                            }}
+                                        >
+                                            {/* Glow effect */}
+                                            <div className={`absolute inset-0 bg-gradient-to-r ${promoteur.color} opacity-0 group-hover:opacity-30 rounded-3xl blur-2xl transition-all duration-700 -z-10`}></div>
+
+                                            {/* Card container */}
+                                            <div className="relative transform transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-4">
+                                                {/* Image principale */}
+                                                <div className="relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/10 group-hover:border-white/30 transition-all duration-500">
+                                                    <img
+                                                        src={promoteur.image}
+                                                        alt={promoteur.nom}
+                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                    />
+
+                                                    {/* Overlay sophistiqué */}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                                                    {/* Badge expertise animé */}
+                                                    <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                                        <div className={`px-4 py-2 bg-gradient-to-r ${promoteur.color} rounded-full text-white font-bold shadow-2xl border border-white/30 backdrop-blur-sm`}>
+                                                            <div className="flex items-center gap-2">
+                                                                <Award className="w-4 h-4" />
+                                                                {promoteur.expertise}
+                                                            </div>
+                                                        </div>
                                                     </div>
+
+                                                    {/* Info au hover */}
+                                                    <div className="absolute bottom-6 left-6 right-6 opacity-100 transition-all duration-500 transform translate-y-6 group-hover:translate-y-0">
+                                                        <p className="text-blue-300 text-2xl font-bold drop-shadow-xl mb-4">{promoteur.role}</p>
+
+                                                    </div>
+
+                                                   
+
+                                                    {/* Effet de particules */}
+                                                    {hoveredCard === promoteur.id && (
+                                                        <div className="absolute inset-0 pointer-events-none">
+                                                            <div className="absolute top-4 right-4 w-2 h-2 bg-white/60 rounded-full animate-ping"></div>
+                                                            <div className="absolute bottom-12 right-8 w-1.5 h-1.5 bg-blue-400/60 rounded-full animate-ping animation-delay-200"></div>
+                                                            <div className="absolute top-16 left-8 w-1 h-1 bg-purple-400/60 rounded-full animate-ping animation-delay-400"></div>
+                                                        </div>
+                                                    )}
                                                 </div>
 
-                                                {/* Info au hover */}
-                                                <div className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                                    <h3 className="text-white text-2xl font-black mb-2 drop-shadow-lg">{promoteur.nom}</h3>
-                                                    <p className="text-blue-300 text-base font-bold drop-shadow-md">{promoteur.role}</p>
-                                                </div>
+                                                {/* Badge nom permanent */}
+                                                <div className="mt-8 text-center">
+                                                    <h4 className="text-white text-3xl font-black mb-2">{promoteur.nom}</h4>
 
-                                                {/* Icône "voir plus" */}
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100">
-                                                    <div className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 shadow-xl">
-                                                        <Eye className="w-10 h-10 text-white drop-shadow-lg" />
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* Badge nom fixe en bas */}
-                                        <div className="mt-6 text-center">
-                                            <h4 className="text-white text-xl font-bold mb-1">{promoteur.nom}</h4>
-                                            <p className="text-slate-400 text-base">{promoteur.role}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
-            {/* Instructions d'interaction */}
-            <section className="relative py-20 px-6">
+            {/* Call to action spectaculaire */}
+            <section className="relative py-24 px-6">
                 <div className="text-center">
-                    <div className="inline-flex items-center gap-6 px-10 py-6 bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-full shadow-2xl">
-                        <div className="flex items-center gap-3 text-blue-400">
-                            <Eye className="w-6 h-6" />
-                            <span className="text-lg font-bold">Cliquez pour explorer</span>
+                    <div className="inline-flex items-center gap-8 px-12 py-8 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 backdrop-blur-2xl border-2 border-white/20 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+                        <div className="flex items-center gap-4 text-blue-400">
+                            <Eye className="w-8 h-8 group-hover:animate-bounce" />
+                            <span className="text-2xl font-black">Explorez nos talents</span>
                         </div>
-                        <div className="w-px h-8 bg-white/30"></div>
-                        <div className="flex items-center gap-3 text-purple-400">
-                            <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
-                            <span className="text-lg font-bold">Survolez pour prévisualiser</span>
+                        <div className="w-px h-12 bg-white/30"></div>
+                        <div className="flex items-center gap-4 text-purple-400">
+                            <Sparkles className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
+                            <span className="text-2xl font-black">Rejoignez l'aventure</span>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Modal */}
-            <ImageModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                promoteur={selectedPromoter} 
+            <ImageModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                promoteur={selectedPromoter}
             />
 
             {/* Custom Styles */}
             <style jsx global>{`
                 @keyframes float {
                     0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50% { transform: translateY(-5px) rotate(180deg); }
+                    33% { transform: translateY(-10px) rotate(120deg); }
+                    66% { transform: translateY(5px) rotate(240deg); }
                 }
                 
                 .animate-float {
-                    animation: float 10s ease-in-out infinite;
+                    animation: float 12s ease-in-out infinite;
+                }
+
+                .perspective-1000 {
+                    perspective: 1000px;
+                }
+
+                .animation-delay-200 {
+                    animation-delay: 200ms;
+                }
+                
+                .animation-delay-400 {
+                    animation-delay: 400ms;
                 }
 
                 /* Animation d'apparition */
                 .grid > div {
-                    animation: fadeInUp 0.6s ease-out forwards;
+                    animation: slideInUp 0.8s ease-out forwards;
                     opacity: 0;
-                    transform: translateY(30px);
+                    transform: translateY(50px);
                 }
 
-                @keyframes fadeInUp {
+                @keyframes slideInUp {
                     to {
                         opacity: 1;
                         transform: translateY(0);
                     }
+                }
+
+                /* Smooth scrolling */
+                html {
+                    scroll-behavior: smooth;
                 }
             `}</style>
         </div>
