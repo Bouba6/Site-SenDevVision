@@ -352,7 +352,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-
+import { FloatingParticles } from "./FloatingParticles";
 export function ValuesSection() {
     const containerRef = useRef(null);
     const imagesRef = useRef(null);
@@ -421,6 +421,9 @@ export function ValuesSection() {
 
     return (
         <div ref={containerRef} className="bg-black text-white">
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <FloatingParticles />
+            </div>
             {/* Section 2 grandes images côte à côte */}
             <section ref={imagesRef} className="relative min-h-screen flex items-center px-8 py-16">
                 <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 z-10 text-center">
@@ -563,6 +566,7 @@ export function ValuesSection() {
 
             {/* Section Valeurs avec Sticky Scroll Effect */}
             <div className="relative">
+
                 <motion.h2
                     className="text-5xl font-bold text-center py-20 text-white sticky top-0 z-10 bg-black/80 backdrop-blur-sm"
                     initial={{ opacity: 0, y: 50 }}
@@ -615,6 +619,9 @@ const StickyValueItem = ({ value, index }) => {
         >
             {/* Contenu principal */}
             <div className="relative z-10 w-full max-w-7xl mx-auto">
+                <div className="fixed inset-0 z-0 pointer-events-none">
+                    {/* <FloatingParticles /> */}
+                </div>
                 <div className="flex flex-col gap-y-24">
                     {/* Container des 2 images côte à côte - GARDE VOTRE DISPOSITION */}
                     <div className="flex flex-col md:flex-row gap-6 w-full">
