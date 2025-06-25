@@ -21,7 +21,7 @@ export function Header() {
   const navItems = [
     { name: "Accueil", url: "accueil", icon: Home },
     { name: "Services", url: "services", icon: Briefcase },
-    { name: "Galerie", url: "Galerie", icon: FileText },
+    { name: "Galerie", url: "galerie", icon: FileText },
     { name: "À Propos", url: "apropos", icon: User },
     { name: "Contact", url: "contact", icon: User },
   ];
@@ -84,7 +84,7 @@ export function Header() {
         >
           <nav className="container mx-auto px-6 py-4">
             <div className="flex flex-col space-y-4">
-              {["Accueil", "Services", "Portfolio", "À Propos", "Contact"].map(
+              {["Accueil", "Services", "Galerie", "À Propos", "Contact"].map(
                 (item) => (
                   <Link
                     key={item}
