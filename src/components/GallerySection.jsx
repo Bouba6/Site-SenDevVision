@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Users, Mail, Linkedin, Github, Eye, Award, X, Grid, Camera, Layers, Heart, Star, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Calendar, Coffee } from 'lucide-react';
-import GalleryHero from './ui/GalleryHero';
-import GalleryGrid from './ui/GalleryGrid';
+import GalleryHero from './Gallery/GalleryHero';
+import GalleryGrid from './Gallery/GalleryGrid';
 
 // Hook personnalisé pour détecter mobile
 const useIsMobile = () => {
@@ -86,26 +86,40 @@ const FloatingParticles = () => {
 // Modal ultra responsive avec scroll
 const ImageModal = ({ isOpen, onClose, promoteur }) => {
     const [mounted, setMounted] = useState(false);
+    // Remplacer useState par useRef pour la position du scroll
+    const scrollPosition = React.useRef(0);
     const isMobile = useIsMobile();
 
     useEffect(() => {
         setMounted(true);
+    }, []);
+
+    useEffect(() => {
         if (isOpen) {
-            // Empêcher le scroll du body
-            document.body.style.overflow = 'hidden';
+            // Sauvegarder la position de scroll
+            const currentScrollY = window.scrollY;
+            scrollPosition.current = currentScrollY;
+            // Bloquer le scroll en maintenant la position
             document.body.style.position = 'fixed';
+            document.body.style.top = `-${currentScrollY}px`;
             document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
         } else {
-            // Restaurer le scroll du body
-            document.body.style.overflow = 'unset';
-            document.body.style.position = 'unset';
-            document.body.style.width = 'unset';
+            // Restaurer le scroll APRÈS avoir réinitialisé le style du body
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            // Utiliser setTimeout pour laisser le DOM se mettre à jour
+            setTimeout(() => {
+                window.scrollTo(0, scrollPosition.current);
+            }, 0);
         }
-        
         return () => {
-            document.body.style.overflow = 'unset';
-            document.body.style.position = 'unset';
-            document.body.style.width = 'unset';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
         };
     }, [isOpen]);
 
@@ -123,11 +137,12 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                 >
                     {/* Backdrop */}
                     <motion.div
-                        className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+                        className="absolute inset-0 bg-black/10 backdrop-blur-2xl"
                         onClick={onClose}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+                        animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+                        exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+                        transition={{ duration: 0.3 }}
                     />
 
                     {/* Modal container - Responsive */}
@@ -576,7 +591,7 @@ const GallerySection = () => {
             bloc: 3
         }
     ];
-
+    
     const handleImageClick = (promoteur) => {
         setSelectedPromoter(promoteur);
         setIsModalOpen(true);
