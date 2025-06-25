@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowUp, User, MapPin, Sparkles, Heart, Star, Users } from 'lucide-react';
-import IntroSection from './IntroSection';
+import { ChevronDown, ArrowUp, User, MapPin, Sparkles, Heart, Star, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -26,14 +25,23 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
     return Object.values(groupedPromoteurs).flat();
   }, [groupedPromoteurs]);
 
-  // Grouper les promoteurs par lignes (adaptable selon l'écran)
+  // AFFICHAGE UN PAR UN SUR MOBILE
   const promoteursGrouped = useMemo(() => {
     const groups = [];
-    const itemsPerGroup = isMobile ? 2 : 3; // 2 sur mobile, 3 sur desktop
     
-    for (let i = 0; i < allPromoteurs.length; i += itemsPerGroup) {
-      groups.push(allPromoteurs.slice(i, i + itemsPerGroup));
+    if (isMobile) {
+      // Sur mobile : 1 promoteur par section pour un affichage fluide
+      for (let i = 0; i < allPromoteurs.length; i++) {
+        groups.push([allPromoteurs[i]]);
+      }
+    } else {
+      // Sur desktop : 3 promoteurs par section
+      const itemsPerGroup = 3;
+      for (let i = 0; i < allPromoteurs.length; i += itemsPerGroup) {
+        groups.push(allPromoteurs.slice(i, i + itemsPerGroup));
+      }
     }
+    
     return groups;
   }, [allPromoteurs, isMobile]);
 
@@ -69,7 +77,6 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
   // Calcul de section simplifié
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange((latest) => {
-      // Calcul section actuelle avec intro et outro
       const totalSections = promoteursGrouped.length + 2;
       const exactPosition = latest * totalSections;
       const newSection = Math.max(0, Math.round(exactPosition) - 1);
@@ -82,7 +89,6 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
         setCurrentSection(clampedSection);
       }
 
-      // Navigation intelligente
       const introEnd = 1 / totalSections;
       const outroStart = (totalSections - 1) / totalSections;
       const offset = isMobile ? 0.05 : 0.1;
@@ -115,13 +121,9 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
       className="relative bg-black overflow-hidden"
       style={{ height: `${(promoteursGrouped.length + 2) * 100}vh` }}
     >
-      {/* Background avec effets adaptés au mobile */}
       <BackgroundEffects isMobile={isMobile} />
-
-      {/* Section d'introduction */}
       <IntroSection isMobile={isMobile} />
 
-      {/* Sections des groupes de promoteurs */}
       {promoteursGrouped.map((promoteurGroup, groupIndex) => (
         <PromoteurGroupSection
           key={groupIndex}
@@ -132,10 +134,11 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
           handleImageClick={handleImageClick}
           progress={scrollYProgress}
           isMobile={isMobile}
+          allPromoteurs={allPromoteurs}
+          scrollToSection={scrollToSection}
         />
       ))}
 
-      {/* Section de conclusion */}
       <OutroSection 
         totalPromoteurs={allPromoteurs.length} 
         progress={scrollYProgress}
@@ -143,7 +146,6 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
         isMobile={isMobile}
       />
 
-      {/* Navigation adaptée au mobile */}
       <NavigationDots 
         showNavigation={showNavigation}
         totalGroups={promoteursGrouped.length}
@@ -152,16 +154,15 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
         isMobile={isMobile}
       />
 
-      {/* Compteur avec progression */}
       <ProgressCounter 
         showNavigation={showNavigation}
         currentSection={currentSection}
         totalSections={promoteursGrouped.length}
         progress={scrollYProgress}
         isMobile={isMobile}
+        allPromoteurs={allPromoteurs}
       />
 
-      {/* Actions flottantes */}
       <FloatingActions 
         showNavigation={showNavigation}
         currentSection={currentSection}
@@ -173,7 +174,7 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
   );
 };
 
-// Section groupe avec animations douces - SANS EFFET DE NOIRCISSEMENT
+// Section groupe optimisée pour affichage un par un
 const PromoteurGroupSection = ({
   promoteurGroup,
   groupIndex,
@@ -182,6 +183,8 @@ const PromoteurGroupSection = ({
   handleImageClick,
   progress,
   isMobile,
+  allPromoteurs,
+  scrollToSection
 }) => {
   const sectionRef = useRef(null);
   
@@ -194,31 +197,28 @@ const PromoteurGroupSection = ({
     once: false 
   });
 
-  // Animations très subtiles et fluides - OPACITY MAINTENUE
   const totalWithIntroOutro = totalSections + 2;
   const sectionStart = (groupIndex + 1) / totalWithIntroOutro;
   const sectionEnd = (groupIndex + 2) / totalWithIntroOutro;
   
-  // Parallax doux SANS disparition
   const groupY = useTransform(
     progress,
     [sectionStart - 0.1, sectionStart, sectionEnd, sectionEnd + 0.1],
-    [20, 0, 0, -20] // Mouvement réduit
+    [20, 0, 0, -20]
   );
 
-  // OPACITY FIXE - Plus de disparition
   const groupOpacity = useTransform(
     progress,
     [sectionStart - 0.2, sectionStart - 0.1, sectionEnd + 0.1, sectionEnd + 0.2],
-    [0, 1, 1, 0] // Zone visible élargie
+    [0, 1, 1, 0]
   );
+
+  const promoteur = promoteurGroup[0]; // Un seul promoteur sur mobile
 
   return (
     <section
       ref={sectionRef}
-      className={`h-screen w-full flex items-center justify-center relative ${
-        isMobile ? 'px-4' : 'px-8'
-      }`}
+      className="h-screen w-full flex items-center justify-center relative px-4"
     >
       <motion.div
         className="relative z-10 w-full max-w-7xl mx-auto"
@@ -227,31 +227,296 @@ const PromoteurGroupSection = ({
           opacity: groupOpacity
         }}
       >
-        {/* Grille responsive */}
-        <div className={`grid gap-6 ${
-          isMobile 
-            ? 'grid-cols-1 sm:grid-cols-2' 
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12'
-        }`}>
-          {promoteurGroup.map((promoteur, index) => (
-            <PromoteurCard
-              key={promoteur.id || `${groupIndex}-${index}`}
+        {/* AFFICHAGE UN PAR UN SUR MOBILE */}
+        {isMobile ? (
+          <div className="max-w-sm mx-auto">
+            <SinglePromoteurCard
               promoteur={promoteur}
-              index={index}
+              index={0}
               groupIndex={groupIndex}
               isGroupActive={isActive}
               handleImageClick={handleImageClick}
               isInView={isInView}
               isMobile={isMobile}
+              totalPromoteurs={allPromoteurs.length}
+              currentIndex={groupIndex}
+              scrollToSection={scrollToSection}
+              totalSections={totalSections}
             />
-          ))}
-        </div>
+          </div>
+        ) : (
+          /* GRILLE NORMALE SUR DESKTOP */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            {promoteurGroup.map((promoteur, index) => (
+              <PromoteurCard
+                key={promoteur.id || `${groupIndex}-${index}`}
+                promoteur={promoteur}
+                index={index}
+                groupIndex={groupIndex}
+                isGroupActive={isActive}
+                handleImageClick={handleImageClick}
+                isInView={isInView}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
+        )}
       </motion.div>
     </section>
   );
 };
 
-// Carte promoteur avec animations élégantes - AMÉLIORATION VISIBILITÉ
+// Carte promoteur mobile un par un avec navigation
+const SinglePromoteurCard = ({
+  promoteur,
+  index,
+  groupIndex,
+  isGroupActive,
+  handleImageClick,
+  isInView,
+  isMobile,
+  totalPromoteurs,
+  currentIndex,
+  scrollToSection,
+  totalSections
+}) => {
+  if (!promoteur) {
+    return null;
+  }
+
+  const handleClick = useCallback(() => {
+    if (handleImageClick && typeof handleImageClick === 'function') {
+      handleImageClick(promoteur);
+    }
+  }, [handleImageClick, promoteur]);
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      scrollToSection(currentIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < totalSections - 1) {
+      scrollToSection(currentIndex + 1);
+    }
+  };
+
+  return (
+    <motion.div
+      className="relative w-full"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
+      {/* Header avec compteur */}
+      <motion.div
+        className="text-center mb-6"
+        initial={{ opacity: 0, y: -20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+        transition={{ delay: 0.2 }}
+      >
+        <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl rounded-full border border-white/20 px-6 py-3">
+          <User className="w-4 h-4 text-white" />
+          <span className="text-white font-semibold text-sm">
+            {currentIndex + 1} / {totalPromoteurs}
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Carte principale */}
+      <motion.div
+        className="cursor-pointer relative group"
+        onClick={handleClick}
+        whileHover={{ scale: 1.02, y: -5 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="relative bg-gradient-to-br from-white/15 via-white/10 to-white/15 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/30 transition-all duration-500 h-[500px] group-hover:border-white/50 group-hover:shadow-2xl group-hover:shadow-white/20">
+          
+          {/* Badge premium */}
+          <div className="absolute z-20 top-6 right-6">
+            <motion.div 
+              className="bg-black/60 backdrop-blur-sm rounded-full border border-white/40 text-white font-medium px-4 py-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0.8, scale: 0.9 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span className="text-xs">Premium</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Image */}
+          <div className="relative overflow-hidden h-72">
+            <motion.img
+              src={promoteur.image || '/placeholder-image.jpg'}
+              alt={promoteur.nom || 'Promoteur'}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+              initial={{ scale: 1.1 }}
+              animate={isInView ? { scale: 1 } : { scale: 1.05 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              onError={(e) => {
+                e.target.src = '/placeholder-image.jpg';
+              }}
+            />
+            
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+            
+            {/* Effet de brillance */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+              style={{ 
+                background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)',
+                transform: 'translateX(-100%)'
+              }}
+              animate={{
+                x: ['0%', '200%']
+              }}
+              transition={{
+                duration: 2.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 3
+              }}
+            />
+          </div>
+
+          {/* Contenu */}
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 p-6"
+            initial={{ y: 20, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : { y: 15, opacity: 0.8 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <motion.h3 
+              className="font-black text-white text-2xl mb-2 tracking-tight leading-tight"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              {promoteur.nom || 'Nom non disponible'}
+            </motion.h3>
+            
+            <motion.p 
+              className={`font-bold text-lg mb-4 leading-tight ${promoteur.colorClass || 'text-white/90'}`}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              {promoteur.role || 'Rôle non spécifié'}
+            </motion.p>
+
+            {/* Badge expertise */}
+            <motion.div 
+              className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full border border-white/30 px-4 py-2"
+              whileHover={{ 
+                scale: 1.05,
+                backgroundColor: 'rgba(255,255,255,0.2)'
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <MapPin className="text-white/70 w-4 h-4" />
+              <span className="text-white/90 font-medium text-sm">
+                {promoteur.expertise || 'Expertise non spécifiée'}
+              </span>
+            </motion.div>
+          </motion.div>
+
+          {/* Effet de lueur pour carte active */}
+          {isGroupActive && (
+            <motion.div
+              className="absolute inset-0 rounded-3xl pointer-events-none"
+              style={{
+                boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)',
+                background: 'linear-gradient(45deg, transparent 40%, rgba(59,130,246,0.05) 50%, transparent 60%)'
+              }}
+              animate={{ 
+                boxShadow: [
+                  '0 0 30px rgba(59, 130, 246, 0.3)',
+                  '0 0 50px rgba(139, 92, 246, 0.4)',
+                  '0 0 30px rgba(59, 130, 246, 0.3)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+          )}
+        </div>
+      </motion.div>
+
+      {/* Navigation arrows */}
+      <motion.div
+        className="flex justify-between items-center mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ delay: 0.7 }}
+      >
+        <motion.button
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
+          className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all ${
+            currentIndex === 0 
+              ? 'bg-white/5 text-white/30 cursor-not-allowed' 
+              : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
+          }`}
+          whileHover={currentIndex > 0 ? { scale: 1.05, x: -2 } : {}}
+          whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span className="text-sm">Précédent</span>
+        </motion.button>
+
+        {/* Indicateur de progression */}
+        <div className="flex items-center gap-2">
+          {Array.from({ length: Math.min(totalPromoteurs, 5) }).map((_, i) => {
+            const dotIndex = currentIndex < 3 ? i : 
+                            currentIndex > totalPromoteurs - 3 ? totalPromoteurs - 5 + i :
+                            currentIndex - 2 + i;
+            return (
+              <motion.div
+                key={i}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  dotIndex === currentIndex ? 'bg-white scale-125' : 'bg-white/30'
+                }`}
+                whileHover={{ scale: 1.5 }}
+              />
+            );
+          })}
+        </div>
+
+        <motion.button
+          onClick={handleNext}
+          disabled={currentIndex === totalSections - 1}
+          className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all ${
+            currentIndex === totalSections - 1 
+              ? 'bg-white/5 text-white/30 cursor-not-allowed' 
+              : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
+          }`}
+          whileHover={currentIndex < totalSections - 1 ? { scale: 1.05, x: 2 } : {}}
+          whileTap={currentIndex < totalSections - 1 ? { scale: 0.95 } : {}}
+        >
+          <span className="text-sm">Suivant</span>
+          <ChevronRight className="w-4 h-4" />
+        </motion.button>
+      </motion.div>
+
+      {/* Citation en bas */}
+      <motion.div
+        className="mt-6 text-center"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 0.9 }}
+      >
+        <blockquote className="text-white/70 text-sm italic max-w-xs mx-auto leading-relaxed">
+          "{promoteur.pensee ? promoteur.pensee.substring(0, 100) + '...' : 'Aucune citation disponible'}"
+        </blockquote>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Carte promoteur desktop standard
 const PromoteurCard = ({
   promoteur,
   index,
@@ -273,7 +538,7 @@ const PromoteurCard = ({
 
   return (
     <motion.div
-      className="cursor-pointer relative group"
+      className="cursor-pointer relative group w-full"
       onClick={handleClick}
       initial={{ 
         opacity: 0, 
@@ -285,46 +550,41 @@ const PromoteurCard = ({
         y: 0,
         scale: 1
       } : {
-        opacity: 0.7, // Au lieu de 0 - garde une visibilité partielle
-        y: 15, // Mouvement réduit
+        opacity: 0.7,
+        y: 15,
         scale: 0.99
       }}
       transition={{ 
         duration: 0.5, 
         ease: [0.25, 0.46, 0.45, 0.94],
-        delay: index * 0.08 // Délai réduit
+        delay: index * 0.08
       }}
       whileHover={{ 
         y: -6,
-        scale: 1.02, // Scale réduit
+        scale: 1.02,
         transition: { duration: 0.3, ease: "easeOut" }
       }}
-      whileTap={isMobile ? { scale: 0.98 } : {}}
+      whileTap={{ scale: 0.98 }}
     >
-      {/* Card avec design épuré - VISIBILITÉ AMÉLIORÉE */}
-      <div className={`relative bg-gradient-to-br from-white/10 via-white/6 to-white/10 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/25 transition-all duration-500 w-full ${
-        isMobile ? 'h-[420px]' : 'h-[540px]'
-      } group-hover:border-white/50 group-hover:shadow-2xl group-hover:shadow-white/15`}>
+      <div className="relative bg-gradient-to-br from-white/10 via-white/6 to-white/10 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/25 transition-all duration-500 w-full h-[540px] group-hover:border-white/50 group-hover:shadow-2xl group-hover:shadow-white/15">
 
         {/* Badge premium moderne */}
-        <div className={`absolute z-20 ${isMobile ? 'top-4 right-4' : 'top-6 right-6'}`}>
+        <div className="absolute z-20 top-6 right-6">
           <motion.div 
-            className={`bg-black/60 backdrop-blur-sm rounded-full border border-white/40 text-white font-medium ${
-              isMobile ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-xs'
-            }`}
+            className="bg-black/60 backdrop-blur-sm rounded-full border border-white/40 text-white font-medium px-4 py-2 text-xs"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0.8, scale: 0.95 }}
             transition={{ delay: 0.3 + index * 0.1 }}
           >
-            <div className={`flex items-center ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
-              <User className={isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} />
+            <div className="flex items-center gap-2">
+              <User className="w-3.5 h-3.5" />
               <span>Team</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Image avec effet hover subtil */}
-        <div className={`relative overflow-hidden ${isMobile ? 'h-64' : 'h-80'}`}>
+        {/* Image */}
+        <div className="relative overflow-hidden h-80">
           <motion.img
             src={promoteur.image || '/placeholder-image.jpg'}
             alt={promoteur.nom || 'Promoteur'}
@@ -335,10 +595,9 @@ const PromoteurCard = ({
             }}
           />
           
-          {/* Overlay gradient amélioré */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
           
-          {/* Effet de brillance moderne - PLUS SUBTIL */}
+          {/* Effet de brillance */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"
             style={{ 
@@ -357,17 +616,15 @@ const PromoteurCard = ({
           />
         </div>
 
-        {/* Contenu avec animations fluides */}
+        {/* Contenu */}
         <motion.div 
-          className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'p-5' : 'p-8'}`}
+          className="absolute bottom-0 left-0 right-0 p-8"
           initial={{ y: 15, opacity: 0 }}
           animate={isInView ? { y: 0, opacity: 1 } : { y: 10, opacity: 0.8 }}
           transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
         >
           <motion.h3 
-            className={`font-bold text-white mb-2 leading-tight ${
-              isMobile ? 'text-xl' : 'text-2xl mb-3'
-            }`}
+            className="font-bold text-white text-2xl mb-3 leading-tight"
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.2 }}
           >
@@ -375,40 +632,33 @@ const PromoteurCard = ({
           </motion.h3>
           
           <motion.p 
-            className={`font-medium mb-4 leading-tight ${
-              isMobile ? 'text-sm' : 'text-lg'
-            } ${promoteur.colorClass || 'text-white/90'}`}
+            className={`font-medium text-lg mb-4 leading-tight ${promoteur.colorClass || 'text-white/90'}`}
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.2 }}
           >
             {promoteur.role || 'Rôle non spécifié'}
           </motion.p>
 
-          {/* Badge expertise moderne */}
+          {/* Badge expertise */}
           <motion.div 
-            className={`inline-flex items-center gap-2 bg-white/12 backdrop-blur-sm rounded-full border border-white/30 ${
-              isMobile ? 'px-3 py-1.5' : 'px-4 py-2'
-            }`}
+            className="inline-flex items-center gap-2 bg-white/12 backdrop-blur-sm rounded-full border border-white/30 px-4 py-2"
             whileHover={{ 
               scale: 1.03,
               backgroundColor: 'rgba(255,255,255,0.18)'
             }}
             transition={{ duration: 0.2 }}
           >
-            <MapPin className={`text-white/70 ${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
-            <span className={`text-white/90 font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>
-              {isMobile 
-                ? (promoteur.expertise || 'Expertise').substring(0, 15) + '...'
-                : promoteur.expertise || 'Expertise non spécifiée'
-              }
+            <MapPin className="text-white/70 w-4 h-4" />
+            <span className="text-white/90 font-medium text-sm">
+              {promoteur.expertise || 'Expertise non spécifiée'}
             </span>
           </motion.div>
         </motion.div>
 
-        {/* Effet de lueur subtile pour la carte active - PLUS DOUX */}
+        {/* Effet de lueur pour carte active */}
         {isGroupActive && (
           <motion.div
-            className="absolute inset-0 rounded-3xl pointer-events-none"
+            className="absolute inset-0 rounded-2xl pointer-events-none"
             style={{
               boxShadow: '0 0 25px rgba(59, 130, 246, 0.25)',
               background: 'linear-gradient(45deg, transparent 40%, rgba(59,130,246,0.03) 50%, transparent 60%)'
@@ -428,13 +678,11 @@ const PromoteurCard = ({
   );
 };
 
-// Background épuré - SANS CHANGEMENTS
+// Composants restants (BackgroundEffects, IntroSection, OutroSection, etc.) restent identiques
 const BackgroundEffects = ({ isMobile }) => (
   <div className="fixed inset-0 z-0">
-    {/* Gradient de base simple */}
     <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/30 to-black" />
     
-    {/* Particules très subtiles */}
     {!isMobile && (
       <motion.div
         className="absolute inset-0 opacity-10"
@@ -456,9 +704,92 @@ const BackgroundEffects = ({ isMobile }) => (
   </div>
 );
 
-<IntroSection />
+const IntroSection = ({ isMobile }) => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { threshold: isMobile ? 0.3 : 0.5 });
+  
+  return (
+    <section
+      ref={sectionRef}
+      className="h-screen w-full flex items-center justify-center relative overflow-hidden"
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-radial from-white/3 via-transparent to-transparent"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={isInView ? { scale: 1.5, opacity: 1 } : { scale: 0, opacity: 0 }}
+        transition={{ duration: isMobile ? 1.5 : 2, ease: "easeOut" }}
+      />
 
-// Section de conclusion simplifiée - SANS CHANGEMENTS
+      <motion.div
+        className={`text-center z-10 max-w-4xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}
+        initial={{ opacity: 0, y: isMobile ? 30 : 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 30 : 50 }}
+        transition={{ duration: isMobile ? 0.8 : 1, ease: "easeOut" }}
+      >
+        <motion.div
+          className={isMobile ? 'mb-8' : 'mb-12'}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+          transition={{ delay: 0.3, duration: isMobile ? 0.6 : 0.8 }}
+        >
+          <div className={`inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl rounded-full border border-white/20 ${
+            isMobile ? 'px-6 py-3 mb-6' : 'px-8 py-4 mb-8'
+          }`}>
+            <Sparkles className={`text-white ${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
+            <span className={`text-white font-semibold tracking-wider ${isMobile ? 'text-sm' : ''}`}>
+              NOTRE ÉQUIPE
+            </span>
+          </div>
+        </motion.div>
+        
+        <motion.h1
+          className={`font-bold text-white mb-8 leading-tight ${
+            isMobile ? 'text-4xl sm:text-5xl' : 'text-6xl lg:text-7xl'
+          }`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.5, duration: isMobile ? 0.8 : 1 }}
+        >
+          <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+            Nos Promoteurs
+          </span>
+        </motion.h1>
+        
+        <motion.p
+          className={`text-white/80 max-w-3xl mx-auto leading-relaxed font-light ${
+            isMobile ? 'text-lg px-4' : 'text-xl'
+          }`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.7, duration: isMobile ? 0.8 : 1 }}
+        >
+          Découvrez les visionnaires qui façonnent l'avenir de vos projets immobiliers.
+          {isMobile && <br />}
+          <span className="text-white/60">
+            Chaque promoteur apporte son expertise unique à votre service.
+          </span>
+        </motion.p>
+
+        <motion.div
+          className={isMobile ? 'mt-12' : 'mt-16'}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: isMobile ? 1.2 : 1.5, duration: 0.8 }}
+        >
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-white/50 text-sm font-medium"
+          >
+            <ChevronDown className={`mx-auto mb-2 ${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
+            Découvrir l'équipe
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
 const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { threshold: isMobile ? 0.2 : 0.3 });
@@ -467,7 +798,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
   const outroStart = (totalSections + 1) / totalWithIntroOutro;
   const outroEnd = 1;
   
-  // Animation douce
   const outroY = useTransform(
     progress,
     [outroStart - 0.1, outroStart, outroEnd],
@@ -485,7 +815,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
       ref={sectionRef}
       className="h-screen w-full flex items-center justify-center relative overflow-hidden"
     >
-      {/* Effet de lumière finale */}
       <motion.div
         className="absolute inset-0 bg-gradient-radial from-blue-500/3 via-purple-500/3 to-transparent"
         initial={{ scale: 0, opacity: 0 }}
@@ -500,7 +829,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
           opacity: outroOpacity
         }}
       >
-        {/* Statistiques élégantes */}
         <motion.div
           className={isMobile ? 'mb-8' : 'mb-12'}
           initial={{ y: -20, opacity: 0 }}
@@ -537,7 +865,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
           </div>
         </motion.div>
         
-        {/* Message de conclusion */}
         <motion.h2
           className={`font-bold text-white mb-6 leading-tight ${
             isMobile ? 'text-3xl sm:text-4xl' : 'text-4xl lg:text-5xl mb-8'
@@ -551,7 +878,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
           </span>
         </motion.h2>
         
-        {/* Call to action */}
         <motion.div
           className="flex justify-center items-center"
           initial={{ y: -15, opacity: 0 }}
@@ -573,7 +899,6 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
   );
 };
 
-// StatCard épurée - SANS CHANGEMENTS
 const StatCard = ({ icon, number, label, delay, isInView, isMobile }) => (
   <motion.div
     className={`text-center bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 ${
@@ -600,7 +925,7 @@ const StatCard = ({ icon, number, label, delay, isInView, isMobile }) => (
   </motion.div>
 );
 
-// Navigation, compteur et actions flottantes - SANS CHANGEMENTS
+// Navigation avec compteur mobile amélioré
 const NavigationDots = ({ showNavigation, totalGroups, currentSection, scrollToSection, isMobile }) => (
   <AnimatePresence>
     {showNavigation && (
@@ -616,30 +941,39 @@ const NavigationDots = ({ showNavigation, totalGroups, currentSection, scrollToS
         <div className={`flex flex-col gap-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl ${
           isMobile ? 'p-3' : 'p-4'
         }`}>
-          {Array.from({ length: totalGroups }).map((_, index) => (
-            <motion.button
-              key={index}
-              onClick={() => scrollToSection(index)}
-              className={`relative rounded-full transition-all duration-300 ${
-                isMobile ? 'w-2.5 h-2.5' : 'w-3 h-3'
-              } ${
-                index === currentSection
-                  ? 'bg-white shadow-lg shadow-white/50'
-                  : 'bg-white/30 hover:bg-white/60'
-              }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.8 }}
-            >
-              <span className="sr-only">Groupe {index + 1}</span>
-            </motion.button>
-          ))}
+          {Array.from({ length: Math.min(totalGroups, isMobile ? 5 : totalGroups) }).map((_, index) => {
+            const dotIndex = isMobile && totalGroups > 5 
+              ? currentSection < 3 ? index :
+                currentSection > totalGroups - 3 ? totalGroups - 5 + index :
+                currentSection - 2 + index
+              : index;
+
+            return (
+              <motion.button
+                key={isMobile ? dotIndex : index}
+                onClick={() => scrollToSection(dotIndex)}
+                className={`relative rounded-full transition-all duration-300 ${
+                  isMobile ? 'w-2.5 h-2.5' : 'w-3 h-3'
+                } ${
+                  dotIndex === currentSection
+                    ? 'bg-white shadow-lg shadow-white/50'
+                    : 'bg-white/30 hover:bg-white/60'
+                }`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+              >
+                <span className="sr-only">Promoteur {dotIndex + 1}</span>
+              </motion.button>
+            );
+          })}
         </div>
       </motion.div>
     )}
   </AnimatePresence>
 );
 
-const ProgressCounter = ({ showNavigation, currentSection, totalSections, progress, isMobile }) => (
+// Progress counter avec compteur de promoteurs
+const ProgressCounter = ({ showNavigation, currentSection, totalSections, progress, isMobile, allPromoteurs }) => (
   <AnimatePresence>
     {showNavigation && (
       <motion.div
@@ -656,7 +990,10 @@ const ProgressCounter = ({ showNavigation, currentSection, totalSections, progre
         }`}>
           <div className={`flex items-center ${isMobile ? 'gap-3' : 'gap-4'}`}>
             <div className={`text-white font-semibold ${isMobile ? 'text-sm' : 'text-base'}`}>
-              {String(currentSection + 1).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
+              {isMobile 
+                ? `${String(currentSection + 1).padStart(2, '0')} / ${String(allPromoteurs?.length || totalSections).padStart(2, '0')}`
+                : `${String(currentSection + 1).padStart(2, '0')} / ${String(totalSections).padStart(2, '0')}`
+              }
             </div>
             <div className={`bg-white/20 rounded-full overflow-hidden ${
               isMobile ? 'w-16 h-2' : 'w-20 h-2'
