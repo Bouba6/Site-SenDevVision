@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowUp, User, MapPin, Sparkles, Heart, Star, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -884,15 +885,17 @@ const OutroSection = ({ totalPromoteurs, progress, totalSections, isMobile }) =>
           animate={isInView ? { y: 0, opacity: 1 } : { y: -15, opacity: 0 }}
           transition={{ delay: 1.4, duration: 1 }}
         >
-          <motion.button
-            className={`bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold rounded-full transition-all duration-300 ${
-              isMobile ? 'px-8 py-4 text-sm' : 'px-10 py-5'
-            }`}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Nous contacter
-          </motion.button>
+          <Link to="/contact">
+            <motion.button
+              className={`bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold rounded-full transition-all duration-300 ${
+                isMobile ? 'px-8 py-4 text-sm' : 'px-10 py-5'
+              }`}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Nous contacter
+            </motion.button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>
