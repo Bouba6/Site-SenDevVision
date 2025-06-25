@@ -4,19 +4,39 @@ import { Users, Mail, Linkedin, Github, Eye, Award, X, Grid, Camera, Layers, Hea
 import GalleryHero from './ui/GalleryHero';
 import GalleryGrid from './ui/GalleryGrid';
 
-// Composant de particules ultra sophistiqué
+// Hook personnalisé pour détecter mobile
+const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    return isMobile;
+};
+
+// Composant de particules optimisé pour mobile
 const FloatingParticles = () => {
     const [particles, setParticles] = useState([]);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         const generateParticles = () => {
             const newParticles = [];
-            for (let i = 0; i < 20; i++) {
+            const particleCount = isMobile ? 8 : 20; // Moins de particules sur mobile
+            
+            for (let i = 0; i < particleCount; i++) {
                 newParticles.push({
                     id: i,
                     x: Math.random() * 100,
                     y: Math.random() * 100,
-                    size: Math.random() * 8 + 4,
+                    size: isMobile ? Math.random() * 4 + 2 : Math.random() * 8 + 4,
                     duration: Math.random() * 6 + 4,
                     delay: Math.random() * 4,
                     opacity: Math.random() * 0.4 + 0.1,
@@ -27,7 +47,7 @@ const FloatingParticles = () => {
         };
 
         generateParticles();
-    }, []);
+    }, [isMobile]);
 
     const getParticleColor = (color, opacity) => {
         switch (color) {
@@ -37,6 +57,9 @@ const FloatingParticles = () => {
             default: return `rgba(59, 130, 246, ${opacity})`;
         }
     };
+
+    // Pas de particules sur mobile pour les performances
+    if (isMobile) return null;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -60,14 +83,30 @@ const FloatingParticles = () => {
     );
 };
 
-// Modal ultra moderne et immersif
+// Modal ultra responsive avec scroll
 const ImageModal = ({ isOpen, onClose, promoteur }) => {
     const [mounted, setMounted] = useState(false);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         setMounted(true);
-        document.body.style.overflow = isOpen ? 'hidden' : 'unset';
-        return () => { document.body.style.overflow = 'unset'; };
+        if (isOpen) {
+            // Empêcher le scroll du body
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        } else {
+            // Restaurer le scroll du body
+            document.body.style.overflow = 'unset';
+            document.body.style.position = 'unset';
+            document.body.style.width = 'unset';
+        }
+        
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.body.style.position = 'unset';
+            document.body.style.width = 'unset';
+        };
     }, [isOpen]);
 
     if (!isOpen || !promoteur || !mounted) return null;
@@ -76,7 +115,7 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 z-50 flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -84,16 +123,20 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                 >
                     {/* Backdrop */}
                     <motion.div
-                        className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+                        className="absolute inset-0 bg-black/95 backdrop-blur-xl"
                         onClick={onClose}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     />
 
-                    {/* Modal container - Taille réduite */}
+                    {/* Modal container - Responsive */}
                     <motion.div
-                        className="relative w-full max-w-3xl mx-auto z-10"
+                        className={`relative z-10 mx-auto ${
+                            isMobile 
+                                ? 'w-full h-full p-0' 
+                                : 'w-full max-w-3xl p-4'
+                        }`}
                         initial={{ scale: 0.8, opacity: 0, y: 50 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -103,145 +146,296 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                             damping: 30
                         }}
                     >
-                        {/* Bouton fermer - Ajusté */}
+                        {/* Bouton fermer - Position adaptée */}
                         <motion.button
                             onClick={onClose}
-                            className="absolute -top-4 -right-4 z-20 w-12 h-12 bg-blue-800 hover:bg-blue-900 rounded-full flex items-center justify-center text-white shadow-2xl border-2 border-white/20"
+                            className={`absolute z-20 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center text-white shadow-2xl border-2 border-white/20 ${
+                                isMobile 
+                                    ? 'top-4 right-4 w-10 h-10' 
+                                    : '-top-4 -right-4 w-12 h-12'
+                            }`}
                             whileHover={{ scale: 1.1, rotate: 90 }}
                             whileTap={{ scale: 0.95 }}
                             transition={{ type: "spring", stiffness: 400 }}
                         >
-                            <X className="w-5 h-5" />
+                            <X className={isMobile ? 'w-4 h-4' : 'w-5 h-5'} />
                         </motion.button>
 
-                        {/* Card principal - Hauteur réduite */}
+                        {/* Card principal - Layout adaptatif */}
                         <motion.div
-                            className="relative bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-h-[75vh]"
+                            className={`relative bg-white/5 backdrop-blur-2xl overflow-hidden border border-white/10 shadow-2xl ${
+                                isMobile 
+                                    ? 'h-full rounded-none' 
+                                    : 'rounded-2xl max-h-[75vh]'
+                            }`}
                             layoutId={`card-${promoteur.id}`}
                         >
-                            <div className="grid lg:grid-cols-2 gap-0 h-full">
-                                {/* Section Image sans cadre - Image complète */}
-                                <motion.div
-                                    className="relative h-full min-h-[350px]"
-                                    initial={{ x: -50, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    {/* Image en plein écran */}
-                                    <motion.img
-                                        src={promoteur.image}
-                                        alt={promoteur.nom}
-                                        className="w-full h-full object-cover"
-                                        initial={{ scale: 1.1 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 0.6, ease: "easeOut" }}
-                                    />
-
-                                    {/* Overlay léger pour meilleure lisibilité */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-                                    
-                                </motion.div>
-
-                                {/* Section Contenu - Padding réduit */}
-                                <motion.div
-                                    className="p-6 flex flex-col justify-center space-y-4"
-                                    initial={{ x: 50, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.3 }}
-                                >
-                                    {/* Header avec animation - Tailles réduites */}
+                            {/* Version Mobile - Layout vertical avec scroll */}
+                            {isMobile ? (
+                                <div className="h-full overflow-y-auto overscroll-contain">
+                                    {/* Image fixe en haut */}
                                     <motion.div
-                                        initial={{ y: 20, opacity: 0 }}
+                                        className="relative h-64 flex-shrink-0"
+                                        initial={{ y: -50, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
-                                        transition={{ delay: 0.4 }}
+                                        transition={{ delay: 0.2 }}
                                     >
-                                        <h3 className="text-3xl font-black text-white mb-2 tracking-tight">
-                                            {promoteur.nom}
-                                        </h3>
-                                        <p className={`text-xl font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
-                                            {promoteur.role}
-                                        </p>
+                                        <motion.img
+                                            src={promoteur.image}
+                                            alt={promoteur.nom}
+                                            className="w-full h-full object-cover"
+                                            initial={{ scale: 1.1 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ duration: 0.6, ease: "easeOut" }}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                                     </motion.div>
 
-                                    {/* Badge expertise - Plus compact */}
+                                    {/* Contenu scrollable */}
                                     <motion.div
-                                        className={`inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${promoteur.color} bg-opacity-20 rounded-full border border-white/20 backdrop-blur-sm w-fit`}
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ delay: 0.5, type: "spring" }}
-                                    >
-                                        <Award className="w-3.5 h-3.5 text-white" />
-                                        <span className="text-white font-medium text-sm">{promoteur.expertise}</span>
-                                    </motion.div>
-
-                                    {/* Citation avec animation typewriter - Plus compact */}
-                                    <motion.blockquote
-                                        className="relative"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.6 }}
-                                    >
-                                        <div className="text-4xl text-blue-400/20 absolute -top-2 -left-1">"</div>
-                                        <p className="text-white/90 text-base italic leading-relaxed pl-4">
-                                            {promoteur.pensee}
-                                        </p>
-                                        <div className="text-4xl text-purple-400/20 absolute -bottom-4 -right-1 rotate-180">"</div>
-                                    </motion.blockquote>
-
-                                    {/* Actions avec hover effects - Plus compact */}
-                                    <motion.div
-                                        className="space-y-2"
-                                        initial={{ y: 30, opacity: 0 }}
+                                        className="p-6 space-y-6 min-h-screen"
+                                        initial={{ y: 50, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
-                                        transition={{ delay: 0.7 }}
+                                        transition={{ delay: 0.3 }}
                                     >
-                                        <div className="flex gap-2">
-                                            <motion.a
-                                                href={promoteur.linkedin}
-                                                className="flex-1 bg-blue-600 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
-                                                whileHover={{ scale: 1.05, backgroundColor: "#1d4ed8" }}
-                                                whileTap={{ scale: 0.95 }}
-                                            >
-                                                <Linkedin className="w-4 h-4" />
-                                                LinkedIn
-                                            </motion.a>
-
-                                            <motion.a
-                                                href={promoteur.github}
-                                                className="flex-1 bg-slate-700 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
-                                                whileHover={{ scale: 1.05, backgroundColor: "#374151" }}
-                                                whileTap={{ scale: 0.95 }}
-                                            >
-                                                <Github className="w-4 h-4" />
-                                                GitHub
-                                            </motion.a>
-                                        </div>
-
-                                        <motion.button
-                                            className="w-full bg-green-600 text-white py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
-                                            whileHover={{ scale: 1.05, backgroundColor: "#059669" }}
-                                            whileTap={{ scale: 0.95 }}
+                                        {/* Header */}
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.4 }}
                                         >
-                                            <Mail className="w-4 h-4" />
-                                            Contacter
-                                        </motion.button>
+                                            <h3 className="text-2xl font-black text-white mb-2 tracking-tight">
+                                                {promoteur.nom}
+                                            </h3>
+                                            <p className={`text-lg font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
+                                                {promoteur.role}
+                                            </p>
+                                        </motion.div>
+
+                                        {/* Badge expertise */}
+                                        <motion.div
+                                            className={`inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r ${promoteur.color} bg-opacity-20 rounded-full border border-white/20 backdrop-blur-sm w-fit`}
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ delay: 0.5, type: "spring" }}
+                                        >
+                                            <Award className="w-4 h-4 text-white" />
+                                            <span className="text-white font-medium text-sm">{promoteur.expertise}</span>
+                                        </motion.div>
+
+                                        {/* Citation */}
+                                        <motion.blockquote
+                                            className="relative bg-white/5 p-6 rounded-xl border border-white/10"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.6 }}
+                                        >
+                                            <div className="text-3xl text-blue-400/30 absolute -top-2 -left-2">"</div>
+                                            <p className="text-white/90 text-base leading-relaxed pl-6 pr-6">
+                                                {promoteur.pensee}
+                                            </p>
+                                            <div className="text-3xl text-purple-400/30 absolute -bottom-2 -right-2 rotate-180">"</div>
+                                        </motion.blockquote>
+
+                                        {/* Informations supplémentaires */}
+                                        <motion.div
+                                            className="space-y-4"
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.7 }}
+                                        >
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                                                    <div className="text-blue-400 text-2xl font-bold">5+</div>
+                                                    <div className="text-white/70 text-sm">Années d'expérience</div>
+                                                </div>
+                                                <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                                                    <div className="text-green-400 text-2xl font-bold">20+</div>
+                                                    <div className="text-white/70 text-sm">Projets réalisés</div>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+
+                                        {/* Actions */}
+                                        <motion.div
+                                            className="space-y-3 pb-8"
+                                            initial={{ y: 30, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.8 }}
+                                        >
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <motion.a
+                                                    href={promoteur.linkedin}
+                                                    className="bg-blue-600 text-white px-4 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-sm"
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    <Linkedin className="w-4 h-4" />
+                                                    LinkedIn
+                                                </motion.a>
+
+                                                <motion.a
+                                                    href={promoteur.github}
+                                                    className="bg-slate-700 text-white px-4 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-sm"
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    <Github className="w-4 h-4" />
+                                                    GitHub
+                                                </motion.a>
+                                            </div>
+
+                                            <motion.button
+                                                className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                <Mail className="w-4 h-4" />
+                                                Contacter par email
+                                            </motion.button>
+
+                                            <motion.button
+                                                className="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                <Phone className="w-4 h-4" />
+                                                Appeler
+                                            </motion.button>
+                                        </motion.div>
+
+                                        {/* Footer */}
+                                        <motion.div
+                                            className="flex items-center justify-center gap-3 pt-4 opacity-70 border-t border-white/10"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.9 }}
+                                        >
+                                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                            <div className="text-white/60 font-medium text-xs">
+                                                Sen Dev Vision
+                                            </div>
+                                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                        </motion.div>
+                                    </motion.div>
+                                </div>
+                            ) : (
+                                /* Version Desktop - Layout horizontal */
+                                <div className="grid lg:grid-cols-2 gap-0 h-full">
+                                    {/* Section Image */}
+                                    <motion.div
+                                        className="relative h-full min-h-[350px]"
+                                        initial={{ x: -50, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ delay: 0.2 }}
+                                    >
+                                        <motion.img
+                                            src={promoteur.image}
+                                            alt={promoteur.nom}
+                                            className="w-full h-full object-cover"
+                                            initial={{ scale: 1.1 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ duration: 0.6, ease: "easeOut" }}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                                     </motion.div>
 
-                                    {/* Footer - Plus compact */}
+                                    {/* Section Contenu Desktop */}
                                     <motion.div
-                                        className="flex items-center justify-center gap-3 pt-3 opacity-70"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.8 }}
+                                        className="p-6 flex flex-col justify-center space-y-4 overflow-y-auto"
+                                        initial={{ x: 50, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ delay: 0.3 }}
                                     >
-                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                                        <div className="text-white/60 font-medium text-xs">
-                                            Sen Dev Vision
-                                        </div>
-                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.4 }}
+                                        >
+                                            <h3 className="text-3xl font-black text-white mb-2 tracking-tight">
+                                                {promoteur.nom}
+                                            </h3>
+                                            <p className={`text-xl font-bold bg-gradient-to-r ${promoteur.color} bg-clip-text text-transparent`}>
+                                                {promoteur.role}
+                                            </p>
+                                        </motion.div>
+
+                                        <motion.div
+                                            className={`inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r ${promoteur.color} bg-opacity-20 rounded-full border border-white/20 backdrop-blur-sm w-fit`}
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ delay: 0.5, type: "spring" }}
+                                        >
+                                            <Award className="w-3.5 h-3.5 text-white" />
+                                            <span className="text-white font-medium text-sm">{promoteur.expertise}</span>
+                                        </motion.div>
+
+                                        <motion.blockquote
+                                            className="relative"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.6 }}
+                                        >
+                                            <div className="text-4xl text-blue-400/20 absolute -top-2 -left-1">"</div>
+                                            <p className="text-white/90 text-base italic leading-relaxed pl-4">
+                                                {promoteur.pensee}
+                                            </p>
+                                            <div className="text-4xl text-purple-400/20 absolute -bottom-4 -right-1 rotate-180">"</div>
+                                        </motion.blockquote>
+
+                                        <motion.div
+                                            className="space-y-2"
+                                            initial={{ y: 30, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.7 }}
+                                        >
+                                            <div className="flex gap-2">
+                                                <motion.a
+                                                    href={promoteur.linkedin}
+                                                    className="flex-1 bg-blue-600 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <Linkedin className="w-4 h-4" />
+                                                    LinkedIn
+                                                </motion.a>
+
+                                                <motion.a
+                                                    href={promoteur.github}
+                                                    className="flex-1 bg-slate-700 text-white px-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <Github className="w-4 h-4" />
+                                                    GitHub
+                                                </motion.a>
+                                            </div>
+
+                                            <motion.button
+                                                className="w-full bg-green-600 text-white py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Mail className="w-4 h-4" />
+                                                Contacter
+                                            </motion.button>
+                                        </motion.div>
+
+                                        <motion.div
+                                            className="flex items-center justify-center gap-3 pt-3 opacity-70"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.8 }}
+                                        >
+                                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                            <div className="text-white/60 font-medium text-xs">
+                                                Sen Dev Vision
+                                            </div>
+                                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                                        </motion.div>
                                     </motion.div>
-                                </motion.div>
-                            </div>
+                                </div>
+                            )}
                         </motion.div>
                     </motion.div>
                 </motion.div>
@@ -249,7 +443,6 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
         </AnimatePresence>
     );
 };
-
 
 const GallerySection = () => {
     const [mounted, setMounted] = useState(false);
@@ -272,7 +465,8 @@ const GallerySection = () => {
             expertise: "Strategy & Leadership",
             linkedin: "#",
             github: "#",
-            color: "bg-red-500",
+            color: "from-red-500 to-orange-500",
+            colorClass: "text-red-400",
             bloc: 1
         },
         {
@@ -285,6 +479,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-purple-500 to-pink-500",
+            colorClass: "text-purple-400",
             bloc: 1
         },
         {
@@ -297,6 +492,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-teal-500 to-cyan-500",
+            colorClass: "text-teal-400",
             bloc: 1
         },
         // Bloc 2 - Développement
@@ -310,6 +506,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-green-500 to-emerald-500",
+            colorClass: "text-green-400",
             bloc: 2
         },
         {
@@ -322,6 +519,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-indigo-500 to-purple-500",
+            colorClass: "text-indigo-400",
             bloc: 2
         },
         {
@@ -334,6 +532,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-violet-500 to-purple-500",
+            colorClass: "text-violet-400",
             bloc: 2
         },
         // Bloc 3 - Design & Marketing
@@ -347,6 +546,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-orange-500 to-red-500",
+            colorClass: "text-orange-400",
             bloc: 3
         },
         {
@@ -359,6 +559,7 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-rose-500 to-pink-500",
+            colorClass: "text-rose-400",
             bloc: 3
         },
         {
@@ -371,27 +572,10 @@ const GallerySection = () => {
             linkedin: "#",
             github: "#",
             color: "from-amber-500 to-orange-500",
+            colorClass: "text-amber-400",
             bloc: 3
         }
     ];
-
-    const blocTitles = {
-        1: "Leadership & Vision",
-        2: "Développement & Tech",
-        3: "Design & Marketing"
-    };
-
-    const blocSubtitles = {
-        1: "L'équipe dirigeante qui guide notre vision",
-        2: "Les architectes de nos solutions techniques",
-        3: "Les créatifs qui donnent vie à nos idées"
-    };
-
-    const blocIcons = {
-        1: Target,
-        2: Code2,
-        3: Sparkles
-    };
 
     const handleImageClick = (promoteur) => {
         setSelectedPromoter(promoteur);
@@ -409,7 +593,10 @@ const GallerySection = () => {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-black overflow-hidden mt-18">
+        <div className="min-h-screen bg-black overflow-hidden mt-0 sm:mt-12">
+            {/* Particules optimisées pour mobile */}
+            <FloatingParticles />
+
             {/* Header spectaculaire */}
             <GalleryHero />
 
@@ -419,14 +606,14 @@ const GallerySection = () => {
                 handleImageClick={handleImageClick}
             />
 
-            {/* Modal */}
+            {/* Modal responsive avec scroll */}
             <ImageModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 promoteur={selectedPromoter}
             />
 
-            {/* Custom Styles */}
+            {/* Custom Styles optimisés pour mobile */}
             <style jsx global>{`
                 @keyframes float {
                     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -438,23 +625,45 @@ const GallerySection = () => {
                     animation: float 12s ease-in-out infinite;
                 }
 
-                .perspective-1000 {
-                    perspective: 1000px;
+                /* Optimisations pour le scroll mobile */
+                .overscroll-contain {
+                    overscroll-behavior: contain;
                 }
 
-                .animation-delay-200 {
-                    animation-delay: 200ms;
-                }
-                
-                .animation-delay-400 {
-                    animation-delay: 400ms;
+                /* Smooth scrolling */
+                html {
+                    scroll-behavior: smooth;
                 }
 
-                /* Animation d'apparition */
+                /* Scroll mobile optimisé */
+                @media (max-width: 768px) {
+                    .animate-float {
+                        animation: float 8s ease-in-out infinite;
+                    }
+                    
+                    /* Amélioration du scroll sur mobile */
+                    .overflow-y-auto {
+                        -webkit-overflow-scrolling: touch;
+                        scrollbar-width: none;
+                        -ms-overflow-style: none;
+                    }
+                    
+                    .overflow-y-auto::-webkit-scrollbar {
+                        display: none;
+                    }
+                    
+                    /* Touch optimizations */
+                    * {
+                        -webkit-tap-highlight-color: transparent;
+                        touch-action: manipulation;
+                    }
+                }
+
+                /* Animation d'apparition optimisée */
                 .grid > div {
-                    animation: slideInUp 0.8s ease-out forwards;
+                    animation: slideInUp 0.6s ease-out forwards;
                     opacity: 0;
-                    transform: translateY(50px);
+                    transform: translateY(30px);
                 }
 
                 @keyframes slideInUp {
@@ -464,9 +673,22 @@ const GallerySection = () => {
                     }
                 }
 
-                /* Smooth scrolling */
-                html {
-                    scroll-behavior: smooth;
+                /* Indicateur de scroll sur mobile */
+                @media (max-width: 768px) {
+                    .overflow-y-auto {
+                        background: 
+                            /* Shadow covers */
+                            linear-gradient(white 30%, rgba(255,255,255,0)) 0 0,
+                            linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+                            
+                            /* Shadows */
+                            radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 0,
+                            radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+                        background-repeat: no-repeat;
+                        background-color: transparent;
+                        background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+                        background-attachment: local, local, scroll, scroll;
+                    }
                 }
             `}</style>
         </div>

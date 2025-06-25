@@ -563,10 +563,10 @@ const IntroSection = ({ isMobile }) => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ delay: 0.7, duration: isMobile ? 0.8 : 1 }}
         >
-          Découvrez les visionnaires qui façonnent l'avenir de nos projets immobiliers.
+          Découvrez les visionnaires qui façonnent l'avenir de vos projets.
           {isMobile && <br />}
           <span className="text-white/60">
-            Chaque promoteur apporte son expertise unique pour créer des espaces d'exception.
+            Chaque promoteur apporte son expertise unique.
           </span>
         </motion.p>
 
