@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FloatingParticles } from "./FloatingParticles";
 import animatedphone from "../assets/animations/animatedphone.json";
 import Lottie from "lottie-react";
+import { Link } from 'react-router-dom';
 
 export function HeroSection() {
   const [currentText, setCurrentText] = useState(0);
@@ -173,6 +174,7 @@ export function HeroSection() {
                 className="flex flex-col sm:flex-row gap-4 pt-4"
                 variants={itemVariants}
               >
+                <Link to="/contact">
                 <motion.button
                   className="group relative px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-xl text-white font-semibold text-lg overflow-hidden"
                   whileHover={{ scale: 1.02, y: -2 }}
@@ -199,7 +201,8 @@ export function HeroSection() {
                     </motion.div>
                   </span>
                 </motion.button>
-
+                </Link>
+                
                 <motion.button
                   className="group px-8 py-4 border border-slate-600 text-slate-300 rounded-xl font-semibold text-lg"
                   whileHover={{
