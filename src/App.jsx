@@ -10,8 +10,6 @@ import ServiceDetailPage from './components/Page-sevice/serviceDetail'
 
 function App() {
   return (
-    <BrowserRouter>
-      {/* <BackgroundSound /> */}
       <Routes>
 
         {/* <Route path="/services/:serviceId" element={<ServiceDetailPage />} /> */}
@@ -26,7 +24,6 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
   )
 
 }
