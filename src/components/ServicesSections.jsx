@@ -8,6 +8,9 @@ import ProcessSection from "./Page-sevice/ProcessSection";
 import { TechnologiesSection } from "./Page-sevice/TechnologiesSection";
 
 export function ServicesSection() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("technologies");
