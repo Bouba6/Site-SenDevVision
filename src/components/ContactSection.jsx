@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import CustomDropdown from "./ui/CustomDropdown";
-import contact from "../assets/video/contact2.mp4";
+import contact from "../assets/video/contact3.mp4";
 
 const useMouseParallax = (stiffness = 100) => {
   const mouseX = useMotionValue(0);
