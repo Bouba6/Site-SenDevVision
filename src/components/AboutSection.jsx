@@ -35,8 +35,12 @@ const FloatingParticles = () => (
   </div>
 );
 
+
 export default function AboutPage() {
   const [activeTab, setActiveTab] = useState("vision");
+  useEffect(() => {
+    window.scrollTo(0, 0) ;
+    }, []) ;
 
   const stats = [
     {
