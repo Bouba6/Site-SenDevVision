@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   ArrowRight,
   Award,
@@ -45,7 +45,7 @@ export default function AboutPage() {
   const stats = [
     {
       icon: <Code className="w-8 h-8" />,
-      number: "50+",
+      number: "0",
       label: "Projets Réalisés",
       color: "bg-blue-500",
     },
@@ -154,22 +154,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="relative p-6 rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 text-center group hover:scale-105 transition-all duration-300"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className={`inline-flex p-3 rounded-xl ${stat.color} shadow-lg mb-4`}>
-                <div className="text-white">{stat.icon}</div>
-              </div>
-              <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-              <div className="text-sm text-slate-400">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+       
 
         {/* Vision, Mission, Values Tabs */}
         <div className="mb-20">
