@@ -132,28 +132,7 @@ export default function AboutPage() {
 
       <div className="container mx-auto px-6 py-24 relative z-10">
         {/* Hero Section */}
-        <div className="text-center mb-20 animate-in fade-in duration-1000">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 mb-6">
-            <Eye className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-400">
-              QUI SOMMES-NOUS
-            </span>
-          </div>
-
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent leading-tight">
-            SenDev
-            <span className="block bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
-              Vision
-            </span>
-          </h1>
-
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Nous transformons les{" "}
-            <span className="font-semibold text-blue-400">idées innovantes</span>{" "}
-            en solutions digitales exceptionnelles qui propulsent votre entreprise vers le succès.
-          </p>
-        </div>
-
+       
        
 
         {/* Vision, Mission, Values Tabs */}
@@ -162,9 +141,11 @@ export default function AboutPage() {
           <div className="flex justify-center mb-8">
             <div className="inline-flex p-1 rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50">
               {[
+                { id: "histoire", label: "Notre Histoire", icon: <Users className="w-4 h-4" /> },
                 { id: "vision", label: "Notre Vision", icon: <Eye className="w-4 h-4" /> },
                 { id: "mission", label: "Notre Mission", icon: <Target className="w-4 h-4" /> },
                 { id: "values", label: "Nos Valeurs", icon: <Heart className="w-4 h-4" /> },
+                
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -184,6 +165,18 @@ export default function AboutPage() {
 
           {/* Tab Content */}
           <div className="max-w-4xl mx-auto">
+          {activeTab === "histoire" && (
+              <div className="text-center p-8 rounded-3xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 animate-in fade-in duration-500">
+                <Target className="w-16 h-16 text-green-400 mx-auto mb-6" />
+                <h3 className="text-3xl font-bold text-white mb-4">Notre Histoire</h3>
+                <p className="text-lg text-slate-300 leading-relaxed">
+                  Accompagner les entreprises dans leur transformation digitale en développant 
+                  des solutions web et mobiles sur mesure. Nous nous engageons à livrer des 
+                  produits de haute qualité qui répondent aux besoins spécifiques de nos clients, 
+                  tout en respectant les délais et les budgets convenus.
+                </p>
+              </div>
+            )}
             {activeTab === "vision" && (
               <div className="text-center p-8 rounded-3xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 animate-in fade-in duration-500">
                 <Rocket className="w-16 h-16 text-blue-400 mx-auto mb-6" />
@@ -209,6 +202,7 @@ export default function AboutPage() {
                 </p>
               </div>
             )}
+             
 
             {activeTab === "values" && (
               <div className="grid md:grid-cols-2 gap-6">
@@ -233,61 +227,10 @@ export default function AboutPage() {
         </div>
 
         {/* Team Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">Notre Équipe</h2>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-              Des professionnels passionnés qui donnent vie à vos projets
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {team.map((member, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-3xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 hover:border-blue-500/30 transition-all duration-500 hover:scale-[1.02]"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="flex items-start space-x-4 mb-4">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-16 h-16 rounded-2xl object-cover"
-                  />
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                    <p className="text-blue-400 font-medium mb-2">{member.role}</p>
-                  </div>
-                </div>
-                <p className="text-slate-300 mb-4 leading-relaxed">{member.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {member.skills.map((skill, skillIndex) => (
-                    <span
-                      key={skillIndex}
-                      className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Location & Contact Info */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-500/20 backdrop-blur-sm">
-            <MapPin className="w-6 h-6 text-blue-400" />
-            <div className="text-left">
-              <div className="font-semibold text-white">Basé à Dakar, Sénégal</div>
-              <div className="text-sm text-slate-300">Intervenant dans toute l'Afrique de l'Ouest</div>
-            </div>
-            <div className="w-px h-8 bg-slate-600 mx-2"></div>
-            <div className="text-sm font-semibold text-blue-400">
-              contact@sendevvision.com
-            </div>
-          </div>
+     
 
           <div className="mt-8">
             <button className="group inline-flex items-center gap-2 px-8 py-4 bg-blue-600 rounded-xl text-white font-semibold hover:bg-blue-700 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
