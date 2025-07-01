@@ -1,7 +1,13 @@
 import AboutPage from "../components/AboutSection";
+import AboutHeroSection from "@/components/Page-sevice/ViewSection";
 const AboutSection = () => {
     return (
-          < AboutPage />
+       <>
+        <AboutHeroSection />
+        < AboutPage />
+       </>
+         
+          
        
       );
 };
