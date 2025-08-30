@@ -235,7 +235,7 @@ const IntroSection = ({ isMobile }) => {
                 transition={{ duration: 0.3 }}
               />
             </motion.span>
-            {' '}qui façonnent l'avenir de vos projets immobiliers.
+            {' '}qui façonnent l'avenir de vos projets.
           </p>
           
           <motion.p
