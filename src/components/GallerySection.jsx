@@ -465,9 +465,9 @@ const GallerySection = () => {
     const promoteurs = [
         {
             id: 1,
-            nom: "Ameth Ba",
+            nom: "Ameth BA",
             role: "Développeur Full-Stack",
-            image: "",
+            image: "/promoteur/ameth.jpg",
             pensee: "SenDev Vision est bien plus qu’une entreprise. C’est une aventure collective née à l’école, où nous avons grandi et collaboré. Aujourd’hui, cette confiance commune est la force technique qui soutient chaque ligne de notre code.",
             expertise: "Esprit d’équipe - Communication",
             linkedin: "https://www.linkedin.com/in/ameth-ba-2920b3253/",
