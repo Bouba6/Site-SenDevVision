@@ -175,34 +175,34 @@ export function HeroSection() {
                 variants={itemVariants}
               >
                 <Link to="/contact">
-                <motion.button
-                  className="group relative px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-xl text-white font-semibold text-lg overflow-hidden"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <span className="relative z-10 flex items-center justify-center">
-                    Démarrer un projet
+                  <motion.button
+                    className="group relative px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-xl text-white font-semibold text-lg overflow-hidden"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
                     <motion.div
-                      whileHover={{ x: 4 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                    >
-                      <Rocket className="ml-2 w-5 h-5" />
-                    </motion.div>
-                  </span>
-                </motion.button>
-                </Link>
-                
+                      className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    <span className="relative z-10 flex items-center justify-center">
+                      Démarrer un projet
+                      <motion.div
+                        whileHover={{ x: 4 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                      >
+                        <Rocket className="ml-2 w-5 h-5" />
+                      </motion.div>
+                    </span>
+                  </motion.button>
+                </Link>       
+
                 <motion.button
                   className="group px-8 py-4 border border-slate-600 text-slate-300 rounded-xl font-semibold text-lg"
                   whileHover={{

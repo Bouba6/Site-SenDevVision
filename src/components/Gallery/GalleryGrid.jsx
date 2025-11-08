@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowUp, User, MapPin, Sparkles, Heart, Star, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronDown, ArrowUp, User, MapPin, Sparkles, Heart, Star, Users, ChevronLeft, ChevronRight, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
@@ -353,12 +353,12 @@ const SinglePromoteurCard = ({
           {/* Image */}
           <div className="relative overflow-hidden h-72">
             <motion.img
-              src={promoteur.image || '/placeholder-image.jpg'}
-              alt={promoteur.nom || 'Promoteur'}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src={promoteur.image}
+              alt={promoteur.nom}
+              className="max-h-full w-auto object-contain transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
-              initial={{ scale: 1.1 }}
-              animate={isInView ? { scale: 1 } : { scale: 1.05 }}
+              initial={{ scale: 1 }}
+              animate={isInView ? { scale: 1 } : { scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
               onError={(e) => {
                 e.target.src = '/placeholder-image.jpg';
@@ -418,7 +418,7 @@ const SinglePromoteurCard = ({
               }}
               transition={{ duration: 0.2 }}
             >
-              <MapPin className="text-white/70 w-4 h-4" />
+              <Award className="text-white/70 w-4 h-4" />
               <span className="text-white/90 font-medium text-sm">
                 {promoteur.expertise || 'Expertise non spécifiée'}
               </span>
@@ -649,7 +649,7 @@ const PromoteurCard = ({
             }}
             transition={{ duration: 0.2 }}
           >
-            <MapPin className="text-white/70 w-4 h-4" />
+            <Award className="text-white/70 w-4 h-4" />
             <span className="text-white/90 font-medium text-sm">
               {promoteur.expertise || 'Expertise non spécifiée'}
             </span>
@@ -764,7 +764,7 @@ const IntroSection = ({ isMobile }) => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: 0.7, duration: isMobile ? 0.8 : 1 }}
         >
-          Découvrez les visionnaires qui façonnent l'avenir de vos projets immobiliers.
+          Découvrez les visionnaires qui façonnent l'avenir de vos projets.
           {isMobile && <br />}
           <span className="text-white/60">
             Chaque promoteur apporte son expertise unique à votre service.

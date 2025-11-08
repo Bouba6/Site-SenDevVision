@@ -300,23 +300,15 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                                                 </motion.a>
                                             </div>
 
-                                            <motion.button
+                                            <motion.a
+                                                href={`mailto:${promoteur.email}`}
                                                 className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
                                                 <Mail className="w-4 h-4" />
                                                 Contacter par email
-                                            </motion.button>
-
-                                            <motion.button
-                                                className="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                            >
-                                                <Phone className="w-4 h-4" />
-                                                Appeler
-                                            </motion.button>
+                                            </motion.a>
                                         </motion.div>
 
                                         {/* Footer */}
@@ -426,14 +418,15 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                                                 </motion.a>
                                             </div>
 
-                                            <motion.button
+                                            <motion.a
+                                                href={`mailto:${promoteur.email}`}
                                                 className="w-full bg-green-600 text-white py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 text-sm"
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
                                             >
                                                 <Mail className="w-4 h-4" />
                                                 Contacter
-                                            </motion.button>
+                                            </motion.a>
                                         </motion.div>
 
                                         <motion.div
@@ -470,126 +463,110 @@ const GallerySection = () => {
     }, []);
 
     const promoteurs = [
-        // Bloc 1 - Leadership
         {
             id: 1,
-            nom: "Amadou Diallo",
-            role: "Fondateur & CEO",
-            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face",
-            pensee: "Sen Dev Vision est né de ma passion pour l'innovation technologique au service de l'Afrique. Je crois fermement que nous pouvons révolutionner le secteur tech africain.",
-            expertise: "Strategy & Leadership",
-            linkedin: "#",
-            github: "#",
-            color: "from-red-500 to-orange-500",
-            colorClass: "text-red-400",
-            bloc: 1
+            nom: "Ameth BA",
+            role: "Développeur Full-Stack",
+            image: "/promoteur/ameth.jpg",
+            pensee: "SenDev Vision est bien plus qu’une entreprise. C’est une aventure collective née à l’école, où nous avons grandi et collaboré. Aujourd’hui, cette confiance commune est la force technique qui soutient chaque ligne de notre code.",
+            expertise: "Esprit d’équipe - Communication",
+            linkedin: "https://www.linkedin.com/in/ameth-ba-2920b3253/",
+            github: "https://github.com/Bameth",
+            email: "amethba8826@gmail.com",
+            color: "from-[#007AFF] to-[#007AFF]",
+            colorClass: "text-[#007AFF]",
         },
         {
             id: 2,
-            nom: "Fatou Sarr",
-            role: "CTO & Co-fondatrice",
-            image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=600&h=800&fit=crop&crop=face",
-            pensee: "Chaque ligne de code contribue à bâtir l'avenir numérique du Sénégal. Notre mission est de créer des solutions qui transforment vraiment la vie des gens.",
-            expertise: "Tech Innovation",
-            linkedin: "#",
-            github: "#",
-            color: "from-purple-500 to-pink-500",
-            colorClass: "text-purple-400",
-            bloc: 1
+            nom: "Henri Pierre BASSENE",
+            role: "Développeur Full-Stack",
+            image: "",
+            pensee: "Chaque ligne de code est un pas de plus vers l’impact.",
+            expertise: "Capacité d’adaptation - Prise d’initiative",
+            linkedin: "https://www.linkedin.com/in/henri-pierre-bassene/",
+            github: "https://github.com/henripierre03",
+            email: "henripierrebassene@gmail.com",
+            color: "from-orange-500 to-orange-700",
+            colorClass: "text-orange-500",
         },
         {
             id: 3,
-            nom: "Khadija Ndiaye",
-            role: "Product Manager",
-            image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=600&h=800&fit=crop&crop=face",
-            pensee: "Je traduis les besoins utilisateurs en solutions concrètes. Mon rôle est de m'assurer que chaque feature apporte une vraie valeur ajoutée.",
-            expertise: "Product Strategy",
-            linkedin: "#",
-            github: "#",
-            color: "from-teal-500 to-cyan-500",
-            colorClass: "text-teal-400",
-            bloc: 1
+            nom: "Seydina Aboubacar Sadikh Bathily",
+            role: "Developpeur FullStack",
+            image: "/promoteur/sadikh.png",
+            pensee: "J'ai su développer une forte capacité à travailler en équipe et à faire avancer les projets dans une dynamique collaborative. SendevVision est le fruit de cette passion partagée. et je suis convaincu que nous irons loin avec ce groupe.",
+            expertise: "Esprit d’équipe - rigueur - Adaptabilité",
+            linkedin: "https://www.linkedin.com/in/aboubacar-sadikh-bathily/",
+            github: "https://github.com/Bouba6/",
+            email: "seydinaaboubacarsadikhbathily@gmail.com",
+            color: "from-[#d2b48c] to-[#d2b48c]",
+            colorClass: "text-[#d2b48c]",
         },
-        // Bloc 2 - Développement
         {
             id: 4,
-            nom: "Ibrahima Kane",
-            role: "Lead Developer",
-            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=face",
-            pensee: "Nous transformons les idées en solutions technologiques révolutionnaires. La créativité et la technique se rencontrent ici pour créer l'extraordinaire.",
-            expertise: "Full-Stack Development",
-            linkedin: "#",
-            github: "#",
-            color: "from-green-500 to-emerald-500",
-            colorClass: "text-green-400",
-            bloc: 2
+            nom: "Cheikh Ibnoul Arabi LY",
+            role: "Full-Stack Développeur",
+            image: "/promoteur/ibnoul.jpg",
+            pensee: "Petit a petit nous tendons à rendre meilleur le monde de par nos sollution digital",
+            expertise: "Esprit de dépassement - esprit d'equipe",
+            linkedin: "https://www.linkedin.com/in/cheikh-ibnoul-arabi-ly-b1444025b?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BFt9kgA64TzW4l1QYK977Qw%3D%3D",
+            github: "https://github.com/CheikhLy",
+            email: "lyibnoul2@gmail.com",
+            color: "from-[#D2691E] to-[#D2691E]",
+            colorClass: "text-[#D2691E]",
         },
         {
             id: 5,
-            nom: "Moussa Traoré",
-            role: "DevOps Engineer",
-            image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop&crop=face",
-            pensee: "L'infrastructure est l'épine dorsale de toute innovation. Je m'assure que nos solutions soient robustes, scalables et disponibles 24/7.",
-            expertise: "Infrastructure & Security",
-            linkedin: "#",
-            github: "#",
-            color: "from-indigo-500 to-purple-500",
-            colorClass: "text-indigo-400",
-            bloc: 2
+            nom: "Assane Ndiaye",
+            role: "Développeur Full-Stack",
+            image: "/promoteur/assane.jpeg",
+            pensee: "SenDev Vision, c’est l’histoire de développeurs réunis dès l’école autour d’une idée simple : faire de la technologie un moteur de confiance et de performance, avec une précision sans compromis.",
+            expertise: "Esprit d'équipe - Gestion des priorités",
+            linkedin: "https://www.linkedin.com/in/assane-ndiaye-859429340/",
+            github: "https://github.com/Assane818",
+            email: "assanen818@gmail.com",
+            color: "from-green-500 to-green-500",
+            colorClass: "text-green-500",
         },
         {
             id: 6,
-            nom: "Omar Fall",
-            role: "Data Scientist",
-            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop&crop=face",
-            pensee: "Les données racontent des histoires fascinantes. Mon travail consiste à extraire des insights précieux qui guident nos décisions stratégiques.",
-            expertise: "Data & AI",
-            linkedin: "#",
-            github: "#",
-            color: "from-violet-500 to-purple-500",
-            colorClass: "text-violet-400",
-            bloc: 2
+            nom: "Birane Ndiaye",
+            role: "Développeur Full-Stack",
+            image: "/promoteur/birane.jpeg",
+            pensee: "Je suis un développeur Full-Stack, capable de transformer des idées complexes en applications fiables et bien conçues, en alliant rigueur technique, vision produit et sens de la collaboration.",
+            expertise: "Sang froid - Communication",
+            linkedin: "https://www.linkedin.com/in/birane-ndiaye-377765253/",
+            github: "https://github.com/Fairyghost007",
+            email: "biranenini6762@gmail.com",
+            color: "from-blue-500 to-blue-700",
+            colorClass: "text-blue-500",
         },
-        // Bloc 3 - Design & Marketing
         {
             id: 7,
-            nom: "Aïssatou Ba",
-            role: "UI/UX Designer",
-            image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=800&fit=crop&crop=face",
-            pensee: "Le design n'est pas juste l'apparence, c'est l'expérience. Chaque pixel compte pour créer des interfaces qui enchantent nos utilisateurs.",
-            expertise: "Design & Experience",
-            linkedin: "#",
-            github: "#",
-            color: "from-orange-500 to-red-500",
-            colorClass: "text-orange-400",
-            bloc: 3
+            nom: "Ousseynou Ndiaye",
+            role: "Full stack développeur",
+            image: "",
+            pensee: "La technologie n'est qu'un levier. Le pouvoir de façonner le monde a toujours résidé, et résidera toujours, dans la bonté et l'ingéniosité de ceux qui s'en saisissent . Je suis ambitieux et déterminé à apporter des solutions innovantes et efficaces pour répondre aux besoins de nos clients.",
+            expertise: "Esprit d’équipe - Capacité d’adaptation",
+            linkedin: "https://www.linkedin.com/in/ousseynou-ndiaye-0aa429340/",
+            github: "https://github.com/Ouzeon007",
+            email: "nousseynou20@gmail.com",
+            color: "from-indigo-600 to-indigo-600",
+            colorClass: "text-indigo-600",
         },
         {
             id: 8,
-            nom: "Aminata Seck",
-            role: "Marketing Digital",
-            image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&h=800&fit=crop&crop=face",
-            pensee: "Je construis des ponts entre nos innovations et nos utilisateurs. Chaque campagne est une opportunité de créer des connexions authentiques.",
-            expertise: "Growth & Marketing",
-            linkedin: "#",
-            github: "#",
-            color: "from-rose-500 to-pink-500",
-            colorClass: "text-rose-400",
-            bloc: 3
+            nom: "Sidy Mohamed Saizonou",
+            role: "Full-Stack & Designer Graphique",
+            image: "/promoteur/sidy.jpeg",
+            pensee: "Je ne travaille pas pour briller, mais pour construire. Je veux que ce que je crée soit utile. Chaque détail compte.",
+            expertise: "Esprit d'équipe - Curieux - Rigoureux",
+            linkedin: "https://www.linkedin.com/in/sidy-mohamed-saizonou",
+            github: "https://github.com/sidymohamed12",
+            email: "mohamedsaizonou86@gmail.com",
+            color: "from-green-500 to-green-700",
+            colorClass: "text-green-500",
         },
-        {
-            id: 9,
-            nom: "Cheikh Ly",
-            role: "QA Engineer",
-            image: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=600&h=800&fit=crop&crop=face",
-            pensee: "La qualité n'est pas négociable. Je m'assure que chaque produit qui sort de nos mains répond aux plus hauts standards d'excellence.",
-            expertise: "Quality Assurance",
-            linkedin: "#",
-            github: "#",
-            color: "from-amber-500 to-orange-500",
-            colorClass: "text-amber-400",
-            bloc: 3
-        }
     ];
     
     const handleImageClick = (promoteur) => {
