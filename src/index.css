@@ -169,3 +169,13 @@
 .animate-aurora-2 { animation: aurora-2 14s infinite ease-in-out; }
 .animate-aurora-3 { animation: aurora-3 16s infinite ease-in-out; }
 .animate-aurora-4 { animation: aurora-4 18s infinite ease-in-out; }
+
+/* Masquer la scrollbar pour la navigation mobile */
+.scrollbar-none {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE et Edge */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

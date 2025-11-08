@@ -26,17 +26,17 @@ const GalleryGrid = ({ groupedPromoteurs, handleImageClick }) => {
     return Object.values(groupedPromoteurs).flat();
   }, [groupedPromoteurs]);
 
-  // MÊME GROUPEMENT POUR MOBILE ET DESKTOP
+  // GROUPEMENT ADAPTATIF SELON LA TAILLE D'ÉCRAN
   const promoteursGrouped = useMemo(() => {
     const groups = [];
-    const itemsPerGroup = 3; // Toujours 3 promoteurs par section
+    const itemsPerGroup = isMobile ? 3 : 4; // 3 sur mobile, 4 sur desktop
     
     for (let i = 0; i < allPromoteurs.length; i += itemsPerGroup) {
       groups.push(allPromoteurs.slice(i, i + itemsPerGroup));
     }
     
     return groups;
-  }, [allPromoteurs]);
+  }, [allPromoteurs, isMobile]);
 
   const containerRef = useRef(null);
   const [currentSection, setCurrentSection] = useState(0);
@@ -206,7 +206,7 @@ const PromoteurGroupSection = ({
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen md:h-screen w-full flex items-center justify-center relative px-4 py-8 md:py-0"
+      className="md:h-screen w-full flex items-center justify-center relative px-4 py-8 md:py-0"
     >
       <motion.div
         className="relative z-10 w-full max-w-7xl mx-auto"
@@ -216,7 +216,7 @@ const PromoteurGroupSection = ({
         }}
       >
         {/* GRILLE UNIFIÉE POUR MOBILE ET DESKTOP */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 lg:gap-12">
           {promoteurGroup.map((promoteur, index) => (
             <PromoteurCard
               key={promoteur.id || `${groupIndex}-${index}`}
@@ -341,7 +341,7 @@ const PromoteurCard = ({
           transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
         >
           <motion.h3 
-            className="font-bold text-white text-xl md:text-2xl mb-2 md:mb-3 leading-tight"
+            className="font-bold text-white text-lg md:text-xl mb-2 md:mb-3 leading-tight"
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.2 }}
           >
@@ -349,7 +349,7 @@ const PromoteurCard = ({
           </motion.h3>
           
           <motion.p 
-            className={`font-medium text-base md:text-lg mb-3 md:mb-4 leading-tight ${promoteur.colorClass || 'text-white/90'}`}
+            className={`font-medium text-sm md:text-base mb-3 md:mb-4 leading-tight ${promoteur.colorClass || 'text-white/90'}`}
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.2 }}
           >
@@ -366,7 +366,7 @@ const PromoteurCard = ({
             transition={{ duration: 0.2 }}
           >
             <Award className="text-white/70 w-4 h-4" />
-            <span className="text-white/90 font-medium text-sm">
+            <span className="text-white/90 font-medium text-xs">
               {promoteur.expertise || 'Expertise non spécifiée'}
             </span>
           </motion.div>

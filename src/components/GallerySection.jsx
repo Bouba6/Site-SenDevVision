@@ -431,7 +431,7 @@ const GallerySection = () => {
             id: 1,
             nom: "Ameth BA",
             role: "Développeur Full-Stack",
-            image: "/promoteur/ameth.jpg",
+            image: "/promoteur/ameth.png",
             pensee: "SenDev Vision est bien plus qu’une entreprise. C’est une aventure collective née à l’école, où nous avons grandi et collaboré. Aujourd’hui, cette confiance commune est la force technique qui soutient chaque ligne de notre code.",
             expertise: "Esprit d’équipe - Communication",
             linkedin: "https://www.linkedin.com/in/ameth-ba-2920b3253/",
@@ -442,19 +442,6 @@ const GallerySection = () => {
         },
         {
             id: 2,
-            nom: "Henri Pierre BASSENE",
-            role: "Développeur Full-Stack",
-            image: "",
-            pensee: "Chaque ligne de code est un pas de plus vers l’impact.",
-            expertise: "Capacité d’adaptation - Prise d’initiative",
-            linkedin: "https://www.linkedin.com/in/henri-pierre-bassene/",
-            github: "https://github.com/henripierre03",
-            email: "henripierrebassene@gmail.com",
-            color: "from-orange-500 to-orange-700",
-            colorClass: "text-orange-500",
-        },
-        {
-            id: 3,
             nom: "Seydina Aboubacar Sadikh Bathily",
             role: "Developpeur FullStack",
             image: "/promoteur/sadikh.png",
@@ -467,10 +454,10 @@ const GallerySection = () => {
             colorClass: "text-[#d2b48c]",
         },
         {
-            id: 4,
+            id: 3,
             nom: "Cheikh Ibnoul Arabi LY",
             role: "Full-Stack Développeur",
-            image: "/promoteur/ibnoul.jpg",
+            image: "/promoteur/ibnoul.png",
             pensee: "Petit a petit nous tendons à rendre meilleur le monde de par nos sollution digital",
             expertise: "Esprit de dépassement - esprit d'equipe",
             linkedin: "https://www.linkedin.com/in/cheikh-ibnoul-arabi-ly-b1444025b?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BFt9kgA64TzW4l1QYK977Qw%3D%3D",
@@ -480,10 +467,10 @@ const GallerySection = () => {
             colorClass: "text-[#D2691E]",
         },
         {
-            id: 5,
+            id: 4,
             nom: "Assane Ndiaye",
             role: "Développeur Full-Stack",
-            image: "/promoteur/assane.jpeg",
+            image: "/promoteur/assane.png",
             pensee: "SenDev Vision, c’est l’histoire de développeurs réunis dès l’école autour d’une idée simple : faire de la technologie un moteur de confiance et de performance, avec une précision sans compromis.",
             expertise: "Esprit d'équipe - Gestion des priorités",
             linkedin: "https://www.linkedin.com/in/assane-ndiaye-859429340/",
@@ -493,10 +480,10 @@ const GallerySection = () => {
             colorClass: "text-green-500",
         },
         {
-            id: 6,
+            id: 5,
             nom: "Birane Ndiaye",
             role: "Développeur Full-Stack",
-            image: "/promoteur/birane.jpeg",
+            image: "/promoteur/birane.png",
             pensee: "Je suis un développeur Full-Stack, capable de transformer des idées complexes en applications fiables et bien conçues, en alliant rigueur technique, vision produit et sens de la collaboration.",
             expertise: "Sang froid - Communication",
             linkedin: "https://www.linkedin.com/in/birane-ndiaye-377765253/",
@@ -506,10 +493,10 @@ const GallerySection = () => {
             colorClass: "text-blue-500",
         },
         {
-            id: 7,
+            id: 6,
             nom: "Ousseynou Ndiaye",
             role: "Full stack développeur",
-            image: "/promoteur/ousseynou.jpeg",
+            image: "/promoteur/ousseynou.png",
             pensee: "La technologie n'est qu'un levier. Le pouvoir de façonner le monde a toujours résidé, et résidera toujours, dans la bonté et l'ingéniosité de ceux qui s'en saisissent . Je suis ambitieux et déterminé à apporter des solutions innovantes et efficaces pour répondre aux besoins de nos clients.",
             expertise: "Esprit d’équipe - Capacité d’adaptation",
             linkedin: "https://www.linkedin.com/in/ousseynou-ndiaye-0aa429340/",
@@ -519,10 +506,10 @@ const GallerySection = () => {
             colorClass: "text-indigo-600",
         },
         {
-            id: 8,
+            id: 7,
             nom: "Sidy Mohamed Saizonou",
             role: "Full-Stack & Designer Graphique",
-            image: "/promoteur/sidy.jpeg",
+            image: "/promoteur/sidy.png",
             pensee: "Je ne travaille pas pour briller, mais pour construire. Je veux que ce que je crée soit utile. Chaque détail compte.",
             expertise: "Esprit d'équipe - Curieux - Rigoureux",
             linkedin: "https://www.linkedin.com/in/sidy-mohamed-saizonou",
@@ -531,6 +518,19 @@ const GallerySection = () => {
             color: "from-green-500 to-green-700",
             colorClass: "text-green-500",
         },
+        // {
+        //     id: 2,
+        //     nom: "Henri Pierre BASSENE",
+        //     role: "Développeur Full-Stack",
+        //     image: "",
+        //     pensee: "Chaque ligne de code est un pas de plus vers l’impact.",
+        //     expertise: "Capacité d’adaptation - Prise d’initiative",
+        //     linkedin: "https://www.linkedin.com/in/henri-pierre-bassene/",
+        //     github: "https://github.com/henripierre03",
+        //     email: "henripierrebassene@gmail.com",
+        //     color: "from-orange-500 to-orange-700",
+        //     colorClass: "text-orange-500",
+        // },
     ];
     
     const handleImageClick = (promoteur) => {
@@ -554,7 +554,7 @@ const GallerySection = () => {
             <FloatingParticles />
 
             {/* Header spectaculaire */}
-            <GalleryHero />
+            {/* <GalleryHero /> */}
 
             {/* Galerie restructurée */}
             <GalleryGrid

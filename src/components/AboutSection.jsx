@@ -120,14 +120,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-gradient-to-r from-green-500/3 to-cyan-500/3 rounded-full blur-3xl"></div>
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-10"></div>
-      </div>
-
+      
       <FloatingParticles />
 
       <div className="container mx-auto px-6 py-24 relative z-10">
@@ -136,28 +129,29 @@ export default function AboutPage() {
        
 
         {/* Vision, Mission, Values Tabs */}
-        <div className="mb-20">
-          {/* Tab Navigation */}
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex p-1 rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50">
+        <div className="">
+          {/* Tab Navigation - Scrollable sur mobile */}
+          <div className="flex justify-center mb-10 px-4 md:px-0">
+            <div className="flex overflow-x-auto overflow-y-hidden p-2 rounded-3xl bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 w-full md:w-auto md:inline-flex max-w-full scrollbar-none">
               {[
-                { id: "histoire", label: "Notre Histoire", icon: <Users className="w-4 h-4" /> },
-                { id: "vision", label: "Notre Vision", icon: <Eye className="w-4 h-4" /> },
-                { id: "mission", label: "Notre Mission", icon: <Target className="w-4 h-4" /> },
-                { id: "values", label: "Nos Valeurs", icon: <Heart className="w-4 h-4" /> },
+                { id: "histoire", label: "Notre Histoire", icon: <Users className="w-5 h-5" /> },
+                { id: "vision", label: "Notre Vision", icon: <Eye className="w-5 h-5" /> },
+                { id: "mission", label: "Notre Mission", icon: <Target className="w-5 h-5" /> },
+                { id: "values", label: "Nos Valeurs", icon: <Heart className="w-5 h-5" /> },
                 
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`flex items-center gap-3 px-6 md:px-8 py-4 md:py-5 rounded-2xl font-bold transition-all duration-300 whitespace-nowrap flex-shrink-0 text-base md:text-lg ${
                     activeTab === tab.id
-                      ? "bg-blue-600 text-white shadow-lg"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-blue-600 text-white shadow-xl"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800/50"
                   }`}
                 >
                   {tab.icon}
-                  {tab.label}
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[1] || tab.label}</span>
                 </button>
               ))}
             </div>
@@ -227,18 +221,6 @@ export default function AboutPage() {
         </div>
 
         {/* Team Section */}
-
-        {/* Location & Contact Info */}
-        <div className="text-center">
-     
-
-          <div className="mt-8">
-            <button className="group inline-flex items-center gap-2 px-8 py-4 bg-blue-600 rounded-xl text-white font-semibold hover:bg-blue-700 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
-              Travaillons ensemble
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
