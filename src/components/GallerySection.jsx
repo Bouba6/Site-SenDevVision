@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Mail, Linkedin, Github, Eye, Award, X, Grid, Camera, Layers, Heart, Star, Phone, MapPin, Code2, Sparkles, ArrowRight, Globe, Zap, Target, Instagram, Calendar, Coffee } from 'lucide-react';
 import GalleryHero from './Gallery/GalleryHero';
 import GalleryGrid from './Gallery/GalleryGrid';
@@ -149,7 +149,7 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                     <motion.div
                         className={`relative z-10 mx-auto ${
                             isMobile 
-                                ? 'w-full h-full p-0' 
+                                ? 'w-full h-full p-4' 
                                 : 'w-full max-w-3xl p-4'
                         }`}
                         initial={{ scale: 0.8, opacity: 0, y: 50 }}
@@ -180,7 +180,7 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                         <motion.div
                             className={`relative bg-white/5 backdrop-blur-2xl overflow-hidden border border-white/10 shadow-2xl ${
                                 isMobile 
-                                    ? 'h-full rounded-none' 
+                                    ? 'h-[85vh] rounded-xl' 
                                     : 'rounded-2xl max-h-[75vh]'
                             }`}
                             layoutId={`card-${promoteur.id}`}
@@ -188,27 +188,11 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                             {/* Version Mobile - Layout vertical avec scroll */}
                             {isMobile ? (
                                 <div className="h-full overflow-y-auto overscroll-contain">
-                                    {/* Image fixe en haut */}
-                                    <motion.div
-                                        className="relative h-64 flex-shrink-0"
-                                        initial={{ y: -50, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        transition={{ delay: 0.2 }}
-                                    >
-                                        <motion.img
-                                            src={promoteur.image}
-                                            alt={promoteur.nom}
-                                            className="w-full h-full object-cover"
-                                            initial={{ scale: 1.1 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ duration: 0.6, ease: "easeOut" }}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                                    </motion.div>
+                                    {/* Image masquée sur mobile pour économiser l'espace */}
 
-                                    {/* Contenu scrollable */}
+                                    {/* Contenu scrollable - commencé dès le haut */}
                                     <motion.div
-                                        className="p-6 space-y-6 min-h-screen"
+                                        className="p-6 space-y-6 min-h-screen pt-8"
                                         initial={{ y: 50, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.3 }}
@@ -251,25 +235,6 @@ const ImageModal = ({ isOpen, onClose, promoteur }) => {
                                             </p>
                                             <div className="text-3xl text-purple-400/30 absolute -bottom-2 -right-2 rotate-180">"</div>
                                         </motion.blockquote>
-
-                                        {/* Informations supplémentaires */}
-                                        <motion.div
-                                            className="space-y-4"
-                                            initial={{ y: 20, opacity: 0 }}
-                                            animate={{ y: 0, opacity: 1 }}
-                                            transition={{ delay: 0.7 }}
-                                        >
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                                                    <div className="text-blue-400 text-2xl font-bold">5+</div>
-                                                    <div className="text-white/70 text-sm">Années d'expérience</div>
-                                                </div>
-                                                <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                                                    <div className="text-green-400 text-2xl font-bold">20+</div>
-                                                    <div className="text-white/70 text-sm">Projets réalisés</div>
-                                                </div>
-                                            </div>
-                                        </motion.div>
 
                                         {/* Actions */}
                                         <motion.div
@@ -456,7 +421,6 @@ const GallerySection = () => {
     const [mounted, setMounted] = useState(false);
     const [selectedPromoter, setSelectedPromoter] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [hoveredCard, setHoveredCard] = useState(null);
 
     useEffect(() => {
         setMounted(true);
@@ -545,7 +509,7 @@ const GallerySection = () => {
             id: 7,
             nom: "Ousseynou Ndiaye",
             role: "Full stack développeur",
-            image: "",
+            image: "/promoteur/ousseynou.jpeg",
             pensee: "La technologie n'est qu'un levier. Le pouvoir de façonner le monde a toujours résidé, et résidera toujours, dans la bonté et l'ingéniosité de ceux qui s'en saisissent . Je suis ambitieux et déterminé à apporter des solutions innovantes et efficaces pour répondre aux besoins de nos clients.",
             expertise: "Esprit d’équipe - Capacité d’adaptation",
             linkedin: "https://www.linkedin.com/in/ousseynou-ndiaye-0aa429340/",
