@@ -84,11 +84,11 @@ export function Header() {
         >
           <nav className="container mx-auto px-6 py-4">
             <div className="flex flex-col space-y-4">
-              {["Accueil", "Services", "Galerie", "À Propos", "Contact"].map(
+              {["Accueil", "Services", "À Propos", "Contact"].map(
                 (item) => (
                   <Link
                     key={item}
-                    to={item === "Accueil" ? "/" : `/${item.toLowerCase()}`}
+                    to={item === "Accueil" ? "/" : item === "À Propos" ? "apropos" : `/${item.toLowerCase()}`}
                     onClick={() => setIsMenuOpen(false)}
                     className="text-[var(--color-quaternary)] hover:text-[var(--color-primary)] transition-colors duration-300 py-2 border-b border-gray-800/50 last:border-b-0"
                   >
